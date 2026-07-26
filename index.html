@@ -44,7 +44,7 @@
   }
   </script>
 
-  <!-- Fonts: Fraunces (display) + Inter (body) -->
+  <!-- Fonts: Fraunces for display, Inter for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -60,14 +60,14 @@
             display: ['Fraunces', 'Georgia', 'serif']
           },
           colors: {
-            navy: { DEFAULT: '#1E3A5F', 900: '#152B47', 800: '#1E3A5F', 700: '#27496F', 100: '#E8EEF5', 50: '#F2F6FA' },
-            royal: { DEFAULT: '#3B82F6', 600: '#2563EB', 100: '#DBEAFE', 50: '#EFF6FF' },
-            amber: { DEFAULT: '#F59E0B', 600: '#D97706', 100: '#FEF3C7', 50: '#FFFBEB' },
-            paper: '#FBFBF9'
+            navy: { DEFAULT: '#1E3A5F', 50: '#EEF3F8', 100: '#D9E4EF', 700: '#24466F', 800: '#1E3A5F', 900: '#162B47', 950: '#0F1F33' },
+            royal: { DEFAULT: '#3B82F6', 50: '#EFF6FF', 100: '#DBEAFE', 600: '#2563EB' },
+            amber: { DEFAULT: '#F59E0B', 50: '#FFFBEB', 100: '#FEF3C7' }
           },
           boxShadow: {
-            soft: '0 1px 2px rgba(21,43,71,0.05), 0 8px 24px -8px rgba(21,43,71,0.10)',
-            lift: '0 2px 4px rgba(21,43,71,0.06), 0 16px 40px -12px rgba(21,43,71,0.18)'
+            soft: '0 1px 2px rgba(15,31,51,.05), 0 8px 24px -8px rgba(15,31,51,.10)',
+            lift: '0 2px 4px rgba(15,31,51,.06), 0 20px 40px -12px rgba(15,31,51,.18)',
+            navy: '0 20px 50px -12px rgba(30,58,95,.45)'
           }
         }
       }
@@ -75,9 +75,9 @@
   </script>
 
   <style>
-    html { scroll-padding-top: 96px; }
+    html { scroll-padding-top: 92px; }
     body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-    ::selection { background: #FDE68A; color: #1E3A5F; }
+    ::selection { background: rgba(245,158,11,.25); }
 
     /* Reveal-on-scroll (hidden state only when JS is available) */
     html.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
@@ -86,81 +86,73 @@
     .reveal-delay-2 { transition-delay: .16s; }
     .reveal-delay-3 { transition-delay: .24s; }
 
-    /* Card hover — subtle lift */
-    .lift { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1), border-color .3s; }
-    .lift:hover { transform: translateY(-3px); box-shadow: 0 2px 4px rgba(21,43,71,0.06), 0 16px 40px -12px rgba(21,43,71,0.18); }
+    /* Card micro-interactions */
+    .lift { transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s cubic-bezier(.16,1,.3,1), border-color .35s; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 2px 4px rgba(15,31,51,.06), 0 24px 48px -12px rgba(15,31,51,.16); }
 
     /* Nav links */
     .nav-link { position: relative; transition: color .25s; }
-    .nav-link::after { content:''; position:absolute; left:0; bottom:-5px; height:2px; width:0; background:#F59E0B; transition:width .3s cubic-bezier(.16,1,.3,1); border-radius:2px; }
-    .nav-link:hover { color:#1E3A5F; }
+    .nav-link::after { content:''; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:#F59E0B; transition:width .3s cubic-bezier(.16,1,.3,1); border-radius:2px; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
     .nav-link.active { color:#1E3A5F; }
-    .nav-link.active::after { width:100%; }
 
-    /* Buttons */
-    .btn-primary { transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s, background-color .25s; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(30,58,95,0.45); }
-    .btn-ghost { transition: transform .25s cubic-bezier(.16,1,.3,1), border-color .25s, background-color .25s, color .25s; }
-    .btn-ghost:hover { transform: translateY(-2px); border-color:#3B82F6; color:#2563EB; background:#EFF6FF; }
-
-    /* Chips */
-    .chip { transition: border-color .25s, background-color .25s, color .25s, transform .25s; }
-    .chip:hover { border-color:#3B82F6; background:#EFF6FF; color:#1E3A5F; transform: translateY(-1px); }
-
-    /* Hero backdrop: soft radial washes + fine grid */
+    /* Hero backdrop */
     .hero-bg {
       background:
-        radial-gradient(720px 420px at 12% 8%, rgba(59,130,246,0.07), transparent 62%),
-        radial-gradient(640px 420px at 88% 18%, rgba(245,158,11,0.06), transparent 60%),
-        linear-gradient(rgba(30,58,95,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,58,95,0.035) 1px, transparent 1px);
-      background-size: auto, auto, 52px 52px, 52px 52px;
-      -webkit-mask-image: radial-gradient(ellipse 90% 78% at 50% 8%, black 55%, transparent 100%);
-      mask-image: radial-gradient(ellipse 90% 78% at 50% 8%, black 55%, transparent 100%);
+        radial-gradient(900px 520px at 88% -10%, rgba(59,130,246,.10), transparent 60%),
+        radial-gradient(700px 460px at -10% 30%, rgba(30,58,95,.07), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, #F7FAFD 100%);
+    }
+    .dot-grid {
+      background-image: radial-gradient(rgba(30,58,95,.10) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
-    /* Photo frame accents */
-    .photo-frame::before { content:''; position:absolute; inset:1.25rem -1.25rem -1.25rem 1.25rem; background:#1E3A5F; border-radius:1.6rem; z-index:-1; }
-    .photo-frame::after { content:''; position:absolute; top:-0.9rem; right:-0.9rem; height:4.5rem; width:4.5rem; border-top:3px solid #F59E0B; border-right:3px solid #F59E0B; border-top-right-radius:1.1rem; }
+    /* Serif display refinements */
+    .display { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.015em; }
+
+    /* Amber underline flourish for section titles */
+    .flourish { position: relative; display: inline-block; }
+    .flourish::after { content:''; position:absolute; left:0; right:0; bottom:.08em; height:.28em; background:rgba(245,158,11,.28); z-index:-1; border-radius:3px; }
+
+    /* Chip */
+    .chip { transition: transform .25s cubic-bezier(.16,1,.3,1), border-color .25s, background-color .25s; }
+    .chip:hover { transform: translateY(-2px); border-color:#3B82F6; background:#EFF6FF; }
 
     /* Timeline */
-    .tl-line { background: linear-gradient(to bottom, #3B82F6 0%, rgba(59,130,246,.25) 70%, transparent 100%); }
-    .tl-dot { box-shadow: 0 0 0 5px #fff, 0 0 0 6px rgba(59,130,246,.35); }
+    .tl-line { background: linear-gradient(to bottom, #3B82F6 0%, rgba(59,130,246,.15) 100%); }
+    .tl-dot { box-shadow: 0 0 0 5px rgba(59,130,246,.12); }
 
-    /* Section eyebrow rule */
-    .eyebrow { display:inline-flex; align-items:center; gap:.65rem; }
-    .eyebrow::before { content:''; width:2.25rem; height:2px; background:#F59E0B; border-radius:2px; }
-
-    /* Numbered project rows */
-    .proj-num { font-variant-numeric: tabular-nums; -webkit-text-stroke: 1.5px rgba(30,58,95,0.22); color: transparent; }
+    /* Buttons */
+    .btn-primary { transition: transform .25s, box-shadow .25s, background-color .25s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -8px rgba(30,58,95,.45); }
+    .btn-ghost { transition: transform .25s, border-color .25s, background-color .25s; }
+    .btn-ghost:hover { transform: translateY(-2px); border-color:#1E3A5F; }
 
     @media (prefers-reduced-motion: reduce) {
-      html.js .reveal, .lift, .btn-primary, .btn-ghost, .chip { transition: none !important; }
+      html.js .reveal, .lift, .chip, .btn-primary, .btn-ghost { transition: none !important; }
       html { scroll-behavior: auto; }
     }
   </style>
 </head>
 
-<body class="font-sans bg-paper text-slate-600">
+<body class="font-sans bg-white text-slate-600">
 
   <!-- ======================= NAV ======================= -->
-  <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-paper/85 backdrop-blur-md border-b border-navy-900/5 transition-shadow duration-300">
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/70 transition-shadow duration-300">
     <nav class="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-[72px]" aria-label="Main navigation">
-      <a href="#home" class="flex items-center gap-3" aria-label="Saurabh Pandey — home">
-        <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-navy text-white text-sm font-bold tracking-tight">SP</span>
-        <span class="hidden sm:block leading-tight">
-          <span class="block font-display font-semibold text-navy text-[15px]">Saurabh Pandey</span>
-          <span class="block text-[11px] uppercase tracking-[0.14em] text-slate-400">E-Commerce Leadership</span>
-        </span>
+      <a href="#home" class="flex items-center gap-2.5" aria-label="Saurabh Pandey — home">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-navy text-white text-sm font-bold shadow-soft">SP</span>
+        <span class="display text-lg font-semibold text-navy hidden sm:inline">Saurabh Pandey</span>
       </a>
 
-      <div class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-slate-500">
-        <a href="#about" class="nav-link">About</a>
-        <a href="#achievements" class="nav-link">Impact</a>
-        <a href="#experience" class="nav-link">Experience</a>
-        <a href="#skills" class="nav-link">Expertise</a>
-        <a href="#projects" class="nav-link">Projects</a>
-        <a href="#contact" class="nav-link">Contact</a>
+      <div class="hidden md:flex items-center gap-8 text-[13.5px] font-semibold text-slate-500">
+        <a href="#about" class="nav-link hover:text-navy">About</a>
+        <a href="#achievements" class="nav-link hover:text-navy">Achievements</a>
+        <a href="#experience" class="nav-link hover:text-navy">Experience</a>
+        <a href="#skills" class="nav-link hover:text-navy">Skills</a>
+        <a href="#projects" class="nav-link hover:text-navy">Projects</a>
+        <a href="#contact" class="nav-link hover:text-navy">Contact</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -168,41 +160,44 @@
           Resume
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
         </a>
-        <button id="menu-btn" class="md:hidden h-10 w-10 inline-flex items-center justify-center rounded-lg border border-navy-900/10 text-navy" aria-label="Open menu" aria-expanded="false">
+        <button id="menu-btn" class="md:hidden h-10 w-10 inline-flex items-center justify-center rounded-xl border border-slate-200 text-navy" aria-label="Open menu" aria-expanded="false">
           <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
       </div>
     </nav>
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-navy-900/5 bg-paper px-5 pb-5 pt-2 space-y-1 text-sm font-medium text-slate-600">
-      <a href="#about" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">About</a>
-      <a href="#achievements" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">Impact</a>
-      <a href="#experience" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">Experience</a>
-      <a href="#skills" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">Expertise</a>
-      <a href="#projects" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">Projects</a>
-      <a href="#contact" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50 hover:text-navy">Contact</a>
-      <a href="resume.pdf" download class="block rounded-lg px-3 py-2.5 text-amber-600 font-semibold">Download Resume ↓</a>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-5 pb-4 pt-2 space-y-1 text-sm font-semibold text-slate-600">
+      <a href="#about" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">About</a>
+      <a href="#achievements" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">Achievements</a>
+      <a href="#experience" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">Experience</a>
+      <a href="#skills" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">Skills</a>
+      <a href="#projects" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">Projects</a>
+      <a href="#contact" class="block rounded-lg px-3 py-2.5 hover:bg-navy-50">Contact</a>
+      <a href="resume.pdf" download class="block rounded-lg px-3 py-2.5 text-amber font-bold">Download Resume ↓</a>
     </div>
   </header>
 
   <main id="home">
 
     <!-- ======================= HERO ======================= -->
-    <section class="relative overflow-hidden">
-      <div class="absolute inset-0 hero-bg" aria-hidden="true"></div>
-      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 pt-36 sm:pt-44 pb-20 sm:pb-24">
-        <div class="grid lg:grid-cols-[1.35fr,1fr] gap-14 lg:gap-20 items-center">
+    <section class="hero-bg relative overflow-hidden">
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 pt-36 pb-20 sm:pt-44 sm:pb-28">
+        <div class="grid lg:grid-cols-[1.35fr,1fr] gap-16 items-center">
 
           <div>
-            <p class="reveal eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Lead E-Commerce · Account Management</p>
+            <p class="reveal inline-flex items-center gap-2.5 rounded-full border border-navy-100 bg-white px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] uppercase text-navy shadow-soft">
+              <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber opacity-60"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-amber"></span></span>
+              Lead E-Commerce · GreenHonchos
+            </p>
 
-            <h1 class="reveal reveal-delay-1 mt-6 font-display font-semibold text-navy leading-[1.04] text-[2.9rem] sm:text-[4.4rem] tracking-[-0.02em]">
-              I help premium D2C brands<br class="hidden sm:block" />
-              turn operations into <em class="not-italic relative whitespace-nowrap">growth.<svg class="absolute -bottom-2 left-0 w-full" height="10" viewBox="0 0 220 10" fill="none" preserveAspectRatio="none" aria-hidden="true"><path d="M3 7.5C60 2.5 140 2 217 6" stroke="#F59E0B" stroke-width="4.5" stroke-linecap="round"/></svg></em>
+            <h1 class="reveal reveal-delay-1 display mt-7 text-[2.6rem] leading-[1.08] sm:text-[3.4rem] font-semibold text-navy">
+              I help premium brands<br class="hidden sm:block" />
+              turn <span class="whitespace-nowrap">e-commerce</span> into<br class="hidden sm:block" />
+              <span class="flourish whitespace-nowrap">measurable growth.</span>
             </h1>
 
             <p class="reveal reveal-delay-2 mt-7 max-w-xl text-lg leading-relaxed text-slate-600">
-              I'm <span class="font-semibold text-navy">Saurabh Pandey</span> — 5+ years leading account management, operational governance, and AI-driven automation for <span class="font-semibold text-navy">20+ premium brands</span> including Philips, Ray-Ban, Liberty, Campus &amp; Forever New at GreenHonchos.
+              Saurabh Pandey — account management &amp; e-commerce operations leader with <strong class="text-navy font-semibold">5+ years</strong> across <strong class="text-navy font-semibold">20+ premium D2C &amp; GCC brands</strong>, blending client leadership, operational rigor, and AI-driven automation.
             </p>
 
             <div class="reveal reveal-delay-3 mt-9 flex flex-wrap items-center gap-3">
@@ -210,67 +205,74 @@
                 Download Resume
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
               </a>
-              <a href="https://www.linkedin.com/in/saurabh-pandey-65b7161ab" target="_blank" rel="noopener" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-navy-900/15 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
+              <a href="https://www.linkedin.com/in/saurabh-pandey-65b7161ab" target="_blank" rel="noopener" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
                 <svg class="h-4 w-4 text-royal" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
                 LinkedIn
               </a>
-              <a href="https://github.com/saurabhpandey-1212" target="_blank" rel="noopener" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-navy-900/15 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
+              <a href="https://github.com/saurabhpandey-1212" target="_blank" rel="noopener" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
                 <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49A10.05 10.05 0 0022 12.25C22 6.58 17.52 2 12 2z"/></svg>
                 GitHub
               </a>
-              <a href="mailto:saurabhpandey1212@gmail.com" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-navy-900/15 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
+              <a href="mailto:saurabhpandey1212@gmail.com" class="btn-ghost inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-navy">
                 <svg class="h-4 w-4 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 Email
               </a>
             </div>
 
-            <!-- Quick stats -->
-            <dl class="reveal reveal-delay-3 mt-12 grid grid-cols-3 max-w-md gap-6 border-t border-navy-900/10 pt-7">
+            <!-- Hero stats -->
+            <dl class="reveal reveal-delay-3 mt-12 grid grid-cols-3 max-w-md gap-6 border-t border-slate-200 pt-7">
               <div>
-                <dt class="text-[11px] uppercase tracking-[0.14em] text-slate-400 font-medium">Experience</dt>
-                <dd class="mt-1 font-display text-3xl font-semibold text-navy">5+ <span class="text-base text-slate-400 font-sans font-medium">yrs</span></dd>
+                <dt class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Experience</dt>
+                <dd class="mt-1 display text-3xl font-semibold text-navy"><span class="counter" data-target="5">0</span>+ <span class="text-base font-medium text-slate-500">yrs</span></dd>
               </div>
               <div>
-                <dt class="text-[11px] uppercase tracking-[0.14em] text-slate-400 font-medium">Brands</dt>
-                <dd class="mt-1 font-display text-3xl font-semibold text-navy">20<span class="text-amber">+</span></dd>
+                <dt class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Brands</dt>
+                <dd class="mt-1 display text-3xl font-semibold text-navy"><span class="counter" data-target="20">0</span>+</dd>
               </div>
               <div>
-                <dt class="text-[11px] uppercase tracking-[0.14em] text-slate-400 font-medium">Efficiency</dt>
-                <dd class="mt-1 font-display text-3xl font-semibold text-navy">40<span class="text-amber">%</span><span class="sr-only"> improvement</span></dd>
+                <dt class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Efficiency</dt>
+                <dd class="mt-1 display text-3xl font-semibold text-navy">+<span class="counter" data-target="40">0</span>%</dd>
               </div>
             </dl>
           </div>
 
           <!-- Photo -->
-          <div class="reveal reveal-delay-2 relative mx-auto lg:mx-0 lg:justify-self-end w-72 sm:w-80 mt-6 lg:mt-0">
-            <div class="photo-frame relative">
-              <img src="images/profile.jpg" alt="Portrait of Saurabh Pandey" width="719" height="781" fetchpriority="high"
-                   class="relative rounded-3xl w-full aspect-[719/781] object-cover shadow-lift bg-navy-100" />
-              <div class="absolute -bottom-5 -left-5 sm:-left-9 rounded-2xl bg-white shadow-lift px-5 py-4 border border-navy-900/5">
-                <p class="text-[11px] uppercase tracking-[0.14em] text-slate-400 font-medium">Currently</p>
-                <p class="mt-0.5 text-sm font-semibold text-navy">Lead E-Commerce, GreenHonchos</p>
-              </div>
-            </div>
+          <div class="reveal reveal-delay-2 relative mx-auto lg:mx-0 w-72 sm:w-80">
+            <div class="absolute -top-6 -left-6 h-28 w-28 dot-grid rounded-2xl" aria-hidden="true"></div>
+            <div class="absolute -bottom-8 -right-8 h-40 w-40 rounded-3xl bg-amber-100/70" aria-hidden="true"></div>
+            <figure class="relative">
+              <div class="absolute inset-0 translate-x-3.5 translate-y-3.5 rounded-[1.75rem] border-2 border-navy/80" aria-hidden="true"></div>
+              <img src="images/profile.jpg" alt="Saurabh Pandey — professional portrait" width="719" height="781"
+                   class="relative rounded-[1.75rem] w-full object-cover shadow-navy bg-navy-100" fetchpriority="high" />
+              <figcaption class="absolute -bottom-5 left-6 right-6 rounded-2xl bg-white/95 backdrop-blur px-5 py-3.5 shadow-lift border border-slate-100 flex items-center justify-between">
+                <div>
+                  <p class="text-sm font-bold text-navy">Saurabh Pandey</p>
+                  <p class="text-[11.5px] text-slate-500 font-medium">Noida, India</p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-100 px-3 py-1 text-[11px] font-bold text-amber">
+                  <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.4 4.7 17l1-5.8L1.5 7.2l5.9-.9L10 1z"/></svg>
+                  Best Performer
+                </span>
+              </figcaption>
+            </figure>
           </div>
         </div>
 
         <!-- Brand strip -->
         <div class="reveal mt-24">
-          <p class="text-[11px] uppercase tracking-[0.22em] text-slate-400 font-semibold mb-5">Trusted with brands like</p>
-          <p class="flex flex-wrap gap-x-8 gap-y-3 font-display text-lg sm:text-xl text-slate-400">
+          <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-slate-400 mb-4">Trusted to manage brands like</p>
+          <div class="flex flex-wrap gap-x-8 gap-y-3 display text-lg sm:text-xl text-slate-400 font-medium">
             <span class="hover:text-navy transition-colors">Philips</span>
             <span class="hover:text-navy transition-colors">Ray-Ban</span>
             <span class="hover:text-navy transition-colors">Liberty</span>
             <span class="hover:text-navy transition-colors">Campus</span>
             <span class="hover:text-navy transition-colors">Forever New</span>
             <span class="hover:text-navy transition-colors">Siyaram's</span>
-            <span class="hover:text-navy transition-colors">Lal's Group</span>
             <span class="hover:text-navy transition-colors">Spykar</span>
             <span class="hover:text-navy transition-colors">Hidesign</span>
             <span class="hover:text-navy transition-colors">Da Milano</span>
-            <span class="hover:text-navy transition-colors">One8 Select</span>
-            <span class="text-amber-600">+ more</span>
-          </p>
+            <span class="hover:text-navy transition-colors">Lal's Group</span>
+          </div>
         </div>
       </div>
     </section>
@@ -279,461 +281,495 @@
     <section id="about" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
       <div class="grid lg:grid-cols-[1fr,1.6fr] gap-12 lg:gap-20">
         <div class="reveal">
-          <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">About</p>
-          <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold text-navy leading-[1.12] tracking-[-0.01em]">From spreadsheets to strategy.</h2>
-
-          <!-- Promotion ladder -->
-          <div class="mt-10 space-y-0">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400 font-semibold mb-4">The path — 4 promotions in 3 years</p>
-            <ol class="relative border-l-2 border-navy-100 space-y-5 pl-5">
-              <li class="relative"><span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-amber"></span><p class="text-sm font-semibold text-navy">Lead E-Commerce</p><p class="text-xs text-slate-400">2026 — Present</p></li>
-              <li class="relative"><span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-royal"></span><p class="text-sm font-semibold text-navy">Associate Lead</p><p class="text-xs text-slate-400">2025</p></li>
-              <li class="relative"><span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-royal/70"></span><p class="text-sm font-semibold text-navy">Senior Executive</p><p class="text-xs text-slate-400">2024</p></li>
-              <li class="relative"><span class="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-royal/40"></span><p class="text-sm font-semibold text-navy">Operations Executive</p><p class="text-xs text-slate-400">2022</p></li>
-            </ol>
-          </div>
+          <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">About</p>
+          <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">From spreadsheets<br/>to strategy.</h2>
+          <div class="mt-6 h-1 w-16 rounded-full bg-amber"></div>
         </div>
-
-        <div class="reveal reveal-delay-1 space-y-6 text-[17px] leading-[1.85] text-slate-600 lg:pt-16">
+        <div class="reveal reveal-delay-1 space-y-6 text-[17px] leading-relaxed">
           <p>
-            My career began in <strong class="font-semibold text-navy">MIS and data</strong> — building reports for banking clients and training systems for government programs. That foundation taught me something most account managers learn late: <span class="font-medium text-royal-600">the numbers always tell the story first.</span>
+            My career began in <strong class="text-navy font-semibold">MIS and data</strong> — building reports for banking clients, then managing information systems for government programs. That foundation taught me something most account managers learn late: <em class="text-navy">the numbers always tell the story first.</em>
           </p>
           <p>
-            At <strong class="font-semibold text-navy">GreenHonchos</strong>, I turned that data instinct into business impact — starting as an MIS Operations Executive designing dashboards for Sales, Performance Marketing, SEO, and Marketplace teams, and earning four promotions in three years to lead e-commerce delivery and account management for a portfolio of 20+ premium D2C and GCC brands.
+            At <strong class="text-navy font-semibold">GreenHonchos</strong>, I turned that data instinct into business impact — starting as an MIS Operations Executive designing dashboards for Sales, Performance Marketing, SEO, and Marketplace teams, then earning <strong class="text-navy font-semibold">four promotions in three years</strong> to lead e-commerce delivery and account management for a portfolio of 20+ premium D2C and GCC brands.
           </p>
           <p>
-            Today I operate at the intersection of <strong class="font-semibold text-navy">client relationships, operations, and AI automation</strong> — running business reviews with brand leadership, orchestrating platform integrations across Technology, Marketing, and Supply Chain, and building Claude Code &amp; Codex-powered workflows that have cut operational effort by roughly 40%.
+            Today I operate at the intersection of <strong class="text-navy font-semibold">client relationships, operations, and AI automation</strong> — running business reviews with brand leadership, orchestrating platform integrations across Technology, Marketing, and Supply Chain, and building Claude Code &amp; Codex-powered workflows that have cut operational effort by roughly 40%.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ======================= KEY ACHIEVEMENTS (navy impact band) ======================= -->
-    <section id="achievements" class="relative bg-navy text-white overflow-hidden">
-      <div class="absolute inset-0 opacity-[0.06]" style="background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);background-size:52px 52px;" aria-hidden="true"></div>
+    <!-- ======================= KEY ACHIEVEMENTS (navy band) ======================= -->
+    <section id="achievements" class="relative bg-navy-900 text-white overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.06] dot-grid" aria-hidden="true" style="background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px);"></div>
       <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
         <div class="reveal max-w-2xl">
-          <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-amber">Key Achievements</p>
-          <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold leading-[1.12] tracking-[-0.01em]">Measurable outcomes, not just responsibilities.</h2>
+          <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-amber">Key Achievements</p>
+          <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-white">Business impact, in numbers.</h2>
         </div>
 
-        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
-          <div class="reveal border-t-2 border-amber/70 pt-5">
-            <p class="font-display text-5xl font-semibold text-white"><span class="counter" data-target="40">0</span><span class="text-amber">%</span></p>
-            <p class="mt-3 text-sm font-semibold text-white">Operational efficiency improved</p>
-            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">Through workflow optimization, automation initiatives, and SOP standardization across 20+ accounts.</p>
+        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
+          <div class="reveal bg-navy-900 p-8">
+            <p class="display text-5xl font-semibold text-amber">~<span class="counter" data-target="40">0</span>%</p>
+            <p class="mt-3 text-sm font-semibold text-white">Operational efficiency gained</p>
+            <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Through workflow optimization, AI automation, SOP standardization &amp; process improvement.</p>
           </div>
-          <div class="reveal reveal-delay-1 border-t-2 border-amber/70 pt-5">
-            <p class="font-display text-5xl font-semibold text-white"><span class="counter" data-target="50">0</span><span class="text-amber">%</span></p>
+          <div class="reveal reveal-delay-1 bg-navy-900 p-8">
+            <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="50">0</span>%</p>
             <p class="mt-3 text-sm font-semibold text-white">Faster report generation</p>
-            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">Cross-functional reporting automation cut generation time 40–50% while improving data accuracy.</p>
+            <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Cross-functional reporting automation cut generation time 40–50% while improving accuracy.</p>
           </div>
-          <div class="reveal reveal-delay-2 border-t-2 border-amber/70 pt-5">
-            <p class="font-display text-5xl font-semibold text-white"><span class="counter" data-target="20">0</span><span class="text-amber">+</span></p>
-            <p class="mt-3 text-sm font-semibold text-white">Premium brands led</p>
-            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">End-to-end delivery and governance for D2C &amp; GCC portfolios — as primary stakeholder liaison.</p>
+          <div class="reveal reveal-delay-2 bg-navy-900 p-8">
+            <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="4">0</span></p>
+            <p class="mt-3 text-sm font-semibold text-white">Promotions in 3 years</p>
+            <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Executive → Senior Executive → Associate Lead → Lead, on consistent performance.</p>
           </div>
-          <div class="reveal reveal-delay-3 border-t-2 border-amber/70 pt-5">
-            <p class="font-display text-5xl font-semibold text-white"><span class="counter" data-target="8">0</span></p>
+          <div class="reveal reveal-delay-3 bg-navy-900 p-8">
+            <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="8">0</span></p>
             <p class="mt-3 text-sm font-semibold text-white">One-time projects delivered</p>
-            <p class="mt-1.5 text-sm text-white/60 leading-relaxed">Delivered alongside regular S&amp;M engagements, spanning integrations, audits, and rollouts.</p>
+            <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Delivered alongside regular S&amp;M engagements across the brand portfolio.</p>
           </div>
         </div>
 
-        <div class="reveal mt-14 flex flex-wrap gap-3">
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-[13px] font-medium"><svg class="h-3.5 w-3.5 text-amber" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.4l-4.8 2.5.9-5.4L2.2 6.7l5.4-.8L10 1z"/></svg>Best Performer — R&amp;R, Sep 2023</span>
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-[13px] font-medium"><svg class="h-3.5 w-3.5 text-amber" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.4l-4.8 2.5.9-5.4L2.2 6.7l5.4-.8L10 1z"/></svg>4 promotions in 3 years</span>
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-[13px] font-medium"><svg class="h-3.5 w-3.5 text-amber" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.4l-4.8 2.5.9-5.4L2.2 6.7l5.4-.8L10 1z"/></svg>Written appreciation — GreenHonchos CEO &amp; Gokwik team</span>
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-[13px] font-medium"><svg class="h-3.5 w-3.5 text-amber" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 13.4l-4.8 2.5.9-5.4L2.2 6.7l5.4-.8L10 1z"/></svg>Org-wide AI automation for reporting &amp; operations</span>
+        <div class="mt-10 grid sm:grid-cols-3 gap-4">
+          <div class="reveal flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber/15 text-amber"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.4 4.7 17l1-5.8L1.5 7.2l5.9-.9L10 1z"/></svg></span>
+            <p class="text-[13.5px] leading-relaxed text-slate-200"><strong class="text-white">Best Performer — R&amp;R award (Sep 2023)</strong> for consistently exceeding expectations.</p>
+          </div>
+          <div class="reveal reveal-delay-1 flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber/15 text-amber"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+            <p class="text-[13.5px] leading-relaxed text-slate-200"><strong class="text-white">AI automation pioneer</strong> — Claude Code &amp; Codex workflows for reporting, dashboards, content &amp; operations.</p>
+          </div>
+          <div class="reveal reveal-delay-2 flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-5">
+            <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber/15 text-amber"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z"/></svg></span>
+            <p class="text-[13.5px] leading-relaxed text-slate-200"><strong class="text-white">Recognized by leadership</strong> — written appreciation from GreenHonchos' CEO and the Gokwik team.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ======================= EXPERIENCE ======================= -->
-    <section id="experience" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-      <div class="reveal max-w-2xl">
-        <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Experience</p>
-        <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold text-navy leading-[1.12] tracking-[-0.01em]">Six roles. One trajectory: upward.</h2>
-      </div>
+    <section id="experience" class="bg-[#F7FAFD] py-24 sm:py-28">
+      <div class="max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Professional Experience</p>
+          <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">A track record of <span class="flourish">promotion &amp; impact.</span></h2>
+        </div>
 
-      <div class="mt-16 relative">
-        <div class="tl-line absolute left-[7px] sm:left-1/2 sm:-translate-x-1/2 top-1 bottom-0 w-[2px]" aria-hidden="true"></div>
-        <ol class="space-y-14">
+        <div class="mt-16 relative">
+          <div class="tl-line absolute left-[15px] sm:left-1/2 sm:-translate-x-px top-1 bottom-1 w-[2px] rounded-full" aria-hidden="true"></div>
+          <ol class="space-y-14">
 
-          <!-- 1 Lead -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-amber" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:text-right sm:pr-14">
-              <span class="inline-flex items-center rounded-full bg-amber-100 text-amber-600 text-[12px] font-bold px-3.5 py-1 tracking-wide">JAN 2026 — PRESENT</span>
-              <h3 class="mt-3 font-display text-2xl font-semibold text-navy">Lead E-Commerce · Account Management</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">GreenHonchos · Noida</p>
-              <p class="mt-4 hidden sm:block text-sm text-slate-500 leading-relaxed">The current chapter — owning delivery, governance, and growth for the full brand portfolio.</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0">
-              <div class="lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-7 text-[14.5px] leading-relaxed text-slate-600 space-y-3">
-                <p><span class="font-semibold text-navy">End-to-end delivery for 20+ premium D2C &amp; GCC brands</span> — Philips, Ray-Ban, Liberty, Campus, Forever New, Siyaram's, Lal's Group — as primary stakeholder liaison.</p>
-                <p>Improved operational efficiency by <span class="font-semibold text-royal-600">~40%</span> via workflow optimization, automation, and SOP standardization.</p>
-                <p>Built AI-powered automation with <span class="font-semibold text-navy">Claude Code &amp; Codex</span> for reporting, content generation, and business analysis.</p>
-                <p>Drive NSV improvement and leakage control; mentor Catalog, MIS &amp; Customer Support teams on SLA compliance and reporting accuracy.</p>
+            <!-- Lead -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-royal border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-0 sm:text-right sm:pr-4">
+                <span class="inline-flex items-center rounded-full bg-amber-50 border border-amber-100 px-3.5 py-1 text-[11.5px] font-bold text-amber">Current · Jan 2026 — Present</span>
+                <h3 class="display mt-3 text-2xl font-semibold text-navy">Lead E-Commerce · Account Management</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">GreenHonchos</p>
+                <p class="mt-4 hidden sm:block text-[13.5px] leading-relaxed text-slate-500">Owning delivery, governance and client leadership for the full premium brand portfolio.</p>
               </div>
-            </div>
-          </li>
-
-          <!-- 2 Associate Lead (alternate side) -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-royal" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:col-start-2 sm:row-start-1 sm:pl-14">
-              <span class="inline-flex items-center rounded-full bg-royal-100 text-royal-600 text-[12px] font-bold px-3.5 py-1 tracking-wide">APR 2025 — DEC 2025</span>
-              <h3 class="mt-3 font-display text-2xl font-semibold text-navy">Associate Lead E-Commerce</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">GreenHonchos · Account Management</p>
-              <p class="mt-4 hidden sm:block text-sm text-slate-500 leading-relaxed">Single point of contact for key accounts across Technology, Sales, and Leakage Control.</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0 sm:col-start-1 sm:row-start-1 sm:pr-14">
-              <div class="lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-7 text-[14.5px] leading-relaxed text-slate-600 space-y-3">
-                <p>Coordinated integrations, UAT, and training for <span class="font-semibold text-navy">OMS, RMA, Checkout &amp; catalog systems</span>.</p>
-                <p>Implemented brand retention strategies that strengthened long-term partnerships and satisfaction.</p>
-                <p>Safeguarded website functionality and uptime; managed accurate catalogs, listings, and pricing for improved visibility and sales.</p>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-4">
+                <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-7 space-y-3 text-[14px] leading-relaxed">
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>End-to-end e-commerce delivery &amp; operational governance for <strong class="text-navy">20+ premium D2C &amp; GCC brands</strong> — Philips, Ray-Ban, Liberty, Campus, Forever New, Siyaram's, Lal's Group.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Improved operational efficiency by <strong class="text-navy">~40%</strong> via automation, SOPs &amp; workflow optimization.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Built <strong class="text-navy">AI-powered automation</strong> (Claude Code, Codex) for reporting, content &amp; business analysis.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Drive NSV improvement &amp; leakage control; mentor Catalog, MIS &amp; Customer Support teams on SLA compliance and scalability.</span></p>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
 
-          <!-- 3 Sr Ops -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-royal/80" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:text-right sm:pr-14">
-              <span class="inline-flex items-center rounded-full bg-royal-100 text-royal-600 text-[12px] font-bold px-3.5 py-1 tracking-wide">JAN 2024 — MAR 2025</span>
-              <h3 class="mt-3 font-display text-2xl font-semibold text-navy">Senior Operations Executive</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">GreenHonchos</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0">
-              <div class="lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-7 text-[14.5px] leading-relaxed text-slate-600 space-y-3">
-                <p>Automated reporting cross-functionally — cutting generation time by <span class="font-semibold text-royal-600">40–50%</span> and enhancing data accuracy.</p>
-                <p>Implemented rigorous leakage-control measures with audits and UAT to minimize inefficiencies and financial losses.</p>
-                <p>Rolled out <span class="font-semibold text-navy">Zoho Projects</span> at the organizational level.</p>
+            <!-- Associate Lead (alternate side on desktop) -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-royal border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-4 sm:col-start-2 sm:row-start-1">
+                <span class="inline-flex items-center rounded-full bg-royal-50 border border-royal-100 px-3.5 py-1 text-[11.5px] font-bold text-royal-600">Apr 2025 — Dec 2025</span>
+                <h3 class="display mt-3 text-2xl font-semibold text-navy">Associate Lead E-Commerce</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">GreenHonchos · Account Management</p>
+                <p class="mt-4 hidden sm:block text-[13.5px] leading-relaxed text-slate-500">Single point of contact for key D2C accounts across Technology, Sales &amp; Leakage Control.</p>
               </div>
-            </div>
-          </li>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-0 sm:pr-4 sm:col-start-1 sm:row-start-1">
+                <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-7 space-y-3 text-[14px] leading-relaxed">
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Coordinated integrations, <strong class="text-navy">UAT &amp; training</strong> for OMS, RMA, Checkout and catalog systems.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Implemented <strong class="text-navy">brand retention strategies</strong> strengthening long-term partnerships.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Safeguarded website uptime, resolved technical issues, and kept catalogs &amp; pricing accurate for improved visibility and sales.</span></p>
+                </div>
+              </div>
+            </li>
 
-          <!-- 4 Ops Exec (alternate) -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-royal/60" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:col-start-2 sm:row-start-1 sm:pl-14">
-              <span class="inline-flex items-center rounded-full bg-royal-100 text-royal-600 text-[12px] font-bold px-3.5 py-1 tracking-wide">NOV 2022 — DEC 2023</span>
-              <h3 class="mt-3 font-display text-2xl font-semibold text-navy">Operations Executive (MIS)</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">GreenHonchos · E-Commerce</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0 sm:col-start-1 sm:row-start-1 sm:pr-14">
-              <div class="lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-7 text-[14.5px] leading-relaxed text-slate-600 space-y-3">
-                <p>Designed interactive dashboards for <span class="font-semibold text-navy">Sales, Performance Marketing, SEO, Social, Marketplace &amp; Operations</span> in Looker Studio and Power BI.</p>
-                <p>Produced P&amp;L reports for premium D2C brands; conducted checkout and order-flow audits for operational efficiency.</p>
+            <!-- Sr Ops -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-royal/70 border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-0 sm:text-right sm:pr-4">
+                <span class="inline-flex items-center rounded-full bg-royal-50 border border-royal-100 px-3.5 py-1 text-[11.5px] font-bold text-royal-600">Jan 2024 — Mar 2025</span>
+                <h3 class="display mt-3 text-2xl font-semibold text-navy">Senior Operations Executive</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">GreenHonchos</p>
               </div>
-            </div>
-          </li>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-4">
+                <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-7 space-y-3 text-[14px] leading-relaxed">
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Automated reporting cross-functionally — <strong class="text-navy">40–50% faster generation</strong> with better accuracy.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Rigorous <strong class="text-navy">leakage-control</strong> measures, audits &amp; UAT minimizing inefficiencies and financial losses.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Implemented <strong class="text-navy">Zoho Projects</strong> at the organizational level.</span></p>
+                </div>
+              </div>
+            </li>
 
-          <!-- 5 REPL -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-slate-300" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:text-right sm:pr-14">
-              <span class="inline-flex items-center rounded-full bg-navy-50 text-slate-500 text-[12px] font-bold px-3.5 py-1 tracking-wide">SEP 2021 — AUG 2022</span>
-              <h3 class="mt-3 font-display text-xl font-semibold text-navy">MIS &amp; Training Support</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">Rudrabhishek Enterprises Ltd. (REPL)</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0">
-              <div class="rounded-2xl border border-dashed border-navy-900/15 p-6 text-[14.5px] leading-relaxed text-slate-500">
-                Managed MIS tracking for program participants with regulatory compliance and government reporting; coordinated monthly reviews with government officials.
+            <!-- Ops Exec -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-royal/60 border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-4 sm:col-start-2 sm:row-start-1">
+                <span class="inline-flex items-center rounded-full bg-royal-50 border border-royal-100 px-3.5 py-1 text-[11.5px] font-bold text-royal-600">Nov 2022 — Dec 2023</span>
+                <h3 class="display mt-3 text-2xl font-semibold text-navy">Operations Executive (MIS)</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">GreenHonchos · E-Commerce</p>
               </div>
-            </div>
-          </li>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-0 sm:pr-4 sm:col-start-1 sm:row-start-1">
+                <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-7 space-y-3 text-[14px] leading-relaxed">
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Designed interactive dashboards for <strong class="text-navy">Sales, Performance Marketing, SEO, Social, Marketplace &amp; Operations</strong> in Looker Studio and Power BI.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Produced <strong class="text-navy">P&amp;L reports</strong> for premium D2C brands enabling data-driven decisions.</span></p>
+                  <p class="flex gap-3"><span class="text-amber font-bold">→</span><span>Comprehensive checkout &amp; order-flow audits ensuring operational efficiency.</span></p>
+                </div>
+              </div>
+            </li>
 
-          <!-- 6 Corpus -->
-          <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-14">
-            <span class="tl-dot absolute left-[7px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3 w-3 rounded-full bg-slate-300" aria-hidden="true"></span>
-            <div class="pl-8 sm:pl-0 sm:col-start-2 sm:row-start-1 sm:pl-14">
-              <span class="inline-flex items-center rounded-full bg-navy-50 text-slate-500 text-[12px] font-bold px-3.5 py-1 tracking-wide">OCT 2018 — SEP 2019</span>
-              <h3 class="mt-3 font-display text-xl font-semibold text-navy">MIS Executive</h3>
-              <p class="mt-1 text-sm font-medium text-slate-400">Corpus Data Information Services</p>
-            </div>
-            <div class="mt-5 sm:mt-0 pl-8 sm:pl-0 sm:col-start-1 sm:row-start-1 sm:pr-14">
-              <div class="rounded-2xl border border-dashed border-navy-900/15 p-6 text-[14.5px] leading-relaxed text-slate-500">
-                Processed banking data into actionable reports for <span class="font-medium text-navy">HDFC, ICICI, Axis &amp; IndusInd Bank</span>; handled client inquiries and coordinated field operations.
+            <!-- REPL -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-slate-300 border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-0 sm:text-right sm:pr-4">
+                <span class="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-3.5 py-1 text-[11.5px] font-bold text-slate-500">Sep 2021 — Aug 2022</span>
+                <h3 class="display mt-3 text-xl font-semibold text-navy">MIS &amp; Training Support</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">Rudrabhishek Enterprises Ltd. (REPL)</p>
               </div>
-            </div>
-          </li>
-        </ol>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-4">
+                <div class="rounded-2xl border border-slate-200/80 bg-white/60 p-6 text-[14px] leading-relaxed text-slate-500">
+                  Managed MIS tracking for program participants with regulatory compliance and government reporting; coordinated monthly reviews with government officials.
+                </div>
+              </div>
+            </li>
+
+            <!-- Corpus -->
+            <li class="reveal relative sm:grid sm:grid-cols-2 sm:gap-16">
+              <span class="tl-dot absolute left-[15px] sm:left-1/2 -translate-x-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-slate-300 border-2 border-white" aria-hidden="true"></span>
+              <div class="pl-12 sm:pl-4 sm:col-start-2 sm:row-start-1">
+                <span class="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-3.5 py-1 text-[11.5px] font-bold text-slate-500">Oct 2018 — Sep 2019</span>
+                <h3 class="display mt-3 text-xl font-semibold text-navy">MIS Executive</h3>
+                <p class="mt-1 text-sm font-semibold text-slate-500">Corpus Data Information Services</p>
+              </div>
+              <div class="mt-5 sm:mt-0 pl-12 sm:pl-0 sm:pr-4 sm:col-start-1 sm:row-start-1">
+                <div class="rounded-2xl border border-slate-200/80 bg-white/60 p-6 text-[14px] leading-relaxed text-slate-500">
+                  Processed banking data into actionable reports for HDFC, ICICI, Axis &amp; IndusInd Bank; handled client queries and coordinated field operations.
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
     </section>
 
-    <!-- ======================= EXPERTISE / SKILLS ======================= -->
-    <section id="skills" class="bg-navy-50/70 border-y border-navy-900/5">
-      <div class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <div class="reveal max-w-2xl">
-          <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Expertise</p>
-          <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold text-navy leading-[1.12] tracking-[-0.01em]">A rare blend: relationships, operations, and AI.</h2>
+    <!-- ======================= SKILLS ======================= -->
+    <section id="skills" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+      <div class="reveal max-w-2xl">
+        <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Skills &amp; Expertise</p>
+        <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">What I bring to the table.</h2>
+      </div>
+
+      <div class="mt-14 grid md:grid-cols-2 gap-x-14 gap-y-12">
+        <!-- Leadership & Accounts -->
+        <div class="reveal">
+          <div class="flex items-center gap-3 pb-4 border-b-2 border-navy/10">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z"/></svg></span>
+            <div>
+              <h3 class="display text-xl font-semibold text-navy">Leadership &amp; Account Management</h3>
+              <p class="text-[12.5px] text-slate-400 font-medium">Client partnership &amp; team growth</p>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Key Account Management</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Stakeholder Management</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Business Reviews</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Client Retention</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Team Mentoring</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Cross-functional Collaboration</span>
+          </div>
         </div>
 
-        <div class="mt-14 grid md:grid-cols-2 gap-x-16 gap-y-12">
-
-          <div class="reveal">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">Leadership &amp; Account Management</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">Primary liaison for brand leadership — business reviews, escalations, retention, and roadmaps. Mentor to Catalog, MIS, and Support teams.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Key Account Management</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Stakeholder Management</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Business Reviews</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Team Mentoring</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Client Retention</span>
+        <!-- E-commerce & Marketplace -->
+        <div class="reveal reveal-delay-1">
+          <div class="flex items-center gap-3 pb-4 border-b-2 border-navy/10">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-royal text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 4.6A1 1 0 005.6 19H19M9 22a1 1 0 100-2 1 1 0 000 2zm9 0a1 1 0 100-2 1 1 0 000 2z"/></svg></span>
+            <div>
+              <h3 class="display text-xl font-semibold text-navy">E-Commerce &amp; Marketplace</h3>
+              <p class="text-[12.5px] text-slate-400 font-medium">D2C platforms &amp; marketplace operations</p>
             </div>
           </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">D2C Platform Operations</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">OMS / RMA / Checkout Integrations</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">UAT Management</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Catalog &amp; Pricing</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Marketplace Performance</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">CRO</span>
+          </div>
+        </div>
 
-          <div class="reveal reveal-delay-1">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-royal text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 4.6A1 1 0 005.6 19H19M9 22a1 1 0 100-2 1 1 0 000 2zm9 0a1 1 0 100-2 1 1 0 000 2z"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">E-Commerce &amp; Marketplace</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">Full-stack D2C operations — storefronts, checkout, order management, returns, couriers, and marketplace channels.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Shopify</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Magento</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Kartmax</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Unicommerce</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Gokwik</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Razorpay</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Shiprocket</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">RMA</span>
+        <!-- Operations -->
+        <div class="reveal">
+          <div class="flex items-center gap-3 pb-4 border-b-2 border-navy/10">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.3 4.3a1.7 1.7 0 013.4 0 1.7 1.7 0 002.6 1.1 1.7 1.7 0 012.4 2.4 1.7 1.7 0 001 2.5 1.7 1.7 0 010 3.4 1.7 1.7 0 00-1 2.5 1.7 1.7 0 01-2.4 2.4 1.7 1.7 0 00-2.6 1 1.7 1.7 0 01-3.4 0 1.7 1.7 0 00-2.5-1 1.7 1.7 0 01-2.4-2.4 1.7 1.7 0 00-1.1-2.5 1.7 1.7 0 010-3.4 1.7 1.7 0 001-2.5 1.7 1.7 0 012.5-2.4 1.7 1.7 0 002.5-1.1zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+            <div>
+              <h3 class="display text-xl font-semibold text-navy">Operations &amp; Governance</h3>
+              <p class="text-[12.5px] text-slate-400 font-medium">Process, compliance &amp; profitability</p>
             </div>
           </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Leakage Control</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">NSV Improvement</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">SOP Standardization</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Audits &amp; Compliance</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Agile Coordination</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Market &amp; Consumer Analysis</span>
+          </div>
+        </div>
 
-          <div class="reveal">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">AI &amp; Automation</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">AI-first operator — building agentic workflows that automate reporting, content generation, and business analysis end to end.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-amber/40 bg-amber-50 px-3.5 py-1.5 text-[13px] font-semibold text-amber-600">Claude Code</span>
-              <span class="chip rounded-full border border-amber/40 bg-amber-50 px-3.5 py-1.5 text-[13px] font-semibold text-amber-600">ChatGPT Codex</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">AI Workflow Automation</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Dashboard Automation</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">CRO</span>
+        <!-- AI, Data & CRM -->
+        <div class="reveal reveal-delay-1">
+          <div class="flex items-center gap-3 pb-4 border-b-2 border-navy/10">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-royal text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+            <div>
+              <h3 class="display text-xl font-semibold text-navy">AI, Automation, Data &amp; Analytics</h3>
+              <p class="text-[12.5px] text-slate-400 font-medium">Intelligence that compounds</p>
             </div>
           </div>
-
-          <div class="reveal reveal-delay-1">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-navy-700 text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19v-6m5.5 6V9m5.5 10v-8m5-7v15M3 21h18"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">Data, BI &amp; Analytics</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">Dashboards, P&amp;L reporting, and performance analysis that turn raw operational data into decisions.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Looker Studio</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Power BI</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">SQL</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Advanced Excel</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Business Intelligence</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">P&amp;L Reporting</span>
-            </div>
-          </div>
-
-          <div class="reveal">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-royal-600 text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.3 4.3a1.7 1.7 0 013.4 0 1.7 1.7 0 002.6 1.1 1.7 1.7 0 012.4 2.4 1.7 1.7 0 001 2.5 1.7 1.7 0 010 3.4 1.7 1.7 0 00-1 2.5 1.7 1.7 0 01-2.4 2.4 1.7 1.7 0 00-2.6 1 1.7 1.7 0 01-3.4 0 1.7 1.7 0 00-2.5-1 1.7 1.7 0 01-2.4-2.4 1.7 1.7 0 00-1.1-2.5 1.7 1.7 0 010-3.4 1.7 1.7 0 001-2.5 1.7 1.7 0 012.5-2.4 1.7 1.7 0 002.5-1.1zM15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">Operations &amp; Governance</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">Leakage control, NSV improvement, audits, and SOPs — the discipline that protects margin while brands scale.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Leakage Control</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">NSV Improvement</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">UAT Management</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">SOP Standardization</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Audits</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Consumer Behavior</span>
-            </div>
-          </div>
-
-          <div class="reveal reveal-delay-1">
-            <div class="flex items-center gap-3">
-              <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-500 text-white"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M9 8h6M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></span>
-              <h3 class="font-display text-xl font-semibold text-navy">Project Management</h3>
-            </div>
-            <p class="mt-3 text-[14.5px] text-slate-500 leading-relaxed">Agile coordination of platform enhancements, integrations, and cross-functional initiatives — from kickoff through UAT to launch.</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Agile Coordination</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Zoho Projects</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Asana</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Integration Delivery</span>
-              <span class="chip rounded-full border border-navy-900/12 bg-white px-3.5 py-1.5 text-[13px] font-medium text-slate-600">Training &amp; Enablement</span>
-            </div>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="chip rounded-full border border-amber-100 bg-amber-50 px-4 py-1.5 text-[13px] font-bold text-amber">AI Workflow Automation</span>
+            <span class="chip rounded-full border border-amber-100 bg-amber-50 px-4 py-1.5 text-[13px] font-bold text-amber">Claude Code</span>
+            <span class="chip rounded-full border border-amber-100 bg-amber-50 px-4 py-1.5 text-[13px] font-bold text-amber">ChatGPT Codex</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Business Intelligence</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Dashboard Automation</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">P&amp;L Reporting</span>
+            <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Performance Reporting</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ======================= PROJECTS ======================= -->
-    <section id="projects" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-      <div class="reveal max-w-2xl">
-        <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Selected Projects</p>
-        <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold text-navy leading-[1.12] tracking-[-0.01em]">Case studies in operational impact.</h2>
-      </div>
+    <section id="projects" class="bg-[#F7FAFD] py-24 sm:py-28">
+      <div class="max-w-6xl mx-auto px-5 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Selected Projects</p>
+          <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">Work with <span class="flourish">measurable outcomes.</span></h2>
+        </div>
 
-      <div class="mt-14 space-y-6">
-
-        <!-- P1 -->
-        <article class="reveal lift group rounded-3xl bg-white border border-navy-900/8 shadow-soft p-8 sm:p-10 grid lg:grid-cols-[auto,1fr,1.1fr] gap-8 items-start">
-          <span class="proj-num font-display text-6xl font-bold leading-none select-none" aria-hidden="true">01</span>
-          <div>
-            <span class="inline-flex items-center rounded-full bg-amber-100 text-amber-600 text-[11px] font-bold uppercase tracking-wider px-3 py-1">AI &amp; Automation</span>
-            <h3 class="mt-3 font-display text-2xl font-semibold text-navy leading-snug">AI-Powered Reporting &amp; Workflow Automation</h3>
-            <div class="mt-4 flex flex-wrap gap-2 text-[12.5px] text-slate-500">
-              <span class="rounded-md bg-navy-50 px-2.5 py-1">Claude Code</span><span class="rounded-md bg-navy-50 px-2.5 py-1">ChatGPT Codex</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Workflow Tools</span>
+        <div class="mt-14 grid md:grid-cols-2 gap-6">
+          <!-- P1 -->
+          <article class="reveal lift rounded-3xl bg-white border border-slate-200/80 shadow-soft overflow-hidden flex flex-col">
+            <div class="h-1.5 bg-gradient-to-r from-amber to-amber/40"></div>
+            <div class="p-8 flex flex-col grow">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="display text-[1.35rem] leading-snug font-semibold text-navy">AI-Powered Reporting &amp; Workflow Automation</h3>
+                <span class="shrink-0 rounded-full bg-amber-50 border border-amber-100 px-3 py-1 text-[11px] font-bold text-amber">AI</span>
+              </div>
+              <dl class="mt-5 space-y-3.5 text-[14px] leading-relaxed">
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Problem</dt><dd class="mt-0.5">Manual reporting and repetitive processes consumed hours of team effort daily across 20+ brand accounts.</dd></div>
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Solution</dt><dd class="mt-0.5">AI-driven pipelines with Claude Code, Codex and workflow tools for report generation, content creation and business analysis.</dd></div>
+                <div><dt class="font-bold text-amber text-[12px] uppercase tracking-wide">Impact</dt><dd class="mt-0.5 font-semibold text-navy">Report generation 40–50% faster; overall operational efficiency up ~40%.</dd></div>
+              </dl>
+              <div class="mt-auto pt-5 flex flex-wrap gap-2 text-[12px] font-semibold text-slate-500">
+                <span class="rounded-md bg-slate-100 px-2.5 py-1">Claude Code</span><span class="rounded-md bg-slate-100 px-2.5 py-1">ChatGPT Codex</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Workflow Automation</span>
+              </div>
             </div>
-          </div>
-          <div class="text-[14.5px] leading-relaxed text-slate-600 space-y-3 lg:border-l lg:border-navy-900/8 lg:pl-8">
-            <p><span class="font-semibold text-navy">Problem —</span> Manual reporting and repetitive processes consumed hours of team effort daily across 20+ brand accounts.</p>
-            <p><span class="font-semibold text-navy">Solution —</span> Designed AI-driven pipelines for report generation, content creation, and business analysis.</p>
-            <p><span class="font-semibold text-royal-600">Impact —</span> Report generation 40–50% faster; overall operational efficiency up ~40%.</p>
-          </div>
-        </article>
+          </article>
 
-        <!-- P2 -->
-        <article class="reveal lift group rounded-3xl bg-white border border-navy-900/8 shadow-soft p-8 sm:p-10 grid lg:grid-cols-[auto,1fr,1.1fr] gap-8 items-start">
-          <span class="proj-num font-display text-6xl font-bold leading-none select-none" aria-hidden="true">02</span>
-          <div>
-            <span class="inline-flex items-center rounded-full bg-royal-100 text-royal-600 text-[11px] font-bold uppercase tracking-wider px-3 py-1">Business Intelligence</span>
-            <h3 class="mt-3 font-display text-2xl font-semibold text-navy leading-snug">BI Dashboard Suite for D2C Brands</h3>
-            <div class="mt-4 flex flex-wrap gap-2 text-[12.5px] text-slate-500">
-              <span class="rounded-md bg-navy-50 px-2.5 py-1">Looker Studio</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Power BI</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Advanced Excel</span>
+          <!-- P2 -->
+          <article class="reveal reveal-delay-1 lift rounded-3xl bg-white border border-slate-200/80 shadow-soft overflow-hidden flex flex-col">
+            <div class="h-1.5 bg-gradient-to-r from-royal to-royal/40"></div>
+            <div class="p-8 flex flex-col grow">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="display text-[1.35rem] leading-snug font-semibold text-navy">Business Intelligence Dashboard Suite</h3>
+                <span class="shrink-0 rounded-full bg-royal-50 border border-royal-100 px-3 py-1 text-[11px] font-bold text-royal-600">Data</span>
+              </div>
+              <dl class="mt-5 space-y-3.5 text-[14px] leading-relaxed">
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Problem</dt><dd class="mt-0.5">Brand teams lacked a unified, real-time view of Sales, Performance Marketing, SEO, Social and Marketplace performance.</dd></div>
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Solution</dt><dd class="mt-0.5">Interactive dashboards and P&amp;L reports designed and shipped in Looker Studio and Power BI for premium D2C brands.</dd></div>
+                <div><dt class="font-bold text-amber text-[12px] uppercase tracking-wide">Impact</dt><dd class="mt-0.5 font-semibold text-navy">Data-driven decision-making enabled across every commercial function.</dd></div>
+              </dl>
+              <div class="mt-auto pt-5 flex flex-wrap gap-2 text-[12px] font-semibold text-slate-500">
+                <span class="rounded-md bg-slate-100 px-2.5 py-1">Looker Studio</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Power BI</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Advanced Excel</span>
+              </div>
             </div>
-          </div>
-          <div class="text-[14.5px] leading-relaxed text-slate-600 space-y-3 lg:border-l lg:border-navy-900/8 lg:pl-8">
-            <p><span class="font-semibold text-navy">Problem —</span> Brand teams lacked a unified, real-time view across Sales, Performance Marketing, SEO, Social, and Marketplace.</p>
-            <p><span class="font-semibold text-navy">Solution —</span> Designed and shipped interactive dashboards plus P&amp;L reports for premium D2C brands.</p>
-            <p><span class="font-semibold text-royal-600">Impact —</span> Data-driven decision-making enabled across every commercial function of the portfolio.</p>
-          </div>
-        </article>
+          </article>
 
-        <!-- P3 -->
-        <article class="reveal lift group rounded-3xl bg-white border border-navy-900/8 shadow-soft p-8 sm:p-10 grid lg:grid-cols-[auto,1fr,1.1fr] gap-8 items-start">
-          <span class="proj-num font-display text-6xl font-bold leading-none select-none" aria-hidden="true">03</span>
-          <div>
-            <span class="inline-flex items-center rounded-full bg-navy-100 text-navy text-[11px] font-bold uppercase tracking-wider px-3 py-1">Operations</span>
-            <h3 class="mt-3 font-display text-2xl font-semibold text-navy leading-snug">Leakage Control &amp; NSV Improvement Program</h3>
-            <div class="mt-4 flex flex-wrap gap-2 text-[12.5px] text-slate-500">
-              <span class="rounded-md bg-navy-50 px-2.5 py-1">Audit Frameworks</span><span class="rounded-md bg-navy-50 px-2.5 py-1">UAT</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Data Analysis</span>
+          <!-- P3 -->
+          <article class="reveal lift rounded-3xl bg-white border border-slate-200/80 shadow-soft overflow-hidden flex flex-col">
+            <div class="h-1.5 bg-gradient-to-r from-navy to-navy/40"></div>
+            <div class="p-8 flex flex-col grow">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="display text-[1.35rem] leading-snug font-semibold text-navy">Leakage Control &amp; NSV Improvement Program</h3>
+                <span class="shrink-0 rounded-full bg-navy-50 border border-navy-100 px-3 py-1 text-[11px] font-bold text-navy">Operations</span>
+              </div>
+              <dl class="mt-5 space-y-3.5 text-[14px] leading-relaxed">
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Problem</dt><dd class="mt-0.5">Operational inefficiencies and revenue leakage eroded net sales value across brand accounts.</dd></div>
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Solution</dt><dd class="mt-0.5">Rigorous leakage-control measures, checkout and order-flow audits, UAT cycles, and corrective action planning driven by business monitoring.</dd></div>
+                <div><dt class="font-bold text-amber text-[12px] uppercase tracking-wide">Impact</dt><dd class="mt-0.5 font-semibold text-navy">Minimized financial losses and improved NSV across the managed portfolio.</dd></div>
+              </dl>
+              <div class="mt-auto pt-5 flex flex-wrap gap-2 text-[12px] font-semibold text-slate-500">
+                <span class="rounded-md bg-slate-100 px-2.5 py-1">Audit Frameworks</span><span class="rounded-md bg-slate-100 px-2.5 py-1">UAT</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Data Analysis</span>
+              </div>
             </div>
-          </div>
-          <div class="text-[14.5px] leading-relaxed text-slate-600 space-y-3 lg:border-l lg:border-navy-900/8 lg:pl-8">
-            <p><span class="font-semibold text-navy">Problem —</span> Operational inefficiencies and revenue leakage eroded net sales value across brand accounts.</p>
-            <p><span class="font-semibold text-navy">Solution —</span> Instituted checkout and order-flow audits, UAT cycles, and corrective action planning driven by business monitoring.</p>
-            <p><span class="font-semibold text-royal-600">Impact —</span> Minimized financial losses and improved NSV across the managed portfolio.</p>
-          </div>
-        </article>
+          </article>
 
-        <!-- P4 -->
-        <article class="reveal lift group rounded-3xl bg-white border border-navy-900/8 shadow-soft p-8 sm:p-10 grid lg:grid-cols-[auto,1fr,1.1fr] gap-8 items-start">
-          <span class="proj-num font-display text-6xl font-bold leading-none select-none" aria-hidden="true">04</span>
-          <div>
-            <span class="inline-flex items-center rounded-full bg-royal-100 text-royal-600 text-[11px] font-bold uppercase tracking-wider px-3 py-1">E-Commerce Delivery</span>
-            <h3 class="mt-3 font-display text-2xl font-semibold text-navy leading-snug">OMS · RMA · Checkout Integration &amp; UAT Program</h3>
-            <div class="mt-4 flex flex-wrap gap-2 text-[12.5px] text-slate-500">
-              <span class="rounded-md bg-navy-50 px-2.5 py-1">Unicommerce</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Shopify</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Magento</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Gokwik</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Razorpay</span>
+          <!-- P4 -->
+          <article class="reveal reveal-delay-1 lift rounded-3xl bg-white border border-slate-200/80 shadow-soft overflow-hidden flex flex-col">
+            <div class="h-1.5 bg-gradient-to-r from-royal to-amber/60"></div>
+            <div class="p-8 flex flex-col grow">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="display text-[1.35rem] leading-snug font-semibold text-navy">OMS · RMA · Checkout Integration &amp; UAT Program</h3>
+                <span class="shrink-0 rounded-full bg-royal-50 border border-royal-100 px-3 py-1 text-[11px] font-bold text-royal-600">E-Commerce</span>
+              </div>
+              <dl class="mt-5 space-y-3.5 text-[14px] leading-relaxed">
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Problem</dt><dd class="mt-0.5">Brand onboardings and platform enhancements required complex integrations without disrupting live storefronts.</dd></div>
+                <div><dt class="font-bold text-navy text-[12px] uppercase tracking-wide">Solution</dt><dd class="mt-0.5">End-to-end coordination of integrations, UAT cycles and team training across OMS, RMA, checkout and catalog systems.</dd></div>
+                <div><dt class="font-bold text-amber text-[12px] uppercase tracking-wide">Impact</dt><dd class="mt-0.5 font-semibold text-navy">Seamless launches with maintained uptime and platform enhancements aligned to each brand's goals.</dd></div>
+              </dl>
+              <div class="mt-auto pt-5 flex flex-wrap gap-2 text-[12px] font-semibold text-slate-500">
+                <span class="rounded-md bg-slate-100 px-2.5 py-1">Unicommerce</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Shopify</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Magento</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Gokwik</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Razorpay</span>
+              </div>
             </div>
-          </div>
-          <div class="text-[14.5px] leading-relaxed text-slate-600 space-y-3 lg:border-l lg:border-navy-900/8 lg:pl-8">
-            <p><span class="font-semibold text-navy">Problem —</span> Brand onboardings and platform enhancements required complex integrations without disrupting live storefronts.</p>
-            <p><span class="font-semibold text-navy">Solution —</span> Coordinated end-to-end integrations, UAT cycles, and team training across OMS, RMA, checkout, and catalog systems.</p>
-            <p><span class="font-semibold text-royal-600">Impact —</span> Seamless launches with maintained uptime and accurate catalogs for brands like Ray-Ban, Liberty &amp; Forever New.</p>
-          </div>
-        </article>
+          </article>
 
-        <!-- P5 -->
-        <article class="reveal lift group rounded-3xl bg-white border border-navy-900/8 shadow-soft p-8 sm:p-10 grid lg:grid-cols-[auto,1fr,1.1fr] gap-8 items-start">
-          <span class="proj-num font-display text-6xl font-bold leading-none select-none" aria-hidden="true">05</span>
-          <div>
-            <span class="inline-flex items-center rounded-full bg-amber-100 text-amber-600 text-[11px] font-bold uppercase tracking-wider px-3 py-1">Transformation</span>
-            <h3 class="mt-3 font-display text-2xl font-semibold text-navy leading-snug">Org-Wide Zoho Projects Implementation</h3>
-            <div class="mt-4 flex flex-wrap gap-2 text-[12.5px] text-slate-500">
-              <span class="rounded-md bg-navy-50 px-2.5 py-1">Zoho Projects</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Change Management</span><span class="rounded-md bg-navy-50 px-2.5 py-1">Training</span>
+          <!-- P5 full width -->
+          <article class="reveal lift rounded-3xl bg-white border border-slate-200/80 shadow-soft overflow-hidden md:col-span-2">
+            <div class="h-1.5 bg-gradient-to-r from-navy via-royal to-amber"></div>
+            <div class="p-8">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="display text-[1.35rem] leading-snug font-semibold text-navy">Organization-Wide Zoho Projects Rollout</h3>
+                <span class="shrink-0 rounded-full bg-navy-50 border border-navy-100 px-3 py-1 text-[11px] font-bold text-navy">Project Management</span>
+              </div>
+              <div class="mt-5 grid md:grid-cols-3 gap-6 text-[14px] leading-relaxed">
+                <div><p class="font-bold text-navy text-[12px] uppercase tracking-wide">Problem</p><p class="mt-0.5">Project tracking and cross-team coordination were fragmented across the organization.</p></div>
+                <div><p class="font-bold text-navy text-[12px] uppercase tracking-wide">Solution</p><p class="mt-0.5">Led the organization-level implementation of Zoho Projects — configuration, training and adoption across teams.</p></div>
+                <div><p class="font-bold text-amber text-[12px] uppercase tracking-wide">Impact</p><p class="mt-0.5 font-semibold text-navy">Standardized workflows and visibility company-wide; 8 one-time projects delivered alongside regular S&amp;M engagements.</p></div>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-2 text-[12px] font-semibold text-slate-500">
+                <span class="rounded-md bg-slate-100 px-2.5 py-1">Zoho Projects</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Asana</span><span class="rounded-md bg-slate-100 px-2.5 py-1">Change Management</span>
+              </div>
             </div>
-          </div>
-          <div class="text-[14.5px] leading-relaxed text-slate-600 space-y-3 lg:border-l lg:border-navy-900/8 lg:pl-8">
-            <p><span class="font-semibold text-navy">Problem —</span> Project tracking and cross-team coordination were fragmented across the organization.</p>
-            <p><span class="font-semibold text-navy">Solution —</span> Led the organization-level rollout — configuration, training, and adoption across teams.</p>
-            <p><span class="font-semibold text-royal-600">Impact —</span> Standardized workflows and visibility company-wide; 8 one-time projects delivered alongside regular S&amp;M engagements.</p>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- ======================= CREDENTIALS (Certifications + Education + Languages) ======================= -->
-    <section id="credentials" class="bg-navy-50/70 border-y border-navy-900/5">
-      <div class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <div class="grid lg:grid-cols-[1.3fr,1fr] gap-16">
+    <!-- ======================= CREDENTIALS: Certifications / Education / Languages / Tools ======================= -->
+    <section id="certifications" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+      <div class="reveal max-w-2xl">
+        <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Credentials</p>
+        <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">Education, certifications &amp; toolkit.</h2>
+      </div>
 
-          <!-- Certifications -->
+      <div class="mt-14 grid lg:grid-cols-3 gap-10">
+        <!-- Education & Languages -->
+        <div class="reveal space-y-8">
           <div>
-            <div class="reveal">
-              <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Certifications</p>
-              <h2 class="mt-5 font-display text-3xl font-semibold text-navy leading-[1.12]">Always learning.</h2>
+            <h3 class="display text-xl font-semibold text-navy flex items-center gap-2.5">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m-7-9.5V17a2 2 0 001 1.7l5 2.8a2 2 0 002 0l5-2.8a2 2 0 001-1.7v-5.5"/></svg></span>
+              Education
+            </h3>
+            <div class="mt-4 space-y-3">
+              <div class="border-l-[3px] border-royal pl-4 py-1">
+                <p class="font-semibold text-navy text-[15px]">Master of Arts (History)</p>
+                <p class="text-[13px] text-slate-500">DRMLAU, Ayodhya · 2021</p>
+              </div>
+              <div class="border-l-[3px] border-slate-200 pl-4 py-1">
+                <p class="font-semibold text-navy text-[15px]">Bachelor of Science</p>
+                <p class="text-[13px] text-slate-500">DRMLAU, Ayodhya · 2015 · Zoology, Chemistry, Botany</p>
+              </div>
             </div>
-            <ul class="mt-9 divide-y divide-navy-900/8">
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-navy-900/10 text-royal"><svg class="h-4.5 w-4.5 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19v-6m5.5 6V9m5.5 10v-8m5-7v15M3 21h18"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">Data Analytics</p><p class="text-[13px] text-slate-500">Google · Coursera</p></div>
-              </li>
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-navy-900/10 text-royal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">Project Management</p><p class="text-[13px] text-slate-500">Google · Coursera</p></div>
-              </li>
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-navy-900/10 text-royal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">Power BI</p><p class="text-[13px] text-slate-500">Udemy</p></div>
-              </li>
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-amber/40 text-amber"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">Generative AI in E-Commerce &amp; Digital Marketing</p><p class="text-[13px] text-slate-500">Certification</p></div>
-              </li>
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-navy-900/10 text-royal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 1.1 3.6 2 8 2s8-.9 8-2V7M4 7c0 1.1 3.6 2 8 2s8-.9 8-2M4 7c0-1.1 3.6-2 8-2s8 .9 8 2m0 5c0 1.1-3.6 2-8 2s-8-.9-8-2"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">SQL</p><p class="text-[13px] text-slate-500">Certification</p></div>
-              </li>
-              <li class="reveal flex items-center gap-4 py-4">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white border border-navy-900/10 text-royal"><svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
-                <div class="flex-1"><p class="font-semibold text-navy text-[15px]">CCC — Course on Computer Concepts</p><p class="text-[13px] text-slate-500">Certification</p></div>
-              </li>
-            </ul>
           </div>
+          <div>
+            <h3 class="display text-xl font-semibold text-navy flex items-center gap-2.5">
+              <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-navy"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.1 8.6A18.02 18.02 0 016.4 8m.6 8l2-4.5L11 16m1.9-11h.1m0 0c1.5 4.1 4 7.7 7 10.5M13 21l3.5-8 3.5 8"/></svg></span>
+              Languages
+            </h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">Hindi · Native</span>
+              <span class="chip rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-semibold text-slate-600">English · Professional</span>
+            </div>
+          </div>
+        </div>
 
-          <!-- Education + Languages -->
-          <div class="space-y-14">
+        <!-- Certifications -->
+        <div class="reveal reveal-delay-1">
+          <h3 class="display text-xl font-semibold text-navy flex items-center gap-2.5">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.6 2A9 9 0 1112 3a9 9 0 018.6 9z"/></svg></span>
+            Certifications
+          </h3>
+          <ul class="mt-4 space-y-2.5">
+            <li class="lift flex items-center justify-between rounded-xl border border-slate-200/80 bg-white px-4.5 px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">Data Analytics</span><span class="text-[11.5px] font-bold text-slate-400">Google · Coursera</span>
+            </li>
+            <li class="lift flex items-center justify-between rounded-xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">Project Management</span><span class="text-[11.5px] font-bold text-slate-400">Google · Coursera</span>
+            </li>
+            <li class="lift flex items-center justify-between rounded-xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">Power BI</span><span class="text-[11.5px] font-bold text-slate-400">Udemy</span>
+            </li>
+            <li class="lift flex items-center justify-between rounded-xl border border-amber-100 bg-amber-50/50 px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">Generative AI in E-Commerce &amp; Digital Marketing</span>
+            </li>
+            <li class="lift flex items-center justify-between rounded-xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">SQL</span>
+            </li>
+            <li class="lift flex items-center justify-between rounded-xl border border-slate-200/80 bg-white px-5 py-3.5 shadow-soft">
+              <span class="text-[14px] font-semibold text-navy">CCC — Course on Computer Concepts</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tools -->
+        <div class="reveal reveal-delay-2">
+          <h3 class="display text-xl font-semibold text-navy flex items-center gap-2.5">
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-royal-50 text-royal"><svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.3 6.7a4 4 0 015.7 5.7l-6.6 6.6a4 4 0 01-5.7-5.7M14 10l-4 4m8.5-8.5l1.8-1.8M19 8l2.5-.5M16 5l.5-2.5"/></svg></span>
+            Daily Toolkit
+          </h3>
+          <div class="mt-4 space-y-4">
             <div>
-              <div class="reveal">
-                <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Education</p>
-                <h2 class="mt-5 font-display text-3xl font-semibold text-navy leading-[1.12]">Foundation.</h2>
-              </div>
-              <div class="mt-9 space-y-5">
-                <div class="reveal lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-6">
-                  <p class="text-[12px] font-bold text-amber-600 tracking-wide">2021</p>
-                  <h3 class="mt-1 font-semibold text-navy">Master of Arts (History)</h3>
-                  <p class="text-sm text-slate-500">DRMLAU, Ayodhya</p>
-                </div>
-                <div class="reveal reveal-delay-1 lift rounded-2xl bg-white border border-navy-900/8 shadow-soft p-6">
-                  <p class="text-[12px] font-bold text-amber-600 tracking-wide">2015</p>
-                  <h3 class="mt-1 font-semibold text-navy">Bachelor of Science</h3>
-                  <p class="text-sm text-slate-500">DRMLAU, Ayodhya — Zoology, Chemistry, Botany</p>
-                </div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-2">Commerce Platforms</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Shopify</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Magento</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Kartmax</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Razorpay</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Gokwik</span>
               </div>
             </div>
-
             <div>
-              <div class="reveal">
-                <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Languages</p>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-2">OMS &amp; Logistics</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Unicommerce</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Vinculum</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Browntape</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Shiprocket</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Delhivery</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Bluedart</span>
               </div>
-              <div class="reveal mt-6 flex flex-wrap gap-3">
-                <span class="inline-flex items-center gap-2 rounded-full bg-white border border-navy-900/10 px-5 py-2.5 text-sm font-semibold text-navy">Hindi <span class="text-[12px] font-medium text-slate-400">Native</span></span>
-                <span class="inline-flex items-center gap-2 rounded-full bg-white border border-navy-900/10 px-5 py-2.5 text-sm font-semibold text-navy">English <span class="text-[12px] font-medium text-slate-400">Professional</span></span>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-2">Data &amp; BI</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Looker Studio</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Power BI</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">SQL</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Advanced Excel</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Google Sheets</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-2">AI &amp; Project Tools</p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="chip rounded-lg border border-amber-100 bg-amber-50 px-3 py-1 text-[12.5px] font-bold text-amber">Claude Code</span>
+                <span class="chip rounded-lg border border-amber-100 bg-amber-50 px-3 py-1 text-[12.5px] font-bold text-amber">ChatGPT Codex</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Zoho Projects</span>
+                <span class="chip rounded-lg border border-slate-200 bg-white px-3 py-1 text-[12.5px] font-semibold text-slate-600">Asana</span>
               </div>
             </div>
           </div>
@@ -742,43 +778,47 @@
     </section>
 
     <!-- ======================= PHILOSOPHY ======================= -->
-    <section id="philosophy" class="max-w-4xl mx-auto px-5 sm:px-8 py-24 sm:py-28 text-center">
-      <p class="reveal text-[12px] font-semibold uppercase tracking-[0.22em] text-royal-600">Professional Philosophy</p>
-      <div class="reveal mx-auto mt-6 h-[3px] w-14 rounded-full bg-amber"></div>
-      <blockquote class="reveal reveal-delay-1 mt-8 font-display text-[1.7rem] sm:text-[2.3rem] font-medium leading-[1.35] text-navy">
-        "The numbers tell the story first. My job is to listen to them, act on them, and turn them into growth my clients can measure."
-      </blockquote>
-      <div class="reveal reveal-delay-2 mt-14 grid sm:grid-cols-3 gap-10 text-left">
-        <div>
-          <p class="font-display text-lg font-semibold text-navy">Client first</p>
-          <p class="mt-2 text-[14.5px] leading-relaxed text-slate-500">Every decision starts with the customer's objective — reviews, escalations, and roadmaps included.</p>
-        </div>
-        <div>
-          <p class="font-display text-lg font-semibold text-navy">Automate the repeatable</p>
-          <p class="mt-2 text-[14.5px] leading-relaxed text-slate-500">If a process runs twice the same way, it should run itself the third time — freeing people for judgment work.</p>
-        </div>
-        <div>
-          <p class="font-display text-lg font-semibold text-navy">Continuous learning</p>
-          <p class="mt-2 text-[14.5px] leading-relaxed text-slate-500">From MIS to AI workflows — staying current with the industry is the core of my professional approach.</p>
+    <section id="philosophy" class="bg-[#F7FAFD] py-24 sm:py-28">
+      <div class="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+        <p class="reveal text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Professional Philosophy</p>
+        <blockquote class="reveal reveal-delay-1 display mt-7 text-3xl sm:text-4xl font-medium leading-snug text-navy">
+          "The numbers tell the story first. My job is to listen to them, act on them, and turn them into <span class="flourish">growth clients can measure</span>."
+        </blockquote>
+        <div class="reveal reveal-delay-2 mt-12 grid sm:grid-cols-3 gap-5 text-left">
+          <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-6">
+            <span class="display text-2xl text-amber font-semibold">01</span>
+            <h3 class="mt-2 font-bold text-navy">Client first</h3>
+            <p class="mt-2 text-[13.5px] leading-relaxed">Every decision starts with the customer's objective — business reviews, escalations, and roadmaps included.</p>
+          </div>
+          <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-6">
+            <span class="display text-2xl text-amber font-semibold">02</span>
+            <h3 class="mt-2 font-bold text-navy">Automate the repeatable</h3>
+            <p class="mt-2 text-[13.5px] leading-relaxed">If a process runs twice the same way, it should run itself the third time — freeing people for judgment work.</p>
+          </div>
+          <div class="lift rounded-2xl bg-white border border-slate-200/80 shadow-soft p-6">
+            <span class="display text-2xl text-amber font-semibold">03</span>
+            <h3 class="mt-2 font-bold text-navy">Continuous learning</h3>
+            <p class="mt-2 text-[13.5px] leading-relaxed">From MIS to AI workflows — staying current with industry trends is the core of my professional approach.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ======================= CONTACT ======================= -->
-    <section id="contact" class="max-w-6xl mx-auto px-5 sm:px-8 pb-24 sm:pb-28">
-      <div class="reveal relative overflow-hidden rounded-[2rem] bg-navy text-white px-7 py-14 sm:px-14 sm:py-16">
-        <div class="absolute inset-0 opacity-[0.07]" style="background-image:linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);background-size:48px 48px;" aria-hidden="true"></div>
+    <section id="contact" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+      <div class="reveal relative overflow-hidden rounded-[2rem] bg-navy-900 text-white shadow-navy">
+        <div class="absolute inset-0 opacity-[0.07]" aria-hidden="true" style="background-image: radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px); background-size: 24px 24px;"></div>
         <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-royal/25 blur-3xl" aria-hidden="true"></div>
         <div class="absolute -bottom-28 -left-16 h-72 w-72 rounded-full bg-amber/15 blur-3xl" aria-hidden="true"></div>
 
-        <div class="relative grid lg:grid-cols-[1.4fr,1fr] gap-12 items-center">
+        <div class="relative px-7 py-14 sm:px-16 sm:py-20 grid lg:grid-cols-[1.3fr,1fr] gap-12 items-center">
           <div>
-            <p class="eyebrow text-[12px] font-semibold uppercase tracking-[0.22em] text-amber">Contact</p>
-            <h2 class="mt-5 font-display text-3xl sm:text-[2.6rem] font-semibold leading-[1.12] tracking-[-0.01em]">Let's grow something together.</h2>
-            <p class="mt-4 max-w-lg text-white/70 leading-relaxed">Open to conversations about e-commerce growth, account leadership, and AI-driven operations. Based in Noida, India — working with brands everywhere.</p>
+            <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-amber">Contact</p>
+            <h2 class="display mt-4 text-4xl sm:text-5xl leading-tight font-semibold">Let's grow something together.</h2>
+            <p class="mt-5 max-w-lg text-slate-300 leading-relaxed">Open to conversations about e-commerce growth, account leadership, and AI-driven operations. Based in Noida, India — working with brands everywhere.</p>
             <div class="mt-8 flex flex-wrap gap-3">
-              <a href="mailto:saurabhpandey1212@gmail.com" class="btn-primary inline-flex items-center gap-2 rounded-full bg-amber px-7 py-3.5 text-sm font-bold text-navy-900 hover:bg-amber-600 hover:text-white">
-                Email me
+              <a href="mailto:saurabhpandey1212@gmail.com" class="btn-primary inline-flex items-center gap-2 rounded-full bg-amber px-7 py-3.5 text-sm font-bold text-navy-950">
+                Get in touch
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </a>
               <a href="resume.pdf" download class="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
@@ -788,36 +828,39 @@
             </div>
           </div>
 
-          <ul class="relative space-y-4 text-[15px]">
-            <li>
-              <a href="mailto:saurabhpandey1212@gmail.com" class="group flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-5 py-4 hover:bg-white/10 transition-colors">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10"><svg class="h-4.5 w-4.5 h-5 w-5 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
-                <span class="min-w-0"><span class="block text-[11px] uppercase tracking-[0.14em] text-white/50">Email</span><span class="block font-medium truncate">saurabhpandey1212@gmail.com</span></span>
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/saurabh-pandey-65b7161ab" target="_blank" rel="noopener" class="group flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-5 py-4 hover:bg-white/10 transition-colors">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10"><svg class="h-4 w-4 text-amber" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></span>
-                <span class="min-w-0"><span class="block text-[11px] uppercase tracking-[0.14em] text-white/50">LinkedIn</span><span class="block font-medium truncate">saurabh-pandey-65b7161ab</span></span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/saurabhpandey-1212" target="_blank" rel="noopener" class="group flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-5 py-4 hover:bg-white/10 transition-colors">
-                <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10"><svg class="h-4 w-4 text-amber" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49A10.05 10.05 0 0022 12.25C22 6.58 17.52 2 12 2z"/></svg></span>
-                <span class="min-w-0"><span class="block text-[11px] uppercase tracking-[0.14em] text-white/50">GitHub</span><span class="block font-medium truncate">saurabhpandey-1212</span></span>
-              </a>
-            </li>
-          </ul>
+          <div class="space-y-3.5">
+            <a href="mailto:saurabhpandey1212@gmail.com" class="lift flex items-center gap-4 rounded-2xl bg-white/[0.06] border border-white/10 px-5 py-4 hover:bg-white/10">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber/15 text-amber"><svg class="h-4.5 w-4.5 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+              <div class="min-w-0">
+                <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400">Email</p>
+                <p class="text-sm font-semibold truncate">saurabhpandey1212@gmail.com</p>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/saurabh-pandey-65b7161ab" target="_blank" rel="noopener" class="lift flex items-center gap-4 rounded-2xl bg-white/[0.06] border border-white/10 px-5 py-4 hover:bg-white/10">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-royal/20 text-royal"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></span>
+              <div class="min-w-0">
+                <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400">LinkedIn</p>
+                <p class="text-sm font-semibold truncate">saurabh-pandey-65b7161ab</p>
+              </div>
+            </a>
+            <a href="https://github.com/saurabhpandey-1212" target="_blank" rel="noopener" class="lift flex items-center gap-4 rounded-2xl bg-white/[0.06] border border-white/10 px-5 py-4 hover:bg-white/10">
+              <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white"><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 015 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9v2.81c0 .27.18.59.69.49A10.05 10.05 0 0022 12.25C22 6.58 17.52 2 12 2z"/></svg></span>
+              <div class="min-w-0">
+                <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400">GitHub</p>
+                <p class="text-sm font-semibold truncate">saurabhpandey-1212</p>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <!-- ======================= FOOTER ======================= -->
-  <footer class="border-t border-navy-900/8">
-    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+  <footer class="border-t border-slate-200">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[13.5px] text-slate-500">
       <p>© <span id="year"></span> Saurabh Pandey · Noida, India</p>
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-6 font-medium">
         <a href="mailto:saurabhpandey1212@gmail.com" class="hover:text-navy transition-colors">Email</a>
         <a href="https://www.linkedin.com/in/saurabh-pandey-65b7161ab" target="_blank" rel="noopener" class="hover:text-navy transition-colors">LinkedIn</a>
         <a href="https://github.com/saurabhpandey-1212" target="_blank" rel="noopener" class="hover:text-navy transition-colors">GitHub</a>
@@ -850,7 +893,7 @@
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // Animated counters
@@ -892,7 +935,7 @@
     // Nav shadow on scroll
     const navbar = document.getElementById('navbar');
     addEventListener('scroll', () => {
-      navbar.classList.toggle('shadow-soft', scrollY > 10);
+      navbar.classList.toggle('shadow-soft', scrollY > 12);
     }, { passive: true });
   </script>
 </body>
