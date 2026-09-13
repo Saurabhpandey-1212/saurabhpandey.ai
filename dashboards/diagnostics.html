@@ -1,0 +1,646 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diagnostics Grid — Distribution, Control &amp; Quality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sample.css">
+<style>
+:root{--bg:#F1F2F0;--card:#FFF;--ink:#14171A;--ink2:#414750;--mut:#767D85;--line:#DFE2E0;--hair:#EDEFEE;
+ --a1:#2D5A66;--a2:#B07D2E;--a3:#3E6B4A;--a4:#A2423F;--a5:#5A5382;--pos:#3E6B4A;--neg:#A2423F;--warn:#8A6A1E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 13.5px/1.5 'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+ font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+svg{display:block}
+.mn{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace}
+.w{max-width:1520px;margin:0 auto;padding:0 clamp(12px,2.2vw,26px) 58px}
+.top{display:flex;align-items:center;gap:14px;height:54px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.top .b{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.2em;text-transform:uppercase}
+.top .b em{color:var(--mut);font-style:normal;margin-left:10px;letter-spacing:.1em}
+.top .s{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.top .s span{font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:.06em;padding:6px 10px;
+ border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--ink2);display:inline-flex;align-items:center;gap:6px}
+.top .s i{width:5px;height:5px;border-radius:50%;background:var(--pos)}
+.top .s .bad i{background:var(--neg)}.top .s .w2 i{background:var(--warn)}
+.hd{padding:20px 0 14px;display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.hd h1{font-size:23px;font-weight:600;letter-spacing:-.025em}
+.hd p{color:var(--mut);font-size:12px;margin-top:4px}
+.fb{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.fb b{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:7px 11px;
+ font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:.04em;color:var(--ink2)}
+.fb b u{color:var(--mut);text-decoration:none;margin-right:7px}
+.fb b.on{border-color:var(--a1);color:var(--a1)}
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px 16px;min-width:0}
+.c h3{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--ink2)}
+.c .sub{font-size:11px;color:var(--mut);margin-top:6px}
+.ch{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.lg{margin-left:auto;display:flex;gap:10px;font-size:10.5px;color:var(--ink2);flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+.lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px}
+.k .l{font:600 9.5px/1 'JetBrains Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--mut)}
+.k .v{font-size:26px;font-weight:600;letter-spacing:-.03em;margin-top:10px}
+.k .v s{font-size:.44em;color:var(--mut);text-decoration:none;margin-left:3px}
+.k .d{font-size:10.5px;font-weight:600;margin-top:7px}
+.up{color:var(--pos)}.dn{color:var(--neg)}.fl{color:var(--mut)}
+table{border-collapse:collapse;width:100%;font-size:11.5px}
+th{text-align:right;font:600 9px/1 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;
+ color:var(--mut);padding:0 6px 8px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;padding-left:0}th:last-child,td:last-child{padding-right:0}
+td{text-align:right;padding:9px 6px;border-bottom:1px solid var(--hair);color:var(--ink2)}
+td.n{color:var(--ink);font-weight:500}
+td.c2{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--mut);text-align:left}
+tfoot td{border-bottom:none;border-top:1px solid var(--line);font-weight:600;color:var(--ink)}
+.rc{display:inline-flex;align-items:center;font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.07em;
+ padding:4px 8px;border-radius:4px}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}
+.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.ft{margin-top:22px;font:400 10.5px/1.6 'JetBrains Mono',monospace;color:var(--mut);display:flex;gap:18px;flex-wrap:wrap}
+@media(max-width:1240px){.s3{grid-column:span 6}.s4,.s5,.s6,.s7,.s8{grid-column:span 12}}
+@media(max-width:680px){.s3{grid-column:span 12}}
+</style>
+<aside class="sp-sample-bar" aria-label="Portfolio sample notice"><a href="../index.html#systems">← Saurabh Pandey</a><span class="sp-sample-label">Interactive concept · illustrative sample data</span></aside>
+<div class="w">
+<div class="top"><span class="b">Brand<em>Diagnostics Grid</em></span>
+ <span class="s"><span><i></i>MAGENTO</span><span><i></i>META</span><span class="bad"><i></i>GOOGLE ADS</span>
+ <span class="w2"><i></i>BACKEND T−1</span><span>21 AUG 2026</span></span></div>
+<div class="hd"><div><h1>Distribution, control and data quality</h1>
+ <p>1–21 August 2026 · 4 active rules · 17 breaches · 20 of 21 days backend-complete</p></div>
+ <div class="fb"><b class="on"><u>RANGE</u>1–21 AUG</b><b><u>LIMIT</u>±2σ</b><b><u>SOURCE</u>ALL</b><b><u>SEVERITY</u>ALL</b></div></div>
+
+<div class="g">
+ <div class="k s3"><div class="l">Backend completeness</div><div class="v">20<s>/ 21 days</s></div><div class="d dn">▼ 21 Aug pending</div></div>
+ <div class="k s3"><div class="l">Rule breaches</div><div class="v">17</div><div class="d dn">▲ 14 on one rule</div></div>
+ <div class="k s3"><div class="l">Attribution delta</div><div class="v">7.8<s>%</s></div><div class="d dn">▲ from −8.1% in W1</div></div>
+ <div class="k s3"><div class="l">Points outside ±2σ</div><div class="v">3</div><div class="d fl">1 revenue · 2 sessions</div></div>
+
+ <div class="c s6"><div class="ch"><div><h3>Revenue control chart</h3><div class="sub">Mean and ±2 standard deviations, 20 complete days</div></div></div>
+  <div data-c="c1"></div></div>
+ <div class="c s6"><div class="ch"><div><h3>Sessions control chart</h3><div class="sub">Same construction across 21 days</div></div></div>
+  <div data-c="c2"></div></div>
+ <div class="c s6"><div class="ch"><div><h3>Add-to-cart rate control chart</h3><div class="sub">Intent signal, 21 days</div></div></div>
+  <div data-c="c3"></div></div>
+ <div class="c s6"><div class="ch"><div><h3>Cost-per-session control chart</h3><div class="sub">Efficiency signal, 21 days</div></div></div>
+  <div data-c="c4"></div></div>
+
+ <div class="c s5"><div class="ch"><div><h3>Distribution by week</h3><div class="sub">Daily ROI · box = interquartile range, line = median, dot = latest</div></div></div>
+  <div data-c="rng1"></div>
+  <div style="height:10px"></div>
+  <div data-c="rng2"></div></div>
+ <div class="c s4"><div class="ch"><div><h3>Revenue histogram</h3><div class="sub">20 complete days grouped into five bands</div></div></div>
+  <div data-c="hist"></div></div>
+ <div class="c s3"><div class="ch"><div><h3>Five-number summary</h3><div class="sub">Last 14 days</div></div></div>
+  <table><thead><tr><th>Metric</th><th>Min</th><th>Med</th><th>Max</th></tr></thead><tbody id="tsum"></tbody></table></div>
+
+ <div class="c s6"><div class="ch"><div><h3>Sessions against add-to-cart rate</h3><div class="sub">Negative relationship signals unqualified traffic</div></div></div>
+  <div data-c="s1"></div></div>
+ <div class="c s6"><div class="ch"><div><h3>Spend against return</h3><div class="sub">One point per day · size = revenue</div></div></div>
+  <div data-c="s2"></div></div>
+
+ <div class="c s12"><div class="ch"><div><h3>Z-score matrix</h3><div class="sub">Standard deviations from each metric's own 21-day mean · cells beyond ±2 are breaches</div></div>
+  <div class="lg"><span><i style="background:#2D5A66"></i>Above mean</span><span><i style="background:#EDEFEE"></i>At mean</span><span><i style="background:#A2423F"></i>Below mean</span></div></div>
+  <div data-c="z"></div></div>
+
+ <div class="c s6"><div class="ch"><div><h3>Revenue reconciliation</h3><div class="sub">Magento backend against platform-attributed, by week</div></div></div>
+  <table><thead><tr><th>Period</th><th>Backend</th><th>Attributed</th><th>Delta</th><th>Delta %</th><th>Status</th></tr></thead>
+  <tbody id="trec"></tbody></table></div>
+ <div class="c s6"><div class="ch"><div><h3>Exception log</h3><div class="sub">Every row is a SQL rule firing</div></div></div>
+  <table><thead><tr><th>Rule</th><th>Condition</th><th>N</th><th>Dates (Aug)</th><th>Severity</th></tr></thead>
+  <tbody id="tlog"></tbody></table></div>
+
+ <div class="c s8"><div class="ch"><div><h3>Completeness by field</h3><div class="sub">Non-null rate across the 21-day window</div></div></div>
+  <div data-c="comp"></div></div>
+ <div class="c s4"><div class="ch"><div><h3>Freshness</h3><div class="sub">Last successful load per source</div></div></div>
+  <table><thead><tr><th>Source</th><th>Rows</th><th>Lag</th><th>Status</th></tr></thead><tbody id="tfr"></tbody></table></div>
+</div>
+<div class="ft"><span>TEMPLATE 09 · DIAGNOSTICS GRID — 20 MODULES</span>
+<span style="margin-left:auto">LOOKER: looker_line + reference lines · looker_scatter · looker_grid conditional format · looker_column · single_value</span></div>
+</div>
+<script>
+const C={bg:'#F1F2F0',card:'#FFF',ink:'#14171A',ink2:'#414750',mut:'#767D85',grid:'#EDEFEE',axis:'#DFE2E0',
+ a1:'#2D5A66',a2:'#B07D2E',a3:'#3E6B4A',a4:'#A2423F',a5:'#5A5382',pos:'#3E6B4A',neg:'#A2423F',warn:'#8A6A1E',inv:'#FFF'};
+/* ============================================================
+   SHARED DATA + CHART LIBRARY
+   Daily series reconcile to the source report:
+   MTD spend 1,019,310 · MTD backend revenue 6,937,242 · 533 orders
+   ============================================================ */
+const D={
+ day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+ dow:['Sat','Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun','Mon','Tue','Wed','Thu','Fri'],
+ metaSpend:[22671,22128,24723,28722,25626,28669,24634,17526,22033,18586,26063,19985,21206,25089,24548,30693,18505,19526,21590,29054,25689],
+ googleSpend:[23016,18013,26018,21015,22016,23016,25018,30021,26018,26018,27019,23016,28020,27019,29020,21015,29020,18369,27697,25446,26234],
+ revenue:[161000,365000,319000,316000,393000,284000,303000,271000,680000,283000,450000,283000,435000,464000,497000,385000,328000,301000,211000,208000,null],
+ sessions:[66000,37000,35000,27000,27000,33000,38000,39000,46000,47000,48000,45000,46000,53000,53000,49000,31000,40000,70000,72000,41000],
+ carts:[653,668,698,602,606,609,581,499,572,588,818,624,650,680,712,687,482,473,488,553,505],
+ a2c:[1.0,1.8,2.0,2.2,2.2,1.8,1.5,1.3,1.2,1.3,1.7,1.4,1.4,1.3,1.3,1.4,1.6,1.2,0.7,0.8,1.2],
+ orders:[18,22,24,22,24,21,22,18,32,27,39,29,34,41,37,40,30,20,20,13,null],
+ c2c:[2.8,3.3,3.4,3.7,4.0,3.4,3.8,3.6,5.6,4.6,4.8,4.6,5.2,6.0,5.2,5.8,6.2,4.2,4.1,2.4,null],
+ cps:[0.69,1.08,1.43,1.83,1.78,1.55,1.31,1.23,1.04,0.95,1.12,0.96,1.09,0.97,1.01,1.06,1.54,0.93,0.70,0.75,1.28],
+ metaRoas:[2.4,2.7,6.2,2.8,7.1,5.3,1.5,5.9,8.1,5.5,7.1,7.0,8.5,7.1,6.2,3.2,6.0,1.9,3.9,1.9,4.3],
+ googleRoas:[8.72,11.20,5.36,8.45,16.20,6.11,15.17,6.47,11.75,7.92,6.98,4.65,12.10,8.40,4.91,7.64,7.92,12.20,2.47,3.26,8.81],
+ metaCts:[86.3,86.3,86.7,89.3,88.8,87.2,88.0,89.2,89.2,87.7,90.2,90.0,87.8,88.7,90.7,89.5,87.3,87.4,87.8,89.5,87.4],
+ googleCts:[122.5,111.6,97.9,103.2,101.0,103.2,103.7,101.8,102.6,104.1,100.7,98.9,98.1,102.3,103.3,108.1,92.1,107.6,95.2,95.7,94.8]
+};
+D.spend=D.day.map((_,i)=>D.metaSpend[i]+D.googleSpend[i]);
+D.roi=D.day.map((_,i)=>D.revenue[i]?D.revenue[i]/D.spend[i]:null);
+D.aov=D.day.map((_,i)=>D.orders[i]?D.revenue[i]/D.orders[i]:null);
+D.mrev=D.day.map((_,i)=>D.metaSpend[i]*D.metaRoas[i]);
+D.grev=D.day.map((_,i)=>D.googleSpend[i]*D.googleRoas[i]);
+D.paid=D.day.map((_,i)=>D.mrev[i]+D.grev[i]);
+D.cvr=D.day.map((_,i)=>D.orders[i]!=null?D.orders[i]/D.sessions[i]*100:null);
+D.cpo=D.day.map((_,i)=>D.orders[i]?D.spend[i]/D.orders[i]:null);
+
+/* breakdowns — roll up exactly to the MTD totals above */
+const CAMP=[
+ {n:'Performance Max',sh:'PMax',p:'Google',s:208818,r:1461000,o:105,cpc:3.6,ctr:4.2},
+ {n:'Brand Search',sh:'Brand',p:'Google',s:78307,r:1441000,o:104,cpc:2.1,ctr:9.8},
+ {n:'Shopping non-brand',sh:'Shopping',p:'Google',s:156613,r:1081000,o:78,cpc:4.1,ctr:3.4},
+ {n:'Advantage+ Shopping',sh:'Adv+',p:'Meta',s:188961,r:926000,o:72,cpc:3.9,ctr:2.8},
+ {n:'Retargeting dynamic',sh:'Retarget',p:'Meta',s:99453,r:875000,o:68,cpc:4.4,ctr:5.1},
+ {n:'Prospecting broad',sh:'Prospect',p:'Meta',s:149180,r:462000,o:36,cpc:3.4,ctr:2.4},
+ {n:'Search non-brand',sh:'Search',p:'Google',s:78306,r:360000,o:25,cpc:5.2,ctr:2.6},
+ {n:'Reach & video',sh:'Reach',p:'Meta',s:59672,r:89000,o:8,cpc:2.6,ctr:1.4}];
+const CATS=[
+ {n:'Sunglasses',r:3607366,o:258,u:266,ret:6.2},
+ {n:'Eyeglasses',r:2011800,o:149,u:151,ret:4.1},
+ {n:'Lenses & contacts',r:832469,o:92,u:104,ret:2.8},
+ {n:'Accessories',r:485607,o:34,u:38,ret:8.9}];
+const DEV=[
+ {n:'Mobile',s:703560,c:8815,o:341,r:4162345},
+ {n:'Desktop',s:162360,c:2816,o:160,r:2289290},
+ {n:'Tablet',s:36080,c:612,o:32,r:485607}];
+const STATE=[
+ {n:'Maharashtra',r:1595566,o:118},{n:'Delhi NCR',r:1110000,o:86},
+ {n:'Karnataka',r:971214,o:76},{n:'Tamil Nadu',r:693724,o:54},
+ {n:'Telangana',r:485607,o:38},{n:'Gujarat',r:416235,o:32},
+ {n:'West Bengal',r:346862,o:27},{n:'Rest of India',r:1318034,o:102}];
+const PROD=[
+ {n:'Aviator Metal 58',c:'Sunglasses',r:641000,o:44,v:9820,rt:5.1},
+ {n:'Square Acetate 52',c:'Eyeglasses',r:518000,o:38,v:8410,rt:3.4},
+ {n:'Round Metal 50',c:'Sunglasses',r:487000,o:33,v:7960,rt:6.8},
+ {n:'Browline Combo 51',c:'Eyeglasses',r:412000,o:31,v:6540,rt:4.2},
+ {n:'Wrap Sport 62',c:'Sunglasses',r:388000,o:24,v:5980,rt:7.9},
+ {n:'Cat-eye Acetate 53',c:'Sunglasses',r:341000,o:26,v:6210,rt:5.6},
+ {n:'Rectangle TR90 54',c:'Eyeglasses',r:296000,o:23,v:4870,rt:3.1},
+ {n:'Oval Titanium 49',c:'Eyeglasses',r:264000,o:19,v:4120,rt:2.7}];
+const BAND=[
+ {n:'Under ₹5K',o:42,r:159600},{n:'₹5–10K',o:118,r:896800},{n:'₹10–15K',o:201,r:2492400},
+ {n:'₹15–20K',o:118,r:2029600},{n:'Above ₹20K',o:54,r:1358842}];
+const HOUR=[1.1,0.7,0.5,0.4,0.4,0.6,1.2,2.3,3.6,4.8,5.6,6.1,6.4,5.9,5.4,5.1,5.3,6.2,7.4,8.6,8.1,6.8,4.6,2.9];
+const VISIT=[{n:'New',s:739640,o:303,r:3607366},{n:'Returning',s:162360,o:230,r:3329876}];
+const FUNNEL=[
+ {n:'Sessions',v:902000},{n:'Product views',v:342760},{n:'Add to cart',v:12243},
+ {n:'Checkout initiated',v:3120},{n:'Orders',v:533}];
+const WEEKS=[{n:'W1',r:[0,7]},{n:'W2',r:[7,14]},{n:'W3',r:[14,20]}];
+
+/* ---------------- svg primitives ---------------- */
+const FF="'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif";
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" fill="${o.f||C.mut}" font-size="${o.s||10}" font-weight="${o.w||500}" text-anchor="${o.a||'start'}" font-family="${o.ff||FF}" style="font-variant-numeric:tabular-nums"${o.ls?` letter-spacing="${o.ls}"`:''}>${t}</text>`;
+const LN=(a,b,c,d,o={})=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${o.c||C.grid}" stroke-width="${o.w||1}"${o.d?` stroke-dasharray="${o.d}"`:''}/>`;
+const RC=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${Math.max(0,h)}" fill="${o.f||'none'}"${o.rx?` rx="${o.rx}"`:''}${o.op!=null?` opacity="${o.op}"`:''}${o.st?` stroke="${o.st}" stroke-width="${o.sw||1}"`:''}/>`;
+const PA=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.c||'none'}" stroke-width="${o.w||1.7}" stroke-linejoin="round" stroke-linecap="round"${o.d?` stroke-dasharray="${o.d}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const CI=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||'none'}"${o.st?` stroke="${o.st}" stroke-width="${o.sw||1.5}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const SVG=(w,h,i)=>`<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMidYMid meet">${i}</svg>`;
+
+const kf=n=>n==null?'—':Math.abs(n)>=1e6?(n/1e6).toFixed(1)+'M':Math.abs(n)>=1000?Math.round(n/1000)+'K':(Math.abs(n)<10?n.toFixed(1):Math.round(n));
+const rk=n=>'₹'+kf(n);
+const rs=n=>'₹'+Math.round(n).toLocaleString('en-US');
+const pc=n=>n.toFixed(1)+'%';
+const xf=n=>n.toFixed(1)+'×';
+const nice=(v,s=4)=>{if(v<=0)return 1;const r=v/s,m=Math.pow(10,Math.floor(Math.log10(r))),k=r/m;
+ return (k<=1?1:k<=2?2:k<=2.5?2.5:k<=5?5:10)*m*s;};
+const sum=(a,i,j)=>a.slice(i==null?0:i,j==null?a.length:j).reduce((s,x)=>s+(x||0),0);
+const perDay=(a,r)=>sum(a,r[0],r[1])/(r[1]-r[0]);
+const mean=a=>{const v=a.filter(x=>x!=null);return v.reduce((s,x)=>s+x,0)/v.length;};
+const sdev=a=>{const v=a.filter(x=>x!=null),m=mean(v);return Math.sqrt(v.reduce((s,x)=>s+(x-m)*(x-m),0)/v.length);};
+const median=a=>{const v=a.filter(x=>x!=null).slice().sort((x,y)=>x-y),n=v.length;
+ return n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2;};
+const quart=(a,p)=>{const v=a.filter(x=>x!=null).slice().sort((x,y)=>x-y);
+ return v[Math.min(v.length-1,Math.floor(v.length*p))];};
+
+function frame(w,h,p,yMax,fmt,steps){
+ steps=steps||4;const x0=p.l,x1=w-p.r,y0=p.t,y1=h-p.b;let g='';
+ for(let i=0;i<=steps;i++){const v=yMax*i/steps,y=y1-(y1-y0)*i/steps;
+  g+=LN(x0,y,x1,y,{c:i?C.grid:C.axis});
+  if(fmt) g+=T(x0-7,y+3.5,fmt(v),{a:'end',s:9});}
+ return {g,x0,x1,y0,y1,sy:v=>y1-(v/yMax)*(y1-y0)};
+}
+const dayAx=(x0,x1,y,n,st)=>{let g='';for(let i=0;i<n;i+=st)
+ g+=T(x0+(x1-x0)*(i+.5)/n,y,String(D.day[i]),{a:'middle',s:9});return g;};
+function spark(v,w,h,col,fill){
+ const c=v.filter(x=>x!=null),mn=Math.min(...c),mx=Math.max(...c),r=(mx-mn)||1;
+ const p=v.map((x,i)=>x==null?null:[2+(w-4)*i/(v.length-1),h-3-((x-mn)/r)*(h-7)]).filter(Boolean);
+ const d=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+ let s='';
+ if(fill!==false)s+=PA(d+`L${p[p.length-1][0].toFixed(1)} ${h}L${p[0][0].toFixed(1)} ${h}Z`,{f:col,op:.12});
+ s+=PA(d,{c:col,w:1.4})+CI(p[p.length-1][0],p[p.length-1][1],2.2,{f:col});
+ return SVG(w,h,s);
+}
+function sparkBar(v,w,h,col,hiIdx){
+ const c=v.filter(x=>x!=null),mx=Math.max(...c),n=v.length,bw=w/n;let s='';
+ v.forEach((x,i)=>{if(x==null)return;const bh=(x/mx)*(h-3);
+  s+=RC(i*bw+bw*.16,h-bh,bw*.68,bh,{f:col,rx:1,op:i===hiIdx?.95:.35});});
+ return SVG(w,h,s);
+}
+const arc=(cx,cy,r,a0,a1)=>{const p=(a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+ const[x0,y0]=p(a0),[x1,y1]=p(a1);return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${a1-a0>Math.PI?1:0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;};
+
+/* ---------------- chart factories ---------------- */
+const mk={};
+
+mk.bars=o=>w=>{
+ const h=o.h||190,p=o.p||{l:44,r:14,t:o.cap?26:14,b:26},n=o.v.length;
+ const F=frame(w,h,p,nice(Math.max(...o.v.filter(x=>x!=null))),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*(o.gap||.6),o.max||26);
+ const mi=o.v.indexOf(Math.max(...o.v.filter(x=>x!=null)));
+ o.v.forEach((v,i)=>{const x=F.x0+bw*i+(bw-bar)/2;
+  if(v==null){s+=RC(x,F.y1-10,bar,10,{f:C.grid,rx:1});return;}
+  const hot=o.hi?o.hi.includes(i):i===mi;
+  s+=RC(x,F.sy(v),bar,F.y1-F.sy(v),{f:hot?(o.hc||C.a2):(o.c||C.a1),rx:2,op:hot?.95:(o.op||.42)});});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,o.step||(w<520?4:3));
+ return SVG(w,h,s);};
+
+mk.line=o=>w=>{
+ const h=o.h||200,p=o.p||{l:42,r:o.r2?42:14,t:o.cap?26:14,b:26};
+ const all=o.series.flatMap(x=>x.v).filter(x=>x!=null);
+ const yMax=o.yMax||nice(Math.max(...all));
+ const F=frame(w,h,p,yMax,o.f||kf);
+ let s=F.g,n=o.series[0].v.length;const X=i=>F.x0+(F.x1-F.x0)*(i+.5)/n;
+ (o.ref||[]).forEach(r=>{s+=LN(F.x0,F.sy(r.y),F.x1,F.sy(r.y),{c:r.c||C.mut,d:'3 4'});
+  if(r.l)s+=T(F.x1-2,F.sy(r.y)-5,r.l,{a:'end',s:8.5,f:r.c||C.mut,w:600});});
+ o.series.forEach(sr=>{
+  const pts=sr.v.map((v,i)=>v==null?null:[X(i),F.sy(v)]).filter(Boolean);
+  if(sr.fill)s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ')+
+   `L${pts[pts.length-1][0].toFixed(1)} ${F.y1}L${pts[0][0].toFixed(1)} ${F.y1}Z`,{f:sr.c,op:.1});
+  s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:sr.c,w:sr.w||1.8,d:sr.d});
+  if(sr.dot!==false)pts.forEach(q=>{s+=CI(q[0],q[1],1.7,{f:sr.c});});});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,o.step||(w<520?4:3));
+ return SVG(w,h,s);};
+
+mk.combo=o=>w=>{
+ const h=o.h||230,p={l:46,r:46,t:26,b:26},n=o.bars.length;
+ const F=frame(w,h,p,nice(Math.max(...o.bars.filter(x=>x!=null))),o.fb||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.58,24);
+ o.bars.forEach((v,i)=>{const x=F.x0+bw*i+(bw-bar)/2;
+  if(v==null){s+=RC(x,F.y1-10,bar,10,{f:C.grid,rx:1});return;}
+  s+=RC(x,F.sy(v),bar,F.y1-F.sy(v),{f:o.cb||C.a1,rx:2,op:.34});});
+ const lm=nice(Math.max(...o.line)),ly=v=>F.y1-(v/lm)*(F.y1-F.y0);
+ s+=PA(o.line.map((v,i)=>(i?'L':'M')+(F.x0+bw*i+bw/2).toFixed(1)+' '+ly(v).toFixed(1)).join(' '),{c:o.cl||C.a2,w:1.9});
+ o.line.forEach((v,i)=>{s+=CI(F.x0+bw*i+bw/2,ly(v),1.7,{f:o.cl||C.a2});});
+ for(let i=0;i<=4;i++){const v=lm*i/4;s+=T(F.x1+7,ly(v)+3.5,(o.fl||kf)(v),{s:9,f:o.cl||C.a2,op:.85});}
+ if(o.capL)s+=T(0,F.y0-11,o.capL,{s:8,ls:'.12em',w:700});
+ if(o.capR)s+=T(w,F.y0-11,o.capR,{a:'end',s:8,ls:'.12em',w:700,f:o.cl||C.a2});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<640?3:2);
+ return SVG(w,h,s);};
+
+mk.area=o=>w=>{
+ const h=o.h||210,p={l:o.pct?36:46,r:14,t:o.cap?26:14,b:26},n=o.series[0].v.length;
+ const tot=o.series[0].v.map((_,i)=>o.series.reduce((s,x)=>s+x.v[i],0));
+ const yMax=o.pct?100:nice(Math.max(...tot));
+ const F=frame(w,h,p,yMax,o.pct?(v=>v.toFixed(0)+'%'):(o.f||kf));
+ let s=F.g;const X=i=>F.x0+(F.x1-F.x0)*i/(n-1);
+ let acc=new Array(n).fill(0);
+ o.series.forEach(sr=>{
+  const lo=acc.slice(),hi=acc.map((v,i)=>v+(o.pct?sr.v[i]/tot[i]*100:sr.v[i]));
+  let d='M'+X(0)+' '+F.sy(hi[0]);
+  for(let i=1;i<n;i++)d+='L'+X(i).toFixed(1)+' '+F.sy(hi[i]).toFixed(1);
+  for(let i=n-1;i>=0;i--)d+='L'+X(i).toFixed(1)+' '+F.sy(lo[i]).toFixed(1);
+  s+=PA(d+'Z',{f:sr.c,op:sr.op||.85});acc=hi;});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ for(let i=0;i<n;i+=w<520?5:3)s+=T(X(i),F.y1+15,String(D.day[i]),{a:'middle',s:9});
+ return SVG(w,h,s);};
+
+mk.stackcol=o=>w=>{
+ const h=o.h||200,p={l:o.pct?36:46,r:14,t:14,b:26},n=o.series[0].v.length;
+ const tot=o.series[0].v.map((_,i)=>o.series.reduce((s,x)=>s+x.v[i],0));
+ const F=frame(w,h,p,o.pct?100:nice(Math.max(...tot)),o.pct?(v=>v.toFixed(0)+'%'):(o.f||kf));
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.66,26);
+ for(let i=0;i<n;i++){let acc=0;const x=F.x0+bw*i+(bw-bar)/2;
+  o.series.forEach(sr=>{const v=o.pct?sr.v[i]/tot[i]*100:sr.v[i];
+   s+=RC(x,F.sy(acc+v),bar,F.sy(acc)-F.sy(acc+v),{f:sr.c,rx:1.5,op:.9});acc+=v;});}
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<520?4:3);
+ return SVG(w,h,s);};
+
+mk.hbar=o=>w=>{
+ const R=o.rows,rh=o.rh||30,pt=o.head?20:6,h=pt+R.length*rh+(o.foot?18:4);
+ const lw=o.lw||Math.min(150,w*.32),bx=lw+10,bw=w-bx-(o.vw||62);
+ const mx=Math.max(...R.map(r=>r.v));
+ let s=o.head?T(0,11,o.head,{s:8.5,ls:'.12em',w:700})+T(w,11,o.head2||'',{a:'end',s:8.5,ls:'.12em',w:700}):'';
+ R.forEach((r,i)=>{const y=pt+i*rh;
+  s+=T(0,y+rh/2+4,r.n,{s:11,f:C.ink,w:500});
+  s+=RC(bx,y+rh/2-7,bw,14,{f:C.grid,rx:o.sq?0:3});
+  const bl=bw*r.v/mx;
+  s+=RC(bx,y+rh/2-7,bl,14,{f:r.c||o.c||C.a1,rx:o.sq?0:3,op:r.op||.9});
+  s+=T(w,y+rh/2+4,(o.f||kf)(r.v),{a:'end',s:11,f:C.ink,w:600});
+  if(r.sub){const ox=bx+bl+7,lim=w-(o.vw||62)-r.sub.length*5.2;
+   if(ox<=lim)s+=T(ox,y+rh/2+4,r.sub,{s:9.5,f:C.mut});
+   else if(bl>r.sub.length*5.6+18)s+=T(bx+bl-8,y+rh/2+4,r.sub,{a:'end',s:9.5,f:C.inv||'#fff'});}});
+ if(o.foot)s+=T(0,h-4,o.foot,{s:9,f:C.mut});
+ return SVG(w,h,s);};
+
+mk.bullet=o=>w=>{
+ const R=o.rows,rh=o.rh||54,h=R.length*rh+6;
+ const lw=o.lw||Math.min(120,w*.26),bx=lw+8,bw=w-bx-48;
+ let s='';
+ R.forEach((r,i)=>{const y=i*rh+10,p=r.v/r.t;
+  s+=T(0,y+8,r.n,{s:10.5,f:C.ink,w:600});
+  s+=T(0,y+24,(r.f||kf)(r.v),{s:13,f:C.ink,w:700});
+  s+=T(0,y+37,'of '+(r.f||kf)(r.t),{s:9,f:C.mut});
+  s+=RC(bx,y+12,bw,11,{f:C.grid,rx:6});
+  const col=p>=.66?C.pos:p>=.45?C.a2:C.neg;
+  s+=RC(bx,y+12,bw*Math.min(p,1),11,{f:col,rx:6});
+  if(o.mark!=null){const mx=bx+bw*o.mark;s+=LN(mx,y+6,mx,y+29,{c:C.ink,w:1.6});
+   if(i===0)s+=T(mx,y+3,o.markLabel||'',{a:'middle',s:8.5,f:C.ink,w:700});}
+  s+=T(w,y+23,Math.round(p*100)+'%',{a:'end',s:14,f:col,w:700});
+  if(i<R.length-1)s+=LN(0,y+rh-8,w,y+rh-8,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.donut=o=>w=>{
+ const h=o.h||190,cx=Math.min(h/2+4,w*.3),cy=h/2,R=Math.min(h/2-8,68),r0=R*.62;
+ const tot=o.segs.reduce((s,x)=>s+x.v,0);let a=-Math.PI/2,s='';
+ o.segs.forEach(g=>{const a1=a+2*Math.PI*g.v/tot;
+  const p0=[cx+R*Math.cos(a),cy+R*Math.sin(a)],p1=[cx+R*Math.cos(a1),cy+R*Math.sin(a1)];
+  const q0=[cx+r0*Math.cos(a1),cy+r0*Math.sin(a1)],q1=[cx+r0*Math.cos(a),cy+r0*Math.sin(a)];
+  const big=a1-a>Math.PI?1:0;
+  s+=PA(`M${p0[0].toFixed(2)} ${p0[1].toFixed(2)}A${R} ${R} 0 ${big} 1 ${p1[0].toFixed(2)} ${p1[1].toFixed(2)}L${q0[0].toFixed(2)} ${q0[1].toFixed(2)}A${r0} ${r0} 0 ${big} 0 ${q1[0].toFixed(2)} ${q1[1].toFixed(2)}Z`,{f:g.c,op:.92});
+  a=a1;});
+ if(o.center){s+=T(cx,cy-2,o.center,{a:'middle',s:17,f:C.ink,w:700});
+  s+=T(cx,cy+13,o.centerSub||'',{a:'middle',s:9,f:C.mut,ls:'.08em'});}
+ const lx=cx+R+22;let ly=cy-(o.segs.length*20)/2+10;
+ o.segs.forEach(g=>{s+=RC(lx,ly-8,9,9,{f:g.c,rx:2});
+  s+=T(lx+15,ly,g.n,{s:10.5,f:C.ink});
+  s+=T(w,ly,(g.v/tot*100).toFixed(1)+'%',{a:'end',s:10.5,f:C.ink,w:600});ly+=20;});
+ return SVG(w,h,s);};
+
+mk.heat=o=>w=>{
+ const rows=o.rows,cols=o.cols,lw=o.lw||Math.min(120,w*.15);
+ const cw=(w-lw-(o.med?46:6))/cols.length,rh=o.rh||30,ht=22;
+ const h=ht+rows.length*rh+(o.foot?16:6);let s='';
+ cols.forEach((c,i)=>{s+=T(lw+cw*i+cw/2,11,c,{a:'middle',s:9,w:600});});
+ if(o.med)s+=T(w,11,'MED',{a:'end',s:8.5,ls:'.1em',w:700});
+ rows.forEach((r,ri)=>{const y=ht+ri*rh,vals=cols.map((_,ci)=>o.get(ri,ci));
+  const mid=median(vals),sc=Math.max(...vals.filter(x=>x!=null).map(x=>Math.abs(x/mid-1)))||1;
+  s+=T(0,y+rh/2+4,r.n,{s:10.5,f:C.ink,w:600});
+  vals.forEach((v,ci)=>{const x=lw+cw*ci;
+   if(v==null){s+=RC(x+1,y+2,cw-3,rh-6,{st:C.grid});s+=T(x+cw/2,y+rh/2+4,'—',{a:'middle',s:10,f:C.mut});return;}
+   const rel=(v/mid-1)*(r.d||0),t=Math.min(1,Math.abs(v/mid-1)/sc);
+   const col=r.d===0?C.mut:(rel>=0?C.a1:C.neg),op=r.d===0?.16:0.05+t*.72;
+   s+=RC(x+1,y+2,cw-3,rh-6,{f:col,rx:2,op:op.toFixed(3)});
+   s+=T(x+cw/2,y+rh/2+4,(r.f||kf)(v),{a:'middle',s:9.8,w:600,f:(r.d!==0&&op>.45)?(C.inv||'#fff'):C.ink});});
+  if(o.med)s+=T(w,y+rh/2+4,(r.f||kf)(mid),{a:'end',s:9.8,f:C.mut,w:600});});
+ if(o.foot)s+=T(0,h-3,o.foot,{s:9,f:C.mut});
+ return SVG(w,h,s);};
+
+mk.funnel=o=>w=>{
+ const S=o.stages,rh=o.rh||52,pt=20,h=pt+S.length*rh+4;
+ const lw=Math.min(160,w*.24),bx=lw+12,bw=w-bx-(o.vw||106);
+ let s=T(bx,10,'SHARE OF PREVIOUS',{s:8.5,ls:'.12em',w:700})+T(w,10,'LOST',{a:'end',s:8.5,ls:'.12em',w:700});
+ S.forEach((x,i)=>{const y=pt+i*rh,pv=i?S[i-1].v:x.v,rt=x.v/pv,lost=pv-x.v;
+  s+=T(0,y+16,x.n,{s:11.5,f:C.ink,w:600});
+  s+=T(0,y+33,x.v.toLocaleString('en-US'),{s:14,f:C.ink,w:700});
+  s+=RC(bx,y+12,bw,16,{f:C.grid,rx:o.sq?0:3});
+  s+=RC(bx,y+12,bw*rt,16,{f:i===0?C.mut:(rt<.2?C.neg:C.a1),rx:o.sq?0:3,op:i===0?.4:.92});
+  const lx=bx+bw*rt,inv=lx+8>bx+bw-44;
+  s+=T(inv?lx-8:lx+8,y+24,(rt*100).toFixed(rt<.1?2:1)+'%',{a:inv?'end':'start',s:11,w:700,f:inv?(C.inv||'#fff'):C.ink});
+  if(i){s+=T(w,y+18,'−'+lost.toLocaleString('en-US'),{a:'end',s:11,f:C.neg,w:600});
+   s+=T(w,y+32,(100-rt*100).toFixed(1)+'%',{a:'end',s:9,f:C.mut});}
+  if(i<S.length-1)s+=LN(0,y+rh-6,w,y+rh-6,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.scatter=o=>w=>{
+ const h=o.h||250,p={l:46,r:16,t:24,b:38};
+ const F=frame(w,h,p,o.yMax,o.fy||kf);
+ let s=F.g;const X=v=>F.x0+(v/o.xMax)*(F.x1-F.x0);
+ for(let i=0;i<=4;i++){const v=o.xMax*i/4;s+=LN(X(v),F.y0,X(v),F.y1,{c:C.grid});
+  s+=T(X(v),F.y1+15,(o.fx||kf)(v),{a:'middle',s:9});}
+ if(o.refx!=null){s+=LN(X(o.refx),F.y0,X(o.refx),F.y1,{c:C.mut,d:'3 3'});}
+ if(o.refy!=null){s+=LN(F.x0,F.sy(o.refy),F.x1,F.sy(o.refy),{c:C.mut,d:'3 3'});
+  if(o.refyL)s+=T(F.x1-2,F.sy(o.refy)-5,o.refyL,{a:'end',s:8.5,f:C.mut,w:600});}
+ o.pts.forEach(q=>{s+=CI(X(q.x),F.sy(Math.min(q.y,o.yMax)),q.r||5,{f:q.c||C.a1,op:q.op||.28});
+  s+=CI(X(q.x),F.sy(Math.min(q.y,o.yMax)),q.r||5,{st:q.c||C.a1,sw:1.3});});
+ if(o.labels){const L=o.pts.filter(q=>q.l).map(q=>({x:X(q.x),y:F.sy(Math.min(q.y,o.yMax)),r:q.r||5,l:q.l}))
+   .sort((a,b)=>a.y-b.y);
+  for(let i=1;i<L.length;i++)if(L[i].y-L[i-1].y<12)L[i].y=L[i-1].y+12;
+  L.forEach(q=>{const rt=q.x<F.x1-110;s+=T(rt?q.x+q.r+6:q.x-q.r-6,q.y+3.5,q.l,{a:rt?'start':'end',s:9.5,f:C.ink,w:600});});}
+ if(o.xLab)s+=T(F.x1,F.y1+30,o.xLab,{a:'end',s:9,f:C.mut});
+ if(o.yLab)s+=T(0,F.y0-10,o.yLab,{s:8,ls:'.12em',w:700});
+ return SVG(w,h,s);};
+
+mk.hist=o=>w=>{
+ const h=o.h||190,p={l:44,r:14,t:16,b:o.sub?40:26},n=o.bins.length;
+ const F=frame(w,h,p,nice(Math.max(...o.bins.map(b=>b.v))),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=bw*.78;
+ o.bins.forEach((b,i)=>{const x=F.x0+bw*i+(bw-bar)/2,y=F.sy(b.v);
+  s+=RC(x,y,bar,F.y1-y,{f:b.c||o.c||C.a1,rx:2,op:.88});
+  s+=T(x+bar/2,y-6,(o.f||kf)(b.v),{a:'middle',s:9.5,f:C.ink,w:600});
+  s+=T(x+bar/2,F.y1+15,b.n,{a:'middle',s:9,f:C.ink,w:500});
+  if(b.sub)s+=T(x+bar/2,F.y1+28,b.sub,{a:'middle',s:9,f:C.mut});});
+ return SVG(w,h,s);};
+
+mk.range=o=>w=>{
+ const R=o.rows,rh=o.rh||34,pt=18,h=pt+R.length*rh+6;
+ const lw=o.lw||Math.min(130,w*.26),bx=lw+10,bw=w-bx-58;
+ const lo=Math.min(...R.map(r=>r.min)),hi=Math.max(...R.map(r=>r.max)),sp=(hi-lo)||1;
+ const X=v=>bx+((v-lo)/sp)*bw;
+ let s=T(0,10,o.head||'',{s:8.5,ls:'.12em',w:700});
+ R.forEach((r,i)=>{const y=pt+i*rh+rh/2;
+  s+=T(0,y+4,r.n,{s:10.5,f:C.ink,w:500});
+  s+=LN(X(r.min),y,X(r.max),y,{c:C.mut,w:1});
+  s+=LN(X(r.min),y-4,X(r.min),y+4,{c:C.mut,w:1});
+  s+=LN(X(r.max),y-4,X(r.max),y+4,{c:C.mut,w:1});
+  s+=RC(X(r.q1),y-7,X(r.q3)-X(r.q1),14,{f:o.c||C.a1,rx:2,op:.22});
+  s+=LN(X(r.med),y-8,X(r.med),y+8,{c:o.c||C.a1,w:2.2});
+  if(r.cur!=null)s+=CI(X(r.cur),y,3.4,{f:C.a2});
+  s+=T(w,y+4,(r.f||kf)(r.med),{a:'end',s:10.5,f:C.ink,w:600});});
+ return SVG(w,h,s);};
+
+mk.butterfly=o=>w=>{
+ const R=o.rows,rh=o.rh||38,pt=22,h=pt+R.length*rh+4;
+ const lw=Math.min(o.lw||140,w*.3),cx=w/2,half=Math.max(26,Math.min(cx-lw/2-50,cx-50));
+ let s=T(0,11,o.la||'A',{s:8.5,f:o.ca||C.a1,w:700,ls:'.13em'})+
+       T(w,11,o.lb||'B',{a:'end',s:8.5,f:o.cb||C.a2,w:700,ls:'.13em'});
+ R.forEach((r,i)=>{const y=pt+i*rh,mx=Math.max(r.a,r.b),aw=r.lo?r.a<=r.b:r.a>=r.b;
+  s+=T(cx,y+12,r.n,{a:'middle',s:10.5,f:C.ink,w:600});
+  const al=half*r.a/mx,bl=half*r.b/mx;
+  s+=RC(cx-lw/2-8-al,y+17,al,13,{f:o.ca||C.a1,rx:2,op:aw?.92:.3});
+  s+=RC(cx+lw/2+8,y+17,bl,13,{f:o.cb||C.a2,rx:2,op:aw?.3:.92});
+  s+=T(cx-lw/2-8-al-6,y+27,(r.f||kf)(r.a),{a:'end',s:10,f:C.ink,w:aw?700:500});
+  s+=T(cx+lw/2+8+bl+6,y+27,(r.f||kf)(r.b),{s:10,f:C.ink,w:aw?500:700});
+  if(i<R.length-1)s+=LN(0,y+rh-4,w,y+rh-4,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.pareto=o=>w=>{
+ const K=o.items.slice().sort((a,b)=>b.v-a.v),tot=K.reduce((s,c)=>s+c.v,0);
+ const h=o.h||270,p={l:48,r:42,t:20,b:52},n=K.length;
+ const F=frame(w,h,p,nice(K[0].v),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.56,46);let run=0;const pts=[];
+ K.forEach((c,i)=>{const x=F.x0+bw*i+(bw-bar)/2,y=F.sy(c.v);
+  s+=RC(x,y,bar,F.y1-y,{f:c.c||C.a1,rx:3,op:.88});run+=c.v;
+  pts.push([F.x0+bw*i+bw/2,F.y1-(run/tot)*(F.y1-F.y0)]);
+  s+=T(F.x0+bw*i+bw/2,F.y1+16,c.n,{a:'middle',s:9,f:C.ink,w:600});
+  s+=T(F.x0+bw*i+bw/2,F.y1+28,(c.v/tot*100).toFixed(1)+'%',{a:'middle',s:9,f:C.mut,w:600});});
+ s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.ink,w:1.8});
+ pts.forEach(q=>{s+=CI(q[0],q[1],2.8,{f:C.card||'#fff',st:C.ink,sw:1.6});});
+ const y80=F.y1-.8*(F.y1-F.y0);
+ s+=LN(F.x0,y80,F.x1,y80,{c:C.neg,d:'4 4'});s+=T(F.x1-2,y80-5,'80%',{a:'end',s:9,f:C.neg,w:700});
+ for(let i=0;i<=4;i++){const v=25*i;s+=T(F.x1+7,F.y1-(v/100)*(F.y1-F.y0)+3.5,v+'%',{s:9});}
+ return SVG(w,h,s);};
+
+mk.control=o=>w=>{
+ const v=o.v.filter(x=>x!=null),mu=mean(v),sd=sdev(v),up=mu+2*sd,lo=Math.max(0,mu-2*sd);
+ const h=o.h||236,p={l:50,r:14,t:24,b:26},n=o.v.length;
+ const F=frame(w,h,p,nice(Math.max(...v,up)),o.f||kf);
+ let s=F.g;const X=i=>F.x0+(F.x1-F.x0)*i/(n-1);
+ s+=RC(F.x0,F.sy(up),F.x1-F.x0,F.sy(lo)-F.sy(up),{f:C.a1,op:.05});
+ [[up,'+2σ',C.neg],[mu,'mean',C.ink],[lo,'−2σ',C.neg]].forEach(([y,t,c])=>{
+  s+=LN(F.x0,F.sy(y),F.x1,F.sy(y),{c,d:y===mu?'':'4 4',w:y===mu?1.2:1});
+  const lb=t+' '+(o.f||kf)(y);
+  s+=RC(F.x0+2,F.sy(y)-11,lb.length*5.2+8,14,{f:C.card||'#fff',rx:3,op:.9});
+  s+=T(F.x0+6,F.sy(y)-1,lb,{s:8.5,f:c,w:600});});
+ const P=o.v.map((x,i)=>x==null?null:[X(i),F.sy(x),x,D.day[i]]).filter(Boolean);
+ s+=PA(P.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.a1,w:1.9});
+ const outs=[];
+ P.forEach(q=>{const bad=q[2]>up||q[2]<lo;s+=CI(q[0],q[1],bad?4.2:2.2,{f:bad?C.neg:C.a1});
+  if(bad){s+=CI(q[0],q[1],7.5,{st:C.neg,sw:1.1,op:.5});outs.push(q);}});
+ let pb=null;
+ outs.forEach((q,k)=>{const near=k>0&&q[0]-outs[k-1][0]<60,below=near?!pb:(q[1]<F.y0+34);pb=below;
+  const ax=q[0]>F.x1-40?'end':(q[0]<F.x0+40?'start':'middle');
+  s+=T(ax==='end'?q[0]+6:ax==='start'?q[0]-6:q[0],below?q[1]+17:q[1]-12,q[3]+' Aug',{a:ax,s:9,f:C.neg,w:700});});
+ if(o.cap)s+=T(0,F.y0-10,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<560?4:3);
+ return SVG(w,h,s);};
+
+mk.small=o=>w=>{
+ const P=o.panels,cols=o.cols||(w>1000?4:w>640?2:1),pw=w/cols,ph=o.ph||124;
+ const h=ph*Math.ceil(P.length/cols);let s='';
+ P.forEach((p,i)=>{const ox=(i%cols)*pw,oy=Math.floor(i/cols)*ph;
+  const x0=ox+2,x1=ox+pw-18,y0=oy+36,y1=oy+ph-24;
+  const c=p.v.filter(x=>x!=null),mn=Math.min(...c),mx=Math.max(...c);
+  const lo=p.k==='bar'?0:mn-(mx-mn)*.15,hi=mx+(mx-lo)*.14,Y=v=>y1-((v-lo)/(hi-lo))*(y1-y0);
+  s+=T(x0,oy+14,p.t,{s:10,f:C.ink,w:600});
+  s+=T(x0,oy+30,(p.f||kf)(c[c.length-1]),{s:14,f:C.ink,w:700});
+  s+=LN(x0,y1,x1,y1,{c:C.axis});
+  const n=p.v.length,bw=(x1-x0)/n,mi=p.v.indexOf(mx);
+  if(p.k==='bar'){p.v.forEach((v,j)=>{if(v==null){s+=RC(x0+bw*j+bw*.16,y1-4,bw*.68,4,{f:C.grid});return;}
+    s+=RC(x0+bw*j+bw*.16,Y(v),bw*.68,y1-Y(v),{f:p.c||C.a1,rx:1.5,op:j===mi?.92:.3});});}
+  else{const pts=p.v.map((v,j)=>v==null?null:[x0+bw*j+bw/2,Y(v)]).filter(Boolean);
+   s+=PA(pts.map((q,j)=>(j?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:p.c||C.a1,w:1.6});
+   s+=CI(pts[pts.length-1][0],pts[pts.length-1][1],2.4,{f:p.c||C.a1});
+   s+=CI(x0+bw*mi+bw/2,Y(mx),2.4,{f:C.card||'#fff',st:C.a2,sw:1.5});}
+  s+=T(x1,oy+30,(p.f||kf)(mx),{a:'end',s:9,f:C.a2,w:700});
+  s+=T(x0,y1+13,'1 Aug',{s:8.5,f:C.mut});s+=T(x1,y1+13,'21 Aug',{a:'end',s:8.5,f:C.mut});});
+ return SVG(w,h,s);};
+
+mk.dumbbell=o=>w=>{
+ const R=o.rows,rh=o.rh||34,pt=18,h=pt+R.length*rh+6;
+ const lw=o.lw||Math.min(140,w*.3),bx=lw+10,bw=w-bx-62;
+ const mx=Math.max(...R.flatMap(r=>[r.a,r.b]));
+ let s=T(bx,10,o.head||'',{s:8.5,ls:'.12em',w:700});
+ R.forEach((r,i)=>{const y=pt+i*rh+rh/2,xa=bx+bw*r.a/mx,xb=bx+bw*r.b/mx;
+  s+=T(0,y+4,r.n,{s:10.5,f:C.ink,w:500});
+  s+=LN(xa,y,xb,y,{c:C.grid,w:3});
+  s+=CI(xa,y,4.2,{f:o.ca||C.mut});s+=CI(xb,y,4.2,{f:o.cb||C.a1});
+  s+=T(w,y+4,(r.f||kf)(r.b),{a:'end',s:10.5,f:C.ink,w:600});});
+ return SVG(w,h,s);};
+
+mk.bridge=o=>w=>{
+ const S=o.segs,tot=o.total,h=S.length*40+64;
+ let s=T(0,11,o.head||'',{s:8.5,ls:'.12em',w:700}),acc=0;
+ s+=RC(0,20,w,24,{f:C.grid,rx:3});
+ S.forEach(g=>{const x=w*acc/tot,bw=w*g.v/tot;
+  s+=RC(x,20,Math.max(bw-1.5,1),24,{f:g.c,rx:2,op:g.op||1});acc+=g.v;});
+ S.forEach((g,i)=>{const y=62+i*40;
+  s+=RC(0,y-9,3,18,{f:g.c,rx:2,op:g.op||1});
+  s+=T(11,y+1,g.n,{s:11,f:C.ink,w:600});
+  s+=T(11,y+15,(g.v/tot*100).toFixed(0)+'% of total',{s:9,f:C.mut});
+  s+=T(w,y+4,(o.f||kf)(g.v),{a:'end',s:13,f:g.strong?g.c:C.ink,w:700});});
+ return SVG(w,h,s);};
+
+/* ---------------- boot ---------------- */
+function boot(){
+ const ns=[...document.querySelectorAll('[data-c]')];
+ const paint=()=>ns.forEach(n=>{const f=CH[n.dataset.c];if(!f)return;
+  const w=Math.max(200,Math.round(n.clientWidth));
+  if(n.dataset.w===String(w))return;n.dataset.w=String(w);n.innerHTML=f(w);});
+ let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{ns.forEach(n=>n.dataset.w='');paint();},140);});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{ns.forEach(n=>n.dataset.w='');paint();});
+ paint();
+}
+
+const CH={};
+CH.c1=mk.control({v:D.revenue,f:rk,h:230});
+CH.c2=mk.control({v:D.sessions,f:kf,h:230});
+CH.c3=mk.control({v:D.a2c,f:pc,h:230});
+CH.c4=mk.control({v:D.cps,f:v=>'₹'+v.toFixed(2),h:230});
+const wkRows=(arr,f)=>WEEKS.map(k=>{const v=arr.slice(k.r[0],k.r[1]).filter(x=>x!=null);
+ return {n:k.n,min:Math.min(...v),q1:quart(v,.25),med:median(v),q3:quart(v,.75),max:Math.max(...v),cur:v[v.length-1],f};});
+CH.rng1=mk.range({rows:wkRows(D.roi,xf),head:'DAILY ROI',c:C.a1,rh:38});
+CH.rng2=mk.range({rows:wkRows(D.a2c,pc),head:'ADD-TO-CART RATE',c:C.a2,rh:38});
+CH.hist=w=>{
+ const V=D.revenue.slice(0,20),edges=[0,200000,300000,400000,500000,800000];
+ const bins=edges.slice(0,-1).map((e,i)=>({n:(i===0?'<₹200K':i===4?'>₹500K':rk(e)+'–'+rk(edges[i+1])),
+  v:V.filter(x=>x>=e&&x<edges[i+1]).length}));
+ return mk.hist({h:216,f:v=>v,c:C.a1,bins})(w);};
+CH.s1=mk.scatter({h:250,xMax:80000,yMax:2.5,fx:kf,fy:pc,xLab:'Daily sessions →',yLab:'A2C RATE',
+ refx:45095,refy:1.36,refyL:'mean 1.36%',labels:true,
+ pts:D.day.map((d,i)=>({x:D.sessions[i],y:D.a2c[i],r:D.orders[i]?Math.max(4,Math.sqrt(D.orders[i])*1.4):4,
+  c:(i===18||i===19)?C.a4:C.a1,op:(i===18||i===19)?.6:.28,l:(i===18||i===19)?d+' Aug':null}))});
+CH.s2=mk.scatter({h:250,xMax:60000,yMax:16,fx:rk,fy:xf,xLab:'Daily spend →',yLab:'ROI',
+ refx:48538,refy:6.81,refyL:'mean 6.8×',
+ pts:D.day.map((d,i)=>D.roi[i]==null?null:({x:D.spend[i],y:D.roi[i],
+  r:5+Math.sqrt(D.revenue[i]/680000)*10,c:D.roi[i]>=6.81?C.a3:C.a4,op:.3})).filter(Boolean)});
+const ZM=[['Spend',D.spend],['Sessions',D.sessions],['Add to carts',D.carts],['Orders',D.orders],
+ ['Revenue',D.revenue],['ROI',D.roi],['A2C rate',D.a2c],['Cost / session',D.cps]];
+CH.z=w=>{
+ const stats=ZM.map(([n,a])=>({n,mu:mean(a),sd:sdev(a),a}));
+ const lw=Math.min(118,w*.13),cw=(w-lw-8)/21,rh=28,ht=22,h=ht+ZM.length*rh+18;
+ let s='';
+ for(let i=0;i<21;i++)s+=T(lw+cw*i+cw/2,11,String(D.day[i]),{a:'middle',s:9,w:600});
+ stats.forEach((m,r)=>{const y=ht+r*rh;
+  s+=T(0,y+rh/2+4,m.n,{s:10.5,f:C.ink,w:600});
+  for(let i=0;i<21;i++){const v=m.a[i],x=lw+cw*i;
+   if(v==null){s+=RC(x+1,y+2,cw-2,rh-6,{st:C.grid});s+=T(x+cw/2,y+rh/2+4,'—',{a:'middle',s:9,f:C.mut});continue;}
+   const z=(v-m.mu)/m.sd,t=Math.min(1,Math.abs(z)/2.5);
+   s+=RC(x+1,y+2,cw-2,rh-6,{f:z>=0?C.a1:C.a4,rx:2,op:(0.04+t*.78).toFixed(3)});
+   if(Math.abs(z)>2)s+=RC(x+1,y+2,cw-2,rh-6,{st:C.ink,sw:1.4,rx:2});
+   s+=T(x+cw/2,y+rh/2+4,(z>=0?'+':'−')+Math.abs(z).toFixed(1),
+    {a:'middle',s:9.2,w:600,f:(0.04+t*.78)>.45?'#fff':C.ink});}});
+ s+=T(0,h-4,'Outlined cells exceed ±2σ. Spend rows are shown for context; they are an input, not a result.',{s:9,f:C.mut});
+ return SVG(w,h,s);};
+CH.comp=w=>{
+ const F=[{n:'ads.spend',v:100},{n:'ads.clicks',v:100},{n:'ads.conv_value',v:100},{n:'ga4.sessions',v:100},
+  {n:'ga4.add_to_carts',v:100},{n:'ga4.item_views',v:95.2},{n:'magento.orders',v:95.2},
+  {n:'magento.revenue',v:95.2},{n:'magento.items',v:95.2},{n:'ga4.landing_page',v:88.1}];
+ return mk.hbar({rows:F.map(f=>({n:f.n,v:f.v,c:f.v===100?C.a3:f.v>=95?C.a2:C.a4})),
+  f:pc,head:'FIELD',head2:'NON-NULL',rh:26,vw:52,lw:Math.min(160,w*.34)})(w);};
+document.getElementById('tsum').innerHTML=[['Spend',D.spend,rk],['Sessions',D.sessions,kf],
+ ['Orders',D.orders,v=>Math.round(v)],['Revenue',D.revenue,rk],['ROI',D.roi,xf],['A2C rate',D.a2c,pc],
+ ['Cost / session',D.cps,v=>'₹'+v.toFixed(2)]].map(([n,a,f])=>{
+ const v=a.slice(7).filter(x=>x!=null).sort((x,y)=>x-y);
+ return `<tr><td class="n">${n}</td><td>${f(v[0])}</td><td>${f(median(v))}</td><td>${f(v[v.length-1])}</td></tr>`;}).join('');
+const P=[{n:'W1 · 1–7 Aug',r:[0,7]},{n:'W2 · 8–14 Aug',r:[7,14]},{n:'W3 · 15–20 Aug',r:[14,20]},{n:'Total · 1–20 Aug',r:[0,20]}];
+document.getElementById('trec').innerHTML=P.map(p=>{
+ const b=sum(D.revenue,p.r[0],p.r[1]),a=sum(D.mrev,p.r[0],p.r[1])+sum(D.grev,p.r[0],p.r[1]);
+ const d=b-a,pcx=d/b*100,ab=Math.abs(pcx);
+ const st=ab<5?['PASS',C.pos,'#3E6B4A14']:ab<15?['REVIEW',C.warn,'#8A6A1E14']:['FAIL',C.neg,'#A2423F14'];
+ return `<tr><td class="n">${p.n}</td><td>${rs(b)}</td><td>${rs(a)}</td>
+ <td style="color:${d>=0?'var(--ink)':'var(--neg)'}">${d>=0?'+':'−'}${rs(Math.abs(d))}</td>
+ <td>${pcx>=0?'+':'−'}${ab.toFixed(1)}%</td>
+ <td><span class="rc" style="color:${st[1]};background:${st[2]}">${st[0]}</span></td></tr>`;}).join('');
+const cts=D.googleCts.map((v,i)=>v>100?D.day[i]:null).filter(Boolean);
+const zOut=(a)=>{const m=mean(a),s2=sdev(a);return a.map((v,i)=>v!=null&&Math.abs(v-m)>2*s2?D.day[i]:null).filter(Boolean);};
+const rules=[['Impossible click-to-session','click_to_session &gt; 100%',cts,'HIGH'],
+ ['Session outlier','|z| &gt; 2 · sessions',zOut(D.sessions),'MEDIUM'],
+ ['Revenue outlier','|z| &gt; 2 · revenue',zOut(D.revenue.slice(0,20)),'LOW'],
+ ['Backend sync incomplete','orders is null, past date',[21],'HIGH']];
+const sev={HIGH:[C.neg,'#A2423F14'],MEDIUM:[C.warn,'#8A6A1E14'],LOW:[C.mut,'#767D8514']};
+document.getElementById('tlog').innerHTML=rules.map(([n,c,ds,s2])=>
+ `<tr><td class="n">${n}</td><td class="c2">${c}</td><td style="font-weight:600;color:var(--ink)">${ds.length}</td>
+ <td style="color:var(--mut)">${ds.slice(0,4).join(', ')}${ds.length>4?' +'+(ds.length-4):''}</td>
+ <td><span class="rc" style="color:${sev[s2][0]};background:${sev[s2][1]}">${s2}</span></td></tr>`).join('');
+document.getElementById('tfr').innerHTML=[['Meta Ads','21','2h','OK'],['Google Ads','21','2h','OK'],
+ ['GA4','21','4h','OK'],['Magento orders','20','26h','LATE']].map(([n,r,l,s2])=>
+ `<tr><td class="n">${n}</td><td>${r}</td><td>${l}</td>
+ <td><span class="rc" style="color:${s2==='OK'?C.pos:C.warn};background:${s2==='OK'?'#3E6B4A14':'#8A6A1E14'}">${s2}</span></td></tr>`).join('');
+boot();
+</script>

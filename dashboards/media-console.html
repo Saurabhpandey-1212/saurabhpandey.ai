@@ -1,0 +1,252 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Console — Channel &amp; Pacing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sample.css">
+<style>
+:root{--bg:#EFF1F4;--card:#FFFFFF;--ink:#181B21;--ink2:#454B55;--mut:#7A828D;--line:#E2E5EA;--hair:#EDEFF3;
+ --a1:#3D5A80;--a2:#C1892B;--a3:#2F7A6B;--a4:#A8484A;--r:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 14px/1.5 'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+ font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+svg{display:block}
+.w{max-width:1400px;margin:0 auto;padding:26px clamp(14px,2.6vw,30px) 70px}
+
+.hd{display:flex;align-items:center;gap:18px;margin-bottom:22px;flex-wrap:wrap}
+.hd h1{font-size:24px;font-weight:600;letter-spacing:-.025em}
+.hd h1 span{color:var(--mut);font-weight:400}
+.seg{margin-left:auto;display:flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg b{font-size:12px;font-weight:500;color:var(--mut);padding:7px 14px;border-radius:7px}
+.seg b.on{background:var(--a1);color:#fff;font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);
+ border-radius:999px;padding:7px 13px;font-size:12px;color:var(--ink2)}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--a3)}
+
+.fb{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fb b{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:9px 13px;font-size:12px;font-weight:500;color:var(--ink2)}
+.fb b u{color:var(--mut);text-decoration:none;margin-right:8px;font-size:11px}
+.fb b.on{border-color:var(--a1);box-shadow:inset 0 0 0 1px var(--a1)}
+.fb b.on u{color:var(--a1)}
+
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.c{background:var(--card);border-radius:var(--r);padding:20px 22px 22px;box-shadow:0 1px 2px rgba(24,27,33,.05),0 10px 24px -16px rgba(24,27,33,.22);min-width:0}
+.ch{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.ch h3{font-size:13.5px;font-weight:600;letter-spacing:-.005em}
+.ch p{font-size:11.5px;color:var(--mut);margin-top:4px}
+.lg{margin-left:auto;display:flex;gap:13px;font-size:11.5px;color:var(--ink2);flex:0 0 auto}
+.lg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.lg u{display:inline-block;width:14px;height:2px;margin-right:6px;vertical-align:3px;text-decoration:none}
+
+.kc{background:var(--card);border-radius:var(--r);padding:18px 20px 20px;box-shadow:0 1px 2px rgba(24,27,33,.05),0 10px 24px -16px rgba(24,27,33,.22);position:relative;overflow:hidden}
+.kc:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--a1)}
+.kc.g2:before{background:var(--a2)}.kc.g3:before{background:var(--a3)}.kc.g4:before{background:var(--a4)}
+.kc .l{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.kc .v{font-size:30px;font-weight:600;letter-spacing:-.03em;margin-top:12px}
+.kc .v s{font-size:.45em;color:var(--mut);text-decoration:none;margin-left:2px}
+.kc .d{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;margin-top:10px;
+ padding:3px 8px;border-radius:6px}
+.up{color:#22664C;background:#2F7A6B14}.dn{color:#8E3A3C;background:#A8484A14}.fl{color:var(--mut);background:#7A828D14}
+
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s7{grid-column:span 7}
+.s8{grid-column:span 8}.s12{grid-column:span 12}
+.ft{margin-top:26px;font-size:11.5px;color:var(--mut);display:flex;gap:20px;flex-wrap:wrap}
+.ft code{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--a1);background:var(--card);
+ border:1px solid var(--line);border-radius:5px;padding:2px 6px}
+@media(max-width:1100px){.s3{grid-column:span 6}.s4,.s5,.s7,.s8{grid-column:span 12}}
+@media(max-width:620px){.s3{grid-column:span 12}}
+</style>
+
+<aside class="sp-sample-bar" aria-label="Portfolio sample notice"><a href="../index.html#systems">← Saurabh Pandey</a><span class="sp-sample-label">Interactive concept · illustrative sample data</span></aside>
+<div class="w">
+  <div class="hd">
+    <h1>Media Console <span>· 21 Aug 2026</span></h1>
+    <span class="pill"><i></i>Meta · Google Ads · Magento</span>
+    <div class="seg"><b class="on">Day</b><b>Week</b><b>Month</b></div>
+  </div>
+
+  <div class="fb">
+    <b class="on"><u>Range</u>1–21 Aug 2026</b><b><u>Platform</u>All</b><b><u>Campaign type</u>All</b>
+    <b><u>Objective</u>Conversions</b><b><u>Attribution</u>Platform</b>
+  </div>
+
+  <div class="g">
+    <div class="kc s3"><div class="l">Spend month to date</div><div class="v">₹1.02<s>M</s></div><div class="d fl">49% of ₹2.10M plan</div></div>
+    <div class="kc g2 s3"><div class="l">Attributed revenue</div><div class="v">₹6.70<s>M</s></div><div class="d up">▲ 6.6× ROAS</div></div>
+    <div class="kc g3 s3"><div class="l">Google ROAS</div><div class="v">8.3<s>×</s></div><div class="d up">▲ 76% of days lead</div></div>
+    <div class="kc g4 s3"><div class="l">Meta ROAS</div><div class="v">4.7<s>×</s></div><div class="d dn">▼ 29% below blended</div></div>
+
+    <div class="c s7">
+      <div class="ch"><div><h3>Campaign concentration</h3><p>Revenue by campaign with cumulative share</p></div>
+        <div class="lg"><span><i style="background:var(--a1)"></i>Meta</span><span><i style="background:var(--a2)"></i>Google</span><span><u style="background:#181B21"></u>Cumulative</span></div></div>
+      <div data-c="par"></div>
+    </div>
+
+    <div class="c s5">
+      <div class="ch"><div><h3>Meta against Google</h3><p>21 August, per metric</p></div></div>
+      <div data-c="fly"></div>
+    </div>
+
+    <div class="c s8">
+      <div class="ch"><div><h3>Revenue control chart</h3><p>Mean and ±2 standard deviations across 20 complete days</p></div>
+        <div class="lg"><span><u style="background:var(--a1)"></u>Daily</span><span><u style="background:#A8484A"></u>Limits</span></div></div>
+      <div data-c="ctl"></div>
+    </div>
+
+    <div class="c s4">
+      <div class="ch"><div><h3>Week on week</h3><p>Attributed revenue per day</p></div>
+        <div class="lg"><span><i style="background:var(--a1)"></i>Meta</span><span><i style="background:var(--a2)"></i>Google</span></div></div>
+      <div data-c="wow"></div>
+    </div>
+  </div>
+
+  <div class="ft"><span>Template 04 · Media Console</span>
+    <span style="margin-left:auto">Looker: <code>looker_column</code> + running_total line · <code>looker_bar</code> negated series · <code>looker_line</code> + reference lines · <code>looker_column</code> pivoted</span></div>
+</div>
+
+<script>
+const C={mut:'#7A828D',grid:'#EDEFF3',axis:'#E2E5EA',ink:'#181B21',ink2:'#454B55',
+ a1:'#3D5A80',a2:'#C1892B',a3:'#2F7A6B',a4:'#A8484A'};
+
+/* ---- verified daily series (reconciles to MTD spend 1,019,310 / revenue 6,937,242) ---- */
+const D={
+ day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+ metaSpend:[22671,22128,24723,28722,25626,28669,24634,17526,22033,18586,26063,19985,21206,25089,24548,30693,18505,19526,21590,29054,25689],
+ googleSpend:[23016,18013,26018,21015,22016,23016,25018,30021,26018,26018,27019,23016,28020,27019,29020,21015,29020,18369,27697,25446,26234],
+ revenue:[161000,365000,319000,316000,393000,284000,303000,271000,680000,283000,450000,283000,435000,464000,497000,385000,328000,301000,211000,208000,null],
+ sessions:[66000,37000,35000,27000,27000,33000,38000,39000,46000,47000,48000,45000,46000,53000,53000,49000,31000,40000,70000,72000,41000],
+ carts:[653,668,698,602,606,609,581,499,572,588,818,624,650,680,712,687,482,473,488,553,505],
+ a2c:[1.0,1.8,2.0,2.2,2.2,1.8,1.5,1.3,1.2,1.3,1.7,1.4,1.4,1.3,1.3,1.4,1.6,1.2,0.7,0.8,1.2],
+ orders:[18,22,24,22,24,21,22,18,32,27,39,29,34,41,37,40,30,20,20,13,null],
+ c2c:[2.8,3.3,3.4,3.7,4.0,3.4,3.8,3.6,5.6,4.6,4.8,4.6,5.2,6.0,5.2,5.8,6.2,4.2,4.1,2.4,null],
+ cps:[0.69,1.08,1.43,1.83,1.78,1.55,1.31,1.23,1.04,0.95,1.12,0.96,1.09,0.97,1.01,1.06,1.54,0.93,0.70,0.75,1.28],
+ metaRoas:[2.4,2.7,6.2,2.8,7.1,5.3,1.5,5.9,8.1,5.5,7.1,7.0,8.5,7.1,6.2,3.2,6.0,1.9,3.9,1.9,4.3],
+ googleRoas:[8.72,11.20,5.36,8.45,16.20,6.11,15.17,6.47,11.75,7.92,6.98,4.65,12.10,8.40,4.91,7.64,7.92,12.20,2.47,3.26,8.81],
+ metaCts:[86.3,86.3,86.7,89.3,88.8,87.2,88.0,89.2,89.2,87.7,90.2,90.0,87.8,88.7,90.7,89.5,87.3,87.4,87.8,89.5,87.4],
+ googleCts:[122.5,111.6,97.9,103.2,101.0,103.2,103.7,101.8,102.6,104.1,100.7,98.9,98.1,102.3,103.3,108.1,92.1,107.6,95.2,95.7,94.8]
+};
+D.spend=D.day.map((_,i)=>D.metaSpend[i]+D.googleSpend[i]);
+D.roi=D.day.map((_,i)=>D.revenue[i]?D.revenue[i]/D.spend[i]:null);
+D.aov=D.day.map((_,i)=>D.orders[i]?D.revenue[i]/D.orders[i]:null);
+D.mrev=D.day.map((_,i)=>D.metaSpend[i]*D.metaRoas[i]);
+D.grev=D.day.map((_,i)=>D.googleSpend[i]*D.googleRoas[i]);
+const CAMP=[
+ {n:'Performance Max',sh:'PMax',p:'G',s:208818,r:1461000,o:105},
+ {n:'Brand Search',sh:'Brand',p:'G',s:78307,r:1441000,o:104},
+ {n:'Shopping non-brand',sh:'Shopping',p:'G',s:156613,r:1081000,o:78},
+ {n:'Advantage+ Shopping',sh:'Adv+',p:'M',s:188961,r:926000,o:72},
+ {n:'Retargeting dynamic',sh:'Retarget',p:'M',s:99453,r:875000,o:68},
+ {n:'Prospecting broad',sh:'Prospect',p:'M',s:149180,r:462000,o:36},
+ {n:'Search non-brand',sh:'Search',p:'G',s:78306,r:360000,o:25},
+ {n:'Reach & video',sh:'Reach',p:'M',s:59672,r:89000,o:8}];
+
+/* ---- svg helpers ---- */
+const FF="'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif";
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" fill="${o.f||C.mut}" font-size="${o.s||10}" font-weight="${o.w||500}" text-anchor="${o.a||'start'}" font-family="${o.ff||FF}" style="font-variant-numeric:tabular-nums"${o.ls?` letter-spacing="${o.ls}"`:''}>${t}</text>`;
+const LN=(a,b,c2,d,o={})=>`<line x1="${a}" y1="${b}" x2="${c2}" y2="${d}" stroke="${o.c||C.grid}" stroke-width="${o.w||1}"${o.d?` stroke-dasharray="${o.d}"`:''}/>`;
+const RC=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${Math.max(0,h)}" fill="${o.f||'none'}"${o.rx?` rx="${o.rx}"`:''}${o.op!=null?` opacity="${o.op}"`:''}${o.st?` stroke="${o.st}" stroke-width="${o.sw||1}"`:''}/>`;
+const PA=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.c||'none'}" stroke-width="${o.w||1.7}" stroke-linejoin="round" stroke-linecap="round"${o.d?` stroke-dasharray="${o.d}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const CI=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||'none'}"${o.st?` stroke="${o.st}" stroke-width="${o.sw||1.5}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const SVG=(w,h,i)=>`<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMidYMid meet">${i}</svg>`;
+const kf=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1000?Math.round(n/1000)+'K':Math.round(n);
+const rs=n=>'₹'+Math.round(n).toLocaleString('en-US');
+const nice=(v,s=4)=>{if(v<=0)return 1;const r=v/s,m=Math.pow(10,Math.floor(Math.log10(r))),k=r/m;
+ return (k<=1?1:k<=2?2:k<=2.5?2.5:k<=5?5:10)*m*s;};
+function frame(w,h,p,yMax,fmt,steps){
+ steps=steps||4;const x0=p.l,x1=w-p.r,y0=p.t,y1=h-p.b;let g='';
+ for(let i=0;i<=steps;i++){const v=yMax*i/steps,y=y1-(y1-y0)*i/steps;
+  g+=LN(x0,y,x1,y,{c:i?C.grid:C.axis});g+=T(x0-8,y+3.5,fmt(v),{a:'end',s:9.5});}
+ return {g,x0,x1,y0,y1,sy:v=>y1-(v/yMax)*(y1-y0)};
+}
+function days(x0,x1,y,n,step){let g='';for(let i=0;i<n;i+=step)
+ g+=T(x0+(x1-x0)*(i+.5)/n,y,String(D.day[i]),{a:'middle',s:9.5});return g;}
+function spark(v,w,h,col,fill){
+ const c=v.filter(x=>x!=null),mn=Math.min(...c),mx=Math.max(...c),r=(mx-mn)||1;
+ const p=v.map((x,i)=>x==null?null:[2+(w-4)*i/(v.length-1),h-3-((x-mn)/r)*(h-7)]).filter(Boolean);
+ const d=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+ let s='';
+ if(fill!==false) s+=PA(d+`L${p[p.length-1][0].toFixed(1)} ${h}L${p[0][0].toFixed(1)} ${h}Z`,{f:col,op:.12});
+ s+=PA(d,{c:col,w:1.5})+CI(p[p.length-1][0],p[p.length-1][1],2.3,{f:col});
+ return SVG(w,h,s);
+}
+/* ---- render loop ---- */
+const CH={};
+function boot(){
+ const ns=[...document.querySelectorAll('[data-c]')];
+ const paint=()=>ns.forEach(n=>{const f=CH[n.dataset.c];if(!f)return;
+  const w=Math.max(200,Math.round(n.clientWidth));
+  if(n.dataset.w===String(w))return;n.dataset.w=String(w);n.innerHTML=f(w);});
+ let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{ns.forEach(n=>n.dataset.w='');paint();},140);});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{ns.forEach(n=>n.dataset.w='');paint();});
+ paint();
+}
+
+CH.par=w=>{
+ const K=CAMP.slice().sort((a,b)=>b.r-a.r),tot=K.reduce((s,c)=>s+c.r,0);
+ const h=290,p={l:48,r:44,t:22,b:56},n=K.length;
+ const F=frame(w,h,p,nice(K[0].r),v=>'₹'+kf(v));
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.56,50);let run=0;const pts=[];
+ K.forEach((c,i)=>{const x=F.x0+bw*i+(bw-bar)/2,y=F.sy(c.r);
+  s+=RC(x,y,bar,F.y1-y,{f:c.p==='M'?C.a1:C.a2,rx:4,op:.9});
+  run+=c.r;pts.push([F.x0+bw*i+bw/2,F.y1-(run/tot)*(F.y1-F.y0)]);
+  s+=T(F.x0+bw*i+bw/2,F.y1+17,c.sh,{a:'middle',s:9.5,f:C.ink,w:600});
+  s+=T(F.x0+bw*i+bw/2,F.y1+30,(c.r/tot*100).toFixed(1)+'%',{a:'middle',s:9.5,f:C.mut,w:600});});
+ s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.ink,w:1.9});
+ pts.forEach(q=>{s+=CI(q[0],q[1],3,{f:'#fff',st:C.ink,sw:1.7});});
+ const y80=F.y1-.8*(F.y1-F.y0);
+ s+=LN(F.x0,y80,F.x1,y80,{c:C.a4,d:'4 4'});s+=T(F.x1-2,y80-6,'80%',{a:'end',s:9,f:C.a4,w:700});
+ for(let i=0;i<=4;i++){const v=25*i;s+=T(F.x1+8,F.y1-(v/100)*(F.y1-F.y0)+3.5,v+'%',{s:9.5});}
+ return SVG(w,h,s);
+};
+CH.fly=w=>{
+ const R=[{n:'Spend',m:25689,g:26234,f:v=>'₹'+kf(v)},{n:'Click-to-session',m:87.4,g:94.9,f:v=>v.toFixed(1)+'%'},
+  {n:'Cost per click',m:3.8,g:3.6,f:v=>'₹'+v.toFixed(2),lo:1},{n:'Click-through rate',m:3.1,g:4.1,f:v=>v.toFixed(1)+'%'},
+  {n:'Orders',m:7,g:12,f:v=>v},{n:'Revenue',m:109440,g:197892,f:v=>'₹'+kf(v)},
+  {n:'ROAS',m:4.3,g:7.5,f:v=>v.toFixed(1)+'×'}];
+ const rh=40,pt=24,h=pt+R.length*rh+4,lw=Math.min(140,w*.3),cx=w/2;
+ const half=Math.max(30,Math.min(cx-lw/2-52,cx-52));
+ let s=T(0,12,'META',{s:9,f:C.a1,w:700,ls:'.13em'})+T(w,12,'GOOGLE',{a:'end',s:9,f:C.a2,w:700,ls:'.13em'});
+ R.forEach((r,i)=>{const y=pt+i*rh,mx=Math.max(r.m,r.g),mw=r.lo?r.m<=r.g:r.m>=r.g;
+  s+=T(cx,y+13,r.n,{a:'middle',s:10.5,f:C.ink,w:600});
+  const ml=half*r.m/mx,gl=half*r.g/mx;
+  s+=RC(cx-lw/2-8-ml,y+18,ml,13,{f:C.a1,rx:3,op:mw?.92:.32});
+  s+=RC(cx+lw/2+8,y+18,gl,13,{f:C.a2,rx:3,op:mw?.32:.92});
+  s+=T(cx-lw/2-8-ml-6,y+28,r.f(r.m),{a:'end',s:10,f:C.ink,w:mw?700:500});
+  s+=T(cx+lw/2+8+gl+6,y+28,r.f(r.g),{s:10,f:C.ink,w:mw?500:700});
+  if(i<R.length-1)s+=LN(0,y+rh-4,w,y+rh-4,{c:C.grid});});
+ return SVG(w,h,s);
+};
+CH.ctl=w=>{
+ const v=D.revenue.slice(0,20),mu=v.reduce((a,b)=>a+b,0)/20;
+ const sd=Math.sqrt(v.reduce((a,b)=>a+(b-mu)*(b-mu),0)/20),up=mu+2*sd,lo=Math.max(0,mu-2*sd);
+ const h=262,p={l:52,r:16,t:26,b:32},n=21;
+ const F=frame(w,h,p,nice(Math.max(...v,up)),x=>'₹'+kf(x));
+ let s=F.g;const X=i=>F.x0+(F.x1-F.x0)*i/(n-1);
+ s+=RC(F.x0,F.sy(up),F.x1-F.x0,F.sy(lo)-F.sy(up),{f:C.a1,op:.05});
+ [[up,'+2σ ₹'+kf(up),C.a4],[mu,'mean ₹'+kf(mu),C.ink],[lo,'−2σ ₹'+kf(lo),C.a4]].forEach(([y,t,c])=>{
+  s+=LN(F.x0,F.sy(y),F.x1,F.sy(y),{c,d:y===mu?'':'4 4',w:y===mu?1.3:1});
+  s+=RC(F.x0+2,F.sy(y)-11,t.length*5.4+8,14,{f:'#fff',rx:3,op:.92});
+  s+=T(F.x0+6,F.sy(y)-1,t,{s:9,f:c,w:600});});
+ const P=D.revenue.map((x,i)=>x==null?null:[X(i),F.sy(x),x,D.day[i]]).filter(Boolean);
+ s+=PA(P.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.a1,w:2});
+ P.forEach(q=>{const o=q[2]>up||q[2]<lo;s+=CI(q[0],q[1],o?4.4:2.4,{f:o?C.a4:C.a1});
+  if(o){s+=CI(q[0],q[1],8,{st:C.a4,sw:1.2,op:.5});s+=T(q[0],q[1]-13,q[3]+' Aug',{a:'middle',s:9.5,f:C.a4,w:700});}});
+ s+=days(F.x0,F.x1,F.y1+16,n,w<700?3:2);
+ return SVG(w,h,s);
+};
+CH.wow=w=>{
+ const R=[[0,7,'W1'],[7,14,'W2'],[14,20,'W3']];
+ const pd=(a,i,j)=>a.slice(i,j).reduce((s,x)=>s+(x||0),0)/(j-i);
+ const Dt=R.map(([i,j,n])=>({n,m:pd(D.mrev,i,j),g:pd(D.grev,i,j),d:j-i}));
+ const h=248,p={l:50,r:14,t:22,b:44};
+ const F=frame(w,h,p,nice(Math.max(...Dt.flatMap(d=>[d.m,d.g]))),v=>'₹'+kf(v));
+ let s=F.g;const gw=(F.x1-F.x0)/3,bar=Math.min(gw*.3,40);
+ Dt.forEach((d,i)=>{const cx=F.x0+gw*i+gw/2;
+  [[d.m,C.a1,-1],[d.g,C.a2,1]].forEach(([v,c,sd2])=>{const x=cx+(sd2<0?-bar-3:3),y=F.sy(v);
+   s+=RC(x,y,bar,F.y1-y,{f:c,rx:3,op:.92});s+=T(x+bar/2,y-6,'₹'+kf(v),{a:'middle',s:9.5,f:C.ink,w:600});});
+  s+=T(cx,F.y1+17,d.n,{a:'middle',s:11,f:C.ink,w:600});
+  s+=T(cx,F.y1+30,d.d+' days',{a:'middle',s:9,f:C.mut});});
+ return SVG(w,h,s);
+};
+boot();
+</script>

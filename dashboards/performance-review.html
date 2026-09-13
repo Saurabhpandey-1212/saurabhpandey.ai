@@ -1,0 +1,689 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Board Deck — Monthly Performance Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="sample.css">
+<style>
+:root{--bg:#EDEBE6;--page:#FFFDF9;--ink:#191A17;--ink2:#43463F;--mut:#7E8378;--line:#DCD8CF;--hair:#EAE7E0;
+ --a1:#28504A;--a2:#A9762A;--a3:#3D5C7A;--a4:#9C4438;--pos:#28504A;--neg:#9C4438}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 13.5px/1.5 'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+ font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;padding:26px clamp(10px,2vw,26px) 60px}
+svg{display:block}
+.deck{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.pg{background:var(--page);border:1px solid var(--line);border-radius:4px;padding:32px clamp(20px,3.4vw,44px) 36px;
+ box-shadow:0 1px 2px rgba(25,26,23,.05),0 20px 48px -30px rgba(25,26,23,.4)}
+.ph{display:flex;align-items:baseline;gap:18px;padding-bottom:14px;border-bottom:1.5px solid var(--ink);margin-bottom:24px;flex-wrap:wrap}
+.ph .no{font:600 10px/1 'Inter';letter-spacing:.2em;color:var(--a2)}
+.ph h2{font:400 clamp(22px,2.8vw,32px)/1.05 'Instrument Serif',Georgia,serif;letter-spacing:-.01em}
+.ph h2 em{font-style:italic;color:var(--a1)}
+.ph .r{margin-left:auto;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.cover{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1.5px solid var(--ink);margin-bottom:24px}
+.cover h1{font:400 clamp(34px,5vw,54px)/1 'Instrument Serif',Georgia,serif;letter-spacing:-.015em}
+.cover h1 em{font-style:italic;color:var(--a1)}
+.cover .m{margin-left:auto;display:flex;gap:26px}
+.cover .m div{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.cover .m div b{display:block;font-size:13px;letter-spacing:0;text-transform:none;color:var(--ink);margin-top:5px}
+.band{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-bottom:1px solid var(--line);margin-bottom:22px}
+.band>div{padding:0 16px 20px 0;border-right:1px solid var(--hair)}
+.band>div:last-child{border-right:none;padding-right:0}
+.band .l{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.band .v{font:400 clamp(22px,2.5vw,30px)/1 'Instrument Serif',Georgia,serif;margin-top:11px}
+.band .v s{font-size:.45em;color:var(--mut);text-decoration:none}
+.band .d{font-size:10.5px;font-weight:600;margin-top:7px}
+.up{color:var(--pos)}.dn{color:var(--neg)}.fl{color:var(--mut)}
+.g{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.blk{min-width:0}
+.bh{display:flex;align-items:baseline;gap:12px;margin-bottom:11px}
+.bh h3{font-size:12.5px;font-weight:600}
+.bh em{font-style:normal;font-size:10.5px;color:var(--mut);margin-left:auto}
+.lg{display:flex;gap:12px;font-size:10.5px;color:var(--ink2);margin-left:auto}
+.lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.lg u{display:inline-block;width:12px;height:2px;margin-right:5px;vertical-align:3px;text-decoration:none}
+table{border-collapse:collapse;width:100%;font-size:11.5px}
+th{text-align:right;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600;padding:0 6px 7px;border-bottom:1px solid var(--ink)}
+th:first-child,td:first-child{text-align:left;padding-left:0}th:last-child,td:last-child{padding-right:0}
+td{text-align:right;padding:8px 6px;border-bottom:1px solid var(--hair);color:var(--ink2)}
+td.n{color:var(--ink);font-weight:500}
+tfoot td{border-bottom:none;border-top:1px solid var(--line);font-weight:600;color:var(--ink)}
+.sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:7px}
+.pf{margin-top:26px;padding-top:12px;border-top:1px solid var(--line);display:flex;font-size:10px;
+ letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.pf b{margin-left:auto;font-weight:600;color:var(--ink2)}
+.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}
+.s8{grid-column:span 8}.s12{grid-column:span 12}
+@media(max-width:960px){.band{grid-template-columns:repeat(3,1fr)}.s4,.s5,.s6,.s7,.s8{grid-column:span 12}
+ .blk table{display:block;overflow-x:auto;white-space:nowrap}}
+@media(max-width:560px){.band{grid-template-columns:repeat(2,1fr)}}
+</style>
+<aside class="sp-sample-bar" aria-label="Portfolio sample notice"><a href="../index.html#systems">← Saurabh Pandey</a><span class="sp-sample-label">Interactive concept · illustrative sample data</span></aside>
+<div class="deck">
+
+<div class="pg">
+ <div class="cover"><h1>Performance <em>Review</em><br>August 2026</h1>
+  <div class="m"><div>Period<b>1–21 Aug 2026</b></div><div>Channels<b>Meta · Google · Organic</b></div>
+   <div>Platform<b>Magento</b></div><div>Currency<b>INR</b></div></div></div>
+ <div class="band">
+  <div><div class="l">Spend</div><div class="v">₹1.02<s>M</s></div><div class="d fl">49% of plan</div></div>
+  <div><div class="l">Revenue</div><div class="v">₹6.94<s>M</s></div><div class="d dn">35% of plan</div></div>
+  <div><div class="l">Return</div><div class="v">6.8<s>×</s></div><div class="d dn">72% of 9.5×</div></div>
+  <div><div class="l">Orders</div><div class="v">533</div><div class="d fl">AOV ₹13,015</div></div>
+  <div><div class="l">Sessions</div><div class="v">943<s>K</s></div><div class="d up">▲ 39.7% W1→W3</div></div>
+  <div><div class="l">Conversion</div><div class="v">0.06<s>%</s></div><div class="d dn">▼ 0.023 pts</div></div>
+ </div>
+ <div class="g">
+  <div class="blk s8"><div class="bh"><h3>Revenue against spend, daily</h3>
+   <div class="lg"><span><i style="background:#28504A55"></i>Revenue</span><span><u style="background:var(--a2)"></u>Spend</span></div></div>
+   <div data-c="combo"></div></div>
+  <div class="blk s4"><div class="bh"><h3>Against the August plan</h3></div><div data-c="pace"></div></div>
+ </div>
+ <div class="pf"><span>Page 1 — Summary</span><b>Brand · Performance Review</b></div>
+</div>
+
+<div class="pg">
+ <div class="ph"><span class="no">02</span><h2>Trend &amp; <em>momentum</em></h2><span class="r">1–21 August 2026</span></div>
+ <div class="g">
+  <div class="blk s7"><div class="bh"><h3>Daily revenue with seven-day trend</h3><em>Bars actual · line rolling mean</em></div>
+   <div data-c="roll"></div></div>
+  <div class="blk s5"><div class="bh"><h3>Five metrics on one index</h3><em>7 Aug = 100</em>
+   </div><div data-c="idx"></div></div>
+  <div class="blk s5"><div class="bh"><h3>Daily variance against the mean</h3></div><div data-c="var"></div></div>
+  <div class="blk s7"><div class="bh"><h3>Supporting series</h3></div><div data-c="sm"></div></div>
+ </div>
+ <div class="pf"><span>Page 2 — Trend</span><b>Brand · Performance Review</b></div>
+</div>
+
+<div class="pg">
+ <div class="ph"><span class="no">03</span><h2>Funnel &amp; <em>conversion</em></h2><span class="r">Complete days only</span></div>
+ <div class="g">
+  <div class="blk s6"><div class="bh"><h3>Session to order</h3><em>1–20 Aug</em></div><div data-c="fun"></div></div>
+  <div class="blk s6"><div class="bh"><h3>Volume against quality</h3><em>One point per day</em></div><div data-c="sc"></div></div>
+  <div class="blk s5"><div class="bh"><h3>Intent and execution rates</h3>
+   <div class="lg"><span><u style="background:var(--a1)"></u>A2C</span><span><u style="background:var(--a2)"></u>Cart→order</span></div></div>
+   <div data-c="rates"></div></div>
+  <div class="blk s7"><div class="bh"><h3>By device</h3></div>
+   <table><thead><tr><th>Device</th><th>Sessions</th><th>Share</th><th>Carts</th><th>Orders</th><th>CVR</th><th>Revenue</th><th>AOV</th></tr></thead>
+   <tbody id="td"></tbody>
+   <tfoot><tr><td>All</td><td>902,000</td><td>100%</td><td>12,243</td><td>533</td><td>0.059%</td><td>₹6.94M</td><td>₹13,015</td></tr></tfoot></table>
+   <div style="height:14px"></div><div data-c="devbar"></div></div>
+ </div>
+ <div class="pf"><span>Page 3 — Funnel</span><b>Brand · Performance Review</b></div>
+</div>
+
+<div class="pg">
+ <div class="ph"><span class="no">04</span><h2>Media <em>efficiency</em></h2><span class="r">Platform attributed</span></div>
+ <div class="g">
+  <div class="blk s5"><div class="bh"><h3>Meta against Google</h3><em>21 August</em></div><div data-c="fly"></div></div>
+  <div class="blk s7"><div class="bh"><h3>Campaign economics</h3><em>Spend against return · bubble = revenue</em></div>
+   <div data-c="quad"></div></div>
+  <div class="blk s7"><div class="bh"><h3>Campaign ledger</h3></div>
+   <table><thead><tr><th>Campaign</th><th>Spend</th><th>Share</th><th>Revenue</th><th>ROAS</th><th>Orders</th><th>CPO</th></tr></thead>
+   <tbody id="tc"></tbody>
+   <tfoot><tr><td>Total</td><td>₹1,019,310</td><td>100%</td><td>₹6,695,000</td><td>6.6×</td><td>496</td><td>₹2,055</td></tr></tfoot></table></div>
+  <div class="blk s5"><div class="bh"><h3>Concentration</h3><em>Cumulative share</em></div><div data-c="par"></div></div>
+ </div>
+ <div class="pf"><span>Page 4 — Media</span><b>Brand · Performance Review</b></div>
+</div>
+
+<div class="pg">
+ <div class="ph"><span class="no">05</span><h2>Catalogue &amp; <em>demand</em></h2><span class="r">Month to date</span></div>
+ <div class="g">
+  <div class="blk s4"><div class="bh"><h3>Category revenue</h3></div><div data-c="cat"></div></div>
+  <div class="blk s4"><div class="bh"><h3>Top products</h3></div><div data-c="prod"></div></div>
+  <div class="blk s4"><div class="bh"><h3>Orders by price band</h3></div><div data-c="band"></div></div>
+  <div class="blk s5"><div class="bh"><h3>Revenue by region</h3></div><div data-c="geo"></div></div>
+  <div class="blk s7"><div class="bh"><h3>Category detail</h3></div>
+   <table><thead><tr><th>Category</th><th>Revenue</th><th>Share</th><th>Orders</th><th>Units</th><th>AOV</th><th>Return rate</th></tr></thead>
+   <tbody id="tcat"></tbody>
+   <tfoot><tr><td>Total</td><td>₹6,937,242</td><td>100%</td><td>533</td><td>559</td><td>₹13,015</td><td>5.4%</td></tr></tfoot></table></div>
+ </div>
+ <div class="pf"><span>Page 5 — Catalogue</span><b>Brand · Performance Review</b></div>
+</div>
+
+</div>
+<script>
+const C={bg:'#EDEBE6',card:'#FFFDF9',ink:'#191A17',ink2:'#43463F',mut:'#7E8378',grid:'#EAE7E0',axis:'#DCD8CF',
+ a1:'#28504A',a2:'#A9762A',a3:'#3D5C7A',a4:'#9C4438',a5:'#6B5C8A',pos:'#28504A',neg:'#9C4438',inv:'#FFFDF9'};
+/* ============================================================
+   SHARED DATA + CHART LIBRARY
+   Daily series reconcile to the source report:
+   MTD spend 1,019,310 · MTD backend revenue 6,937,242 · 533 orders
+   ============================================================ */
+const D={
+ day:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+ dow:['Sat','Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun','Mon','Tue','Wed','Thu','Fri'],
+ metaSpend:[22671,22128,24723,28722,25626,28669,24634,17526,22033,18586,26063,19985,21206,25089,24548,30693,18505,19526,21590,29054,25689],
+ googleSpend:[23016,18013,26018,21015,22016,23016,25018,30021,26018,26018,27019,23016,28020,27019,29020,21015,29020,18369,27697,25446,26234],
+ revenue:[161000,365000,319000,316000,393000,284000,303000,271000,680000,283000,450000,283000,435000,464000,497000,385000,328000,301000,211000,208000,null],
+ sessions:[66000,37000,35000,27000,27000,33000,38000,39000,46000,47000,48000,45000,46000,53000,53000,49000,31000,40000,70000,72000,41000],
+ carts:[653,668,698,602,606,609,581,499,572,588,818,624,650,680,712,687,482,473,488,553,505],
+ a2c:[1.0,1.8,2.0,2.2,2.2,1.8,1.5,1.3,1.2,1.3,1.7,1.4,1.4,1.3,1.3,1.4,1.6,1.2,0.7,0.8,1.2],
+ orders:[18,22,24,22,24,21,22,18,32,27,39,29,34,41,37,40,30,20,20,13,null],
+ c2c:[2.8,3.3,3.4,3.7,4.0,3.4,3.8,3.6,5.6,4.6,4.8,4.6,5.2,6.0,5.2,5.8,6.2,4.2,4.1,2.4,null],
+ cps:[0.69,1.08,1.43,1.83,1.78,1.55,1.31,1.23,1.04,0.95,1.12,0.96,1.09,0.97,1.01,1.06,1.54,0.93,0.70,0.75,1.28],
+ metaRoas:[2.4,2.7,6.2,2.8,7.1,5.3,1.5,5.9,8.1,5.5,7.1,7.0,8.5,7.1,6.2,3.2,6.0,1.9,3.9,1.9,4.3],
+ googleRoas:[8.72,11.20,5.36,8.45,16.20,6.11,15.17,6.47,11.75,7.92,6.98,4.65,12.10,8.40,4.91,7.64,7.92,12.20,2.47,3.26,8.81],
+ metaCts:[86.3,86.3,86.7,89.3,88.8,87.2,88.0,89.2,89.2,87.7,90.2,90.0,87.8,88.7,90.7,89.5,87.3,87.4,87.8,89.5,87.4],
+ googleCts:[122.5,111.6,97.9,103.2,101.0,103.2,103.7,101.8,102.6,104.1,100.7,98.9,98.1,102.3,103.3,108.1,92.1,107.6,95.2,95.7,94.8]
+};
+D.spend=D.day.map((_,i)=>D.metaSpend[i]+D.googleSpend[i]);
+D.roi=D.day.map((_,i)=>D.revenue[i]?D.revenue[i]/D.spend[i]:null);
+D.aov=D.day.map((_,i)=>D.orders[i]?D.revenue[i]/D.orders[i]:null);
+D.mrev=D.day.map((_,i)=>D.metaSpend[i]*D.metaRoas[i]);
+D.grev=D.day.map((_,i)=>D.googleSpend[i]*D.googleRoas[i]);
+D.paid=D.day.map((_,i)=>D.mrev[i]+D.grev[i]);
+D.cvr=D.day.map((_,i)=>D.orders[i]!=null?D.orders[i]/D.sessions[i]*100:null);
+D.cpo=D.day.map((_,i)=>D.orders[i]?D.spend[i]/D.orders[i]:null);
+
+/* breakdowns — roll up exactly to the MTD totals above */
+const CAMP=[
+ {n:'Performance Max',sh:'PMax',p:'Google',s:208818,r:1461000,o:105,cpc:3.6,ctr:4.2},
+ {n:'Brand Search',sh:'Brand',p:'Google',s:78307,r:1441000,o:104,cpc:2.1,ctr:9.8},
+ {n:'Shopping non-brand',sh:'Shopping',p:'Google',s:156613,r:1081000,o:78,cpc:4.1,ctr:3.4},
+ {n:'Advantage+ Shopping',sh:'Adv+',p:'Meta',s:188961,r:926000,o:72,cpc:3.9,ctr:2.8},
+ {n:'Retargeting dynamic',sh:'Retarget',p:'Meta',s:99453,r:875000,o:68,cpc:4.4,ctr:5.1},
+ {n:'Prospecting broad',sh:'Prospect',p:'Meta',s:149180,r:462000,o:36,cpc:3.4,ctr:2.4},
+ {n:'Search non-brand',sh:'Search',p:'Google',s:78306,r:360000,o:25,cpc:5.2,ctr:2.6},
+ {n:'Reach & video',sh:'Reach',p:'Meta',s:59672,r:89000,o:8,cpc:2.6,ctr:1.4}];
+const CATS=[
+ {n:'Sunglasses',r:3607366,o:258,u:266,ret:6.2},
+ {n:'Eyeglasses',r:2011800,o:149,u:151,ret:4.1},
+ {n:'Lenses & contacts',r:832469,o:92,u:104,ret:2.8},
+ {n:'Accessories',r:485607,o:34,u:38,ret:8.9}];
+const DEV=[
+ {n:'Mobile',s:703560,c:8815,o:341,r:4162345},
+ {n:'Desktop',s:162360,c:2816,o:160,r:2289290},
+ {n:'Tablet',s:36080,c:612,o:32,r:485607}];
+const STATE=[
+ {n:'Maharashtra',r:1595566,o:118},{n:'Delhi NCR',r:1110000,o:86},
+ {n:'Karnataka',r:971214,o:76},{n:'Tamil Nadu',r:693724,o:54},
+ {n:'Telangana',r:485607,o:38},{n:'Gujarat',r:416235,o:32},
+ {n:'West Bengal',r:346862,o:27},{n:'Rest of India',r:1318034,o:102}];
+const PROD=[
+ {n:'Aviator Metal 58',c:'Sunglasses',r:641000,o:44,v:9820,rt:5.1},
+ {n:'Square Acetate 52',c:'Eyeglasses',r:518000,o:38,v:8410,rt:3.4},
+ {n:'Round Metal 50',c:'Sunglasses',r:487000,o:33,v:7960,rt:6.8},
+ {n:'Browline Combo 51',c:'Eyeglasses',r:412000,o:31,v:6540,rt:4.2},
+ {n:'Wrap Sport 62',c:'Sunglasses',r:388000,o:24,v:5980,rt:7.9},
+ {n:'Cat-eye Acetate 53',c:'Sunglasses',r:341000,o:26,v:6210,rt:5.6},
+ {n:'Rectangle TR90 54',c:'Eyeglasses',r:296000,o:23,v:4870,rt:3.1},
+ {n:'Oval Titanium 49',c:'Eyeglasses',r:264000,o:19,v:4120,rt:2.7}];
+const BAND=[
+ {n:'Under ₹5K',o:42,r:159600},{n:'₹5–10K',o:118,r:896800},{n:'₹10–15K',o:201,r:2492400},
+ {n:'₹15–20K',o:118,r:2029600},{n:'Above ₹20K',o:54,r:1358842}];
+const HOUR=[1.1,0.7,0.5,0.4,0.4,0.6,1.2,2.3,3.6,4.8,5.6,6.1,6.4,5.9,5.4,5.1,5.3,6.2,7.4,8.6,8.1,6.8,4.6,2.9];
+const VISIT=[{n:'New',s:739640,o:303,r:3607366},{n:'Returning',s:162360,o:230,r:3329876}];
+const FUNNEL=[
+ {n:'Sessions',v:902000},{n:'Product views',v:342760},{n:'Add to cart',v:12243},
+ {n:'Checkout initiated',v:3120},{n:'Orders',v:533}];
+const WEEKS=[{n:'W1',r:[0,7]},{n:'W2',r:[7,14]},{n:'W3',r:[14,20]}];
+
+/* ---------------- svg primitives ---------------- */
+const FF="'Inter',-apple-system,Segoe UI,Helvetica,Arial,sans-serif";
+const T=(x,y,t,o={})=>`<text x="${x}" y="${y}" fill="${o.f||C.mut}" font-size="${o.s||10}" font-weight="${o.w||500}" text-anchor="${o.a||'start'}" font-family="${o.ff||FF}" style="font-variant-numeric:tabular-nums"${o.ls?` letter-spacing="${o.ls}"`:''}>${t}</text>`;
+const LN=(a,b,c,d,o={})=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${o.c||C.grid}" stroke-width="${o.w||1}"${o.d?` stroke-dasharray="${o.d}"`:''}/>`;
+const RC=(x,y,w,h,o={})=>`<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${Math.max(0,h)}" fill="${o.f||'none'}"${o.rx?` rx="${o.rx}"`:''}${o.op!=null?` opacity="${o.op}"`:''}${o.st?` stroke="${o.st}" stroke-width="${o.sw||1}"`:''}/>`;
+const PA=(d,o={})=>`<path d="${d}" fill="${o.f||'none'}" stroke="${o.c||'none'}" stroke-width="${o.w||1.7}" stroke-linejoin="round" stroke-linecap="round"${o.d?` stroke-dasharray="${o.d}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const CI=(x,y,r,o={})=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${o.f||'none'}"${o.st?` stroke="${o.st}" stroke-width="${o.sw||1.5}"`:''}${o.op!=null?` opacity="${o.op}"`:''}/>`;
+const SVG=(w,h,i)=>`<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" preserveAspectRatio="xMidYMid meet">${i}</svg>`;
+
+const kf=n=>n==null?'—':Math.abs(n)>=1e6?(n/1e6).toFixed(1)+'M':Math.abs(n)>=1000?Math.round(n/1000)+'K':(Math.abs(n)<10?n.toFixed(1):Math.round(n));
+const rk=n=>'₹'+kf(n);
+const rs=n=>'₹'+Math.round(n).toLocaleString('en-US');
+const pc=n=>n.toFixed(1)+'%';
+const xf=n=>n.toFixed(1)+'×';
+const nice=(v,s=4)=>{if(v<=0)return 1;const r=v/s,m=Math.pow(10,Math.floor(Math.log10(r))),k=r/m;
+ return (k<=1?1:k<=2?2:k<=2.5?2.5:k<=5?5:10)*m*s;};
+const sum=(a,i,j)=>a.slice(i==null?0:i,j==null?a.length:j).reduce((s,x)=>s+(x||0),0);
+const perDay=(a,r)=>sum(a,r[0],r[1])/(r[1]-r[0]);
+const mean=a=>{const v=a.filter(x=>x!=null);return v.reduce((s,x)=>s+x,0)/v.length;};
+const sdev=a=>{const v=a.filter(x=>x!=null),m=mean(v);return Math.sqrt(v.reduce((s,x)=>s+(x-m)*(x-m),0)/v.length);};
+const median=a=>{const v=a.filter(x=>x!=null).slice().sort((x,y)=>x-y),n=v.length;
+ return n%2?v[(n-1)/2]:(v[n/2-1]+v[n/2])/2;};
+const quart=(a,p)=>{const v=a.filter(x=>x!=null).slice().sort((x,y)=>x-y);
+ return v[Math.min(v.length-1,Math.floor(v.length*p))];};
+
+function frame(w,h,p,yMax,fmt,steps){
+ steps=steps||4;const x0=p.l,x1=w-p.r,y0=p.t,y1=h-p.b;let g='';
+ for(let i=0;i<=steps;i++){const v=yMax*i/steps,y=y1-(y1-y0)*i/steps;
+  g+=LN(x0,y,x1,y,{c:i?C.grid:C.axis});
+  if(fmt) g+=T(x0-7,y+3.5,fmt(v),{a:'end',s:9});}
+ return {g,x0,x1,y0,y1,sy:v=>y1-(v/yMax)*(y1-y0)};
+}
+const dayAx=(x0,x1,y,n,st)=>{let g='';for(let i=0;i<n;i+=st)
+ g+=T(x0+(x1-x0)*(i+.5)/n,y,String(D.day[i]),{a:'middle',s:9});return g;};
+function spark(v,w,h,col,fill){
+ const c=v.filter(x=>x!=null),mn=Math.min(...c),mx=Math.max(...c),r=(mx-mn)||1;
+ const p=v.map((x,i)=>x==null?null:[2+(w-4)*i/(v.length-1),h-3-((x-mn)/r)*(h-7)]).filter(Boolean);
+ const d=p.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+ let s='';
+ if(fill!==false)s+=PA(d+`L${p[p.length-1][0].toFixed(1)} ${h}L${p[0][0].toFixed(1)} ${h}Z`,{f:col,op:.12});
+ s+=PA(d,{c:col,w:1.4})+CI(p[p.length-1][0],p[p.length-1][1],2.2,{f:col});
+ return SVG(w,h,s);
+}
+function sparkBar(v,w,h,col,hiIdx){
+ const c=v.filter(x=>x!=null),mx=Math.max(...c),n=v.length,bw=w/n;let s='';
+ v.forEach((x,i)=>{if(x==null)return;const bh=(x/mx)*(h-3);
+  s+=RC(i*bw+bw*.16,h-bh,bw*.68,bh,{f:col,rx:1,op:i===hiIdx?.95:.35});});
+ return SVG(w,h,s);
+}
+const arc=(cx,cy,r,a0,a1)=>{const p=(a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+ const[x0,y0]=p(a0),[x1,y1]=p(a1);return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r} ${r} 0 ${a1-a0>Math.PI?1:0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;};
+
+/* ---------------- chart factories ---------------- */
+const mk={};
+
+mk.bars=o=>w=>{
+ const h=o.h||190,p=o.p||{l:44,r:14,t:o.cap?26:14,b:26},n=o.v.length;
+ const F=frame(w,h,p,nice(Math.max(...o.v.filter(x=>x!=null))),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*(o.gap||.6),o.max||26);
+ const mi=o.v.indexOf(Math.max(...o.v.filter(x=>x!=null)));
+ o.v.forEach((v,i)=>{const x=F.x0+bw*i+(bw-bar)/2;
+  if(v==null){s+=RC(x,F.y1-10,bar,10,{f:C.grid,rx:1});return;}
+  const hot=o.hi?o.hi.includes(i):i===mi;
+  s+=RC(x,F.sy(v),bar,F.y1-F.sy(v),{f:hot?(o.hc||C.a2):(o.c||C.a1),rx:2,op:hot?.95:(o.op||.42)});});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,o.step||(w<520?4:3));
+ return SVG(w,h,s);};
+
+mk.line=o=>w=>{
+ const h=o.h||200,p=o.p||{l:42,r:o.r2?42:14,t:o.cap?26:14,b:26};
+ const all=o.series.flatMap(x=>x.v).filter(x=>x!=null);
+ const yMax=o.yMax||nice(Math.max(...all));
+ const F=frame(w,h,p,yMax,o.f||kf);
+ let s=F.g,n=o.series[0].v.length;const X=i=>F.x0+(F.x1-F.x0)*(i+.5)/n;
+ (o.ref||[]).forEach(r=>{s+=LN(F.x0,F.sy(r.y),F.x1,F.sy(r.y),{c:r.c||C.mut,d:'3 4'});
+  if(r.l)s+=T(F.x1-2,F.sy(r.y)-5,r.l,{a:'end',s:8.5,f:r.c||C.mut,w:600});});
+ o.series.forEach(sr=>{
+  const pts=sr.v.map((v,i)=>v==null?null:[X(i),F.sy(v)]).filter(Boolean);
+  if(sr.fill)s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ')+
+   `L${pts[pts.length-1][0].toFixed(1)} ${F.y1}L${pts[0][0].toFixed(1)} ${F.y1}Z`,{f:sr.c,op:.1});
+  s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:sr.c,w:sr.w||1.8,d:sr.d});
+  if(sr.dot!==false)pts.forEach(q=>{s+=CI(q[0],q[1],1.7,{f:sr.c});});});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,o.step||(w<520?4:3));
+ return SVG(w,h,s);};
+
+mk.combo=o=>w=>{
+ const h=o.h||230,p={l:46,r:46,t:26,b:26},n=o.bars.length;
+ const F=frame(w,h,p,nice(Math.max(...o.bars.filter(x=>x!=null))),o.fb||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.58,24);
+ o.bars.forEach((v,i)=>{const x=F.x0+bw*i+(bw-bar)/2;
+  if(v==null){s+=RC(x,F.y1-10,bar,10,{f:C.grid,rx:1});return;}
+  s+=RC(x,F.sy(v),bar,F.y1-F.sy(v),{f:o.cb||C.a1,rx:2,op:.34});});
+ const lm=nice(Math.max(...o.line)),ly=v=>F.y1-(v/lm)*(F.y1-F.y0);
+ s+=PA(o.line.map((v,i)=>(i?'L':'M')+(F.x0+bw*i+bw/2).toFixed(1)+' '+ly(v).toFixed(1)).join(' '),{c:o.cl||C.a2,w:1.9});
+ o.line.forEach((v,i)=>{s+=CI(F.x0+bw*i+bw/2,ly(v),1.7,{f:o.cl||C.a2});});
+ for(let i=0;i<=4;i++){const v=lm*i/4;s+=T(F.x1+7,ly(v)+3.5,(o.fl||kf)(v),{s:9,f:o.cl||C.a2,op:.85});}
+ if(o.capL)s+=T(0,F.y0-11,o.capL,{s:8,ls:'.12em',w:700});
+ if(o.capR)s+=T(w,F.y0-11,o.capR,{a:'end',s:8,ls:'.12em',w:700,f:o.cl||C.a2});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<640?3:2);
+ return SVG(w,h,s);};
+
+mk.area=o=>w=>{
+ const h=o.h||210,p={l:o.pct?36:46,r:14,t:o.cap?26:14,b:26},n=o.series[0].v.length;
+ const tot=o.series[0].v.map((_,i)=>o.series.reduce((s,x)=>s+x.v[i],0));
+ const yMax=o.pct?100:nice(Math.max(...tot));
+ const F=frame(w,h,p,yMax,o.pct?(v=>v.toFixed(0)+'%'):(o.f||kf));
+ let s=F.g;const X=i=>F.x0+(F.x1-F.x0)*i/(n-1);
+ let acc=new Array(n).fill(0);
+ o.series.forEach(sr=>{
+  const lo=acc.slice(),hi=acc.map((v,i)=>v+(o.pct?sr.v[i]/tot[i]*100:sr.v[i]));
+  let d='M'+X(0)+' '+F.sy(hi[0]);
+  for(let i=1;i<n;i++)d+='L'+X(i).toFixed(1)+' '+F.sy(hi[i]).toFixed(1);
+  for(let i=n-1;i>=0;i--)d+='L'+X(i).toFixed(1)+' '+F.sy(lo[i]).toFixed(1);
+  s+=PA(d+'Z',{f:sr.c,op:sr.op||.85});acc=hi;});
+ if(o.cap)s+=T(0,F.y0-11,o.cap,{s:8,ls:'.12em',w:700});
+ for(let i=0;i<n;i+=w<520?5:3)s+=T(X(i),F.y1+15,String(D.day[i]),{a:'middle',s:9});
+ return SVG(w,h,s);};
+
+mk.stackcol=o=>w=>{
+ const h=o.h||200,p={l:o.pct?36:46,r:14,t:14,b:26},n=o.series[0].v.length;
+ const tot=o.series[0].v.map((_,i)=>o.series.reduce((s,x)=>s+x.v[i],0));
+ const F=frame(w,h,p,o.pct?100:nice(Math.max(...tot)),o.pct?(v=>v.toFixed(0)+'%'):(o.f||kf));
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.66,26);
+ for(let i=0;i<n;i++){let acc=0;const x=F.x0+bw*i+(bw-bar)/2;
+  o.series.forEach(sr=>{const v=o.pct?sr.v[i]/tot[i]*100:sr.v[i];
+   s+=RC(x,F.sy(acc+v),bar,F.sy(acc)-F.sy(acc+v),{f:sr.c,rx:1.5,op:.9});acc+=v;});}
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<520?4:3);
+ return SVG(w,h,s);};
+
+mk.hbar=o=>w=>{
+ const R=o.rows,rh=o.rh||30,pt=o.head?20:6,h=pt+R.length*rh+(o.foot?18:4);
+ const lw=o.lw||Math.min(150,w*.32),bx=lw+10,bw=w-bx-(o.vw||62);
+ const mx=Math.max(...R.map(r=>r.v));
+ let s=o.head?T(0,11,o.head,{s:8.5,ls:'.12em',w:700})+T(w,11,o.head2||'',{a:'end',s:8.5,ls:'.12em',w:700}):'';
+ R.forEach((r,i)=>{const y=pt+i*rh;
+  s+=T(0,y+rh/2+4,r.n,{s:11,f:C.ink,w:500});
+  s+=RC(bx,y+rh/2-7,bw,14,{f:C.grid,rx:o.sq?0:3});
+  const bl=bw*r.v/mx;
+  s+=RC(bx,y+rh/2-7,bl,14,{f:r.c||o.c||C.a1,rx:o.sq?0:3,op:r.op||.9});
+  s+=T(w,y+rh/2+4,(o.f||kf)(r.v),{a:'end',s:11,f:C.ink,w:600});
+  if(r.sub){const ox=bx+bl+7,lim=w-(o.vw||62)-r.sub.length*5.2;
+   if(ox<=lim)s+=T(ox,y+rh/2+4,r.sub,{s:9.5,f:C.mut});
+   else if(bl>r.sub.length*5.6+18)s+=T(bx+bl-8,y+rh/2+4,r.sub,{a:'end',s:9.5,f:C.inv||'#fff'});}});
+ if(o.foot)s+=T(0,h-4,o.foot,{s:9,f:C.mut});
+ return SVG(w,h,s);};
+
+mk.bullet=o=>w=>{
+ const R=o.rows,rh=o.rh||54,h=R.length*rh+6;
+ const lw=o.lw||Math.min(120,w*.26),bx=lw+8,bw=w-bx-48;
+ let s='';
+ R.forEach((r,i)=>{const y=i*rh+10,p=r.v/r.t;
+  s+=T(0,y+8,r.n,{s:10.5,f:C.ink,w:600});
+  s+=T(0,y+24,(r.f||kf)(r.v),{s:13,f:C.ink,w:700});
+  s+=T(0,y+37,'of '+(r.f||kf)(r.t),{s:9,f:C.mut});
+  s+=RC(bx,y+12,bw,11,{f:C.grid,rx:6});
+  const col=p>=.66?C.pos:p>=.45?C.a2:C.neg;
+  s+=RC(bx,y+12,bw*Math.min(p,1),11,{f:col,rx:6});
+  if(o.mark!=null){const mx=bx+bw*o.mark;s+=LN(mx,y+6,mx,y+29,{c:C.ink,w:1.6});
+   if(i===0)s+=T(mx,y+3,o.markLabel||'',{a:'middle',s:8.5,f:C.ink,w:700});}
+  s+=T(w,y+23,Math.round(p*100)+'%',{a:'end',s:14,f:col,w:700});
+  if(i<R.length-1)s+=LN(0,y+rh-8,w,y+rh-8,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.donut=o=>w=>{
+ const h=o.h||190,cx=Math.min(h/2+4,w*.3),cy=h/2,R=Math.min(h/2-8,68),r0=R*.62;
+ const tot=o.segs.reduce((s,x)=>s+x.v,0);let a=-Math.PI/2,s='';
+ o.segs.forEach(g=>{const a1=a+2*Math.PI*g.v/tot;
+  const p0=[cx+R*Math.cos(a),cy+R*Math.sin(a)],p1=[cx+R*Math.cos(a1),cy+R*Math.sin(a1)];
+  const q0=[cx+r0*Math.cos(a1),cy+r0*Math.sin(a1)],q1=[cx+r0*Math.cos(a),cy+r0*Math.sin(a)];
+  const big=a1-a>Math.PI?1:0;
+  s+=PA(`M${p0[0].toFixed(2)} ${p0[1].toFixed(2)}A${R} ${R} 0 ${big} 1 ${p1[0].toFixed(2)} ${p1[1].toFixed(2)}L${q0[0].toFixed(2)} ${q0[1].toFixed(2)}A${r0} ${r0} 0 ${big} 0 ${q1[0].toFixed(2)} ${q1[1].toFixed(2)}Z`,{f:g.c,op:.92});
+  a=a1;});
+ if(o.center){s+=T(cx,cy-2,o.center,{a:'middle',s:17,f:C.ink,w:700});
+  s+=T(cx,cy+13,o.centerSub||'',{a:'middle',s:9,f:C.mut,ls:'.08em'});}
+ const lx=cx+R+22;let ly=cy-(o.segs.length*20)/2+10;
+ o.segs.forEach(g=>{s+=RC(lx,ly-8,9,9,{f:g.c,rx:2});
+  s+=T(lx+15,ly,g.n,{s:10.5,f:C.ink});
+  s+=T(w,ly,(g.v/tot*100).toFixed(1)+'%',{a:'end',s:10.5,f:C.ink,w:600});ly+=20;});
+ return SVG(w,h,s);};
+
+mk.heat=o=>w=>{
+ const rows=o.rows,cols=o.cols,lw=o.lw||Math.min(120,w*.15);
+ const cw=(w-lw-(o.med?46:6))/cols.length,rh=o.rh||30,ht=22;
+ const h=ht+rows.length*rh+(o.foot?16:6);let s='';
+ cols.forEach((c,i)=>{s+=T(lw+cw*i+cw/2,11,c,{a:'middle',s:9,w:600});});
+ if(o.med)s+=T(w,11,'MED',{a:'end',s:8.5,ls:'.1em',w:700});
+ rows.forEach((r,ri)=>{const y=ht+ri*rh,vals=cols.map((_,ci)=>o.get(ri,ci));
+  const mid=median(vals),sc=Math.max(...vals.filter(x=>x!=null).map(x=>Math.abs(x/mid-1)))||1;
+  s+=T(0,y+rh/2+4,r.n,{s:10.5,f:C.ink,w:600});
+  vals.forEach((v,ci)=>{const x=lw+cw*ci;
+   if(v==null){s+=RC(x+1,y+2,cw-3,rh-6,{st:C.grid});s+=T(x+cw/2,y+rh/2+4,'—',{a:'middle',s:10,f:C.mut});return;}
+   const rel=(v/mid-1)*(r.d||0),t=Math.min(1,Math.abs(v/mid-1)/sc);
+   const col=r.d===0?C.mut:(rel>=0?C.a1:C.neg),op=r.d===0?.16:0.05+t*.72;
+   s+=RC(x+1,y+2,cw-3,rh-6,{f:col,rx:2,op:op.toFixed(3)});
+   s+=T(x+cw/2,y+rh/2+4,(r.f||kf)(v),{a:'middle',s:9.8,w:600,f:(r.d!==0&&op>.45)?(C.inv||'#fff'):C.ink});});
+  if(o.med)s+=T(w,y+rh/2+4,(r.f||kf)(mid),{a:'end',s:9.8,f:C.mut,w:600});});
+ if(o.foot)s+=T(0,h-3,o.foot,{s:9,f:C.mut});
+ return SVG(w,h,s);};
+
+mk.funnel=o=>w=>{
+ const S=o.stages,rh=o.rh||52,pt=20,h=pt+S.length*rh+4;
+ const lw=Math.min(160,w*.24),bx=lw+12,bw=w-bx-(o.vw||106);
+ let s=T(bx,10,'SHARE OF PREVIOUS',{s:8.5,ls:'.12em',w:700})+T(w,10,'LOST',{a:'end',s:8.5,ls:'.12em',w:700});
+ S.forEach((x,i)=>{const y=pt+i*rh,pv=i?S[i-1].v:x.v,rt=x.v/pv,lost=pv-x.v;
+  s+=T(0,y+16,x.n,{s:11.5,f:C.ink,w:600});
+  s+=T(0,y+33,x.v.toLocaleString('en-US'),{s:14,f:C.ink,w:700});
+  s+=RC(bx,y+12,bw,16,{f:C.grid,rx:o.sq?0:3});
+  s+=RC(bx,y+12,bw*rt,16,{f:i===0?C.mut:(rt<.2?C.neg:C.a1),rx:o.sq?0:3,op:i===0?.4:.92});
+  const lx=bx+bw*rt,inv=lx+8>bx+bw-44;
+  s+=T(inv?lx-8:lx+8,y+24,(rt*100).toFixed(rt<.1?2:1)+'%',{a:inv?'end':'start',s:11,w:700,f:inv?(C.inv||'#fff'):C.ink});
+  if(i){s+=T(w,y+18,'−'+lost.toLocaleString('en-US'),{a:'end',s:11,f:C.neg,w:600});
+   s+=T(w,y+32,(100-rt*100).toFixed(1)+'%',{a:'end',s:9,f:C.mut});}
+  if(i<S.length-1)s+=LN(0,y+rh-6,w,y+rh-6,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.scatter=o=>w=>{
+ const h=o.h||250,p={l:46,r:16,t:24,b:38};
+ const F=frame(w,h,p,o.yMax,o.fy||kf);
+ let s=F.g;const X=v=>F.x0+(v/o.xMax)*(F.x1-F.x0);
+ for(let i=0;i<=4;i++){const v=o.xMax*i/4;s+=LN(X(v),F.y0,X(v),F.y1,{c:C.grid});
+  s+=T(X(v),F.y1+15,(o.fx||kf)(v),{a:'middle',s:9});}
+ if(o.refx!=null){s+=LN(X(o.refx),F.y0,X(o.refx),F.y1,{c:C.mut,d:'3 3'});}
+ if(o.refy!=null){s+=LN(F.x0,F.sy(o.refy),F.x1,F.sy(o.refy),{c:C.mut,d:'3 3'});
+  if(o.refyL)s+=T(F.x1-2,F.sy(o.refy)-5,o.refyL,{a:'end',s:8.5,f:C.mut,w:600});}
+ o.pts.forEach(q=>{s+=CI(X(q.x),F.sy(Math.min(q.y,o.yMax)),q.r||5,{f:q.c||C.a1,op:q.op||.28});
+  s+=CI(X(q.x),F.sy(Math.min(q.y,o.yMax)),q.r||5,{st:q.c||C.a1,sw:1.3});});
+ if(o.labels){const L=o.pts.filter(q=>q.l).map(q=>({x:X(q.x),y:F.sy(Math.min(q.y,o.yMax)),r:q.r||5,l:q.l}))
+   .sort((a,b)=>a.y-b.y);
+  for(let i=1;i<L.length;i++)if(L[i].y-L[i-1].y<12)L[i].y=L[i-1].y+12;
+  L.forEach(q=>{const rt=q.x<F.x1-110;s+=T(rt?q.x+q.r+6:q.x-q.r-6,q.y+3.5,q.l,{a:rt?'start':'end',s:9.5,f:C.ink,w:600});});}
+ if(o.xLab)s+=T(F.x1,F.y1+30,o.xLab,{a:'end',s:9,f:C.mut});
+ if(o.yLab)s+=T(0,F.y0-10,o.yLab,{s:8,ls:'.12em',w:700});
+ return SVG(w,h,s);};
+
+mk.hist=o=>w=>{
+ const h=o.h||190,p={l:44,r:14,t:16,b:o.sub?40:26},n=o.bins.length;
+ const F=frame(w,h,p,nice(Math.max(...o.bins.map(b=>b.v))),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=bw*.78;
+ o.bins.forEach((b,i)=>{const x=F.x0+bw*i+(bw-bar)/2,y=F.sy(b.v);
+  s+=RC(x,y,bar,F.y1-y,{f:b.c||o.c||C.a1,rx:2,op:.88});
+  s+=T(x+bar/2,y-6,(o.f||kf)(b.v),{a:'middle',s:9.5,f:C.ink,w:600});
+  s+=T(x+bar/2,F.y1+15,b.n,{a:'middle',s:9,f:C.ink,w:500});
+  if(b.sub)s+=T(x+bar/2,F.y1+28,b.sub,{a:'middle',s:9,f:C.mut});});
+ return SVG(w,h,s);};
+
+mk.range=o=>w=>{
+ const R=o.rows,rh=o.rh||34,pt=18,h=pt+R.length*rh+6;
+ const lw=o.lw||Math.min(130,w*.26),bx=lw+10,bw=w-bx-58;
+ const lo=Math.min(...R.map(r=>r.min)),hi=Math.max(...R.map(r=>r.max)),sp=(hi-lo)||1;
+ const X=v=>bx+((v-lo)/sp)*bw;
+ let s=T(0,10,o.head||'',{s:8.5,ls:'.12em',w:700});
+ R.forEach((r,i)=>{const y=pt+i*rh+rh/2;
+  s+=T(0,y+4,r.n,{s:10.5,f:C.ink,w:500});
+  s+=LN(X(r.min),y,X(r.max),y,{c:C.mut,w:1});
+  s+=LN(X(r.min),y-4,X(r.min),y+4,{c:C.mut,w:1});
+  s+=LN(X(r.max),y-4,X(r.max),y+4,{c:C.mut,w:1});
+  s+=RC(X(r.q1),y-7,X(r.q3)-X(r.q1),14,{f:o.c||C.a1,rx:2,op:.22});
+  s+=LN(X(r.med),y-8,X(r.med),y+8,{c:o.c||C.a1,w:2.2});
+  if(r.cur!=null)s+=CI(X(r.cur),y,3.4,{f:C.a2});
+  s+=T(w,y+4,(r.f||kf)(r.med),{a:'end',s:10.5,f:C.ink,w:600});});
+ return SVG(w,h,s);};
+
+mk.butterfly=o=>w=>{
+ const R=o.rows,rh=o.rh||38,pt=22,h=pt+R.length*rh+4;
+ const lw=Math.min(o.lw||140,w*.3),cx=w/2,half=Math.max(26,Math.min(cx-lw/2-50,cx-50));
+ let s=T(0,11,o.la||'A',{s:8.5,f:o.ca||C.a1,w:700,ls:'.13em'})+
+       T(w,11,o.lb||'B',{a:'end',s:8.5,f:o.cb||C.a2,w:700,ls:'.13em'});
+ R.forEach((r,i)=>{const y=pt+i*rh,mx=Math.max(r.a,r.b),aw=r.lo?r.a<=r.b:r.a>=r.b;
+  s+=T(cx,y+12,r.n,{a:'middle',s:10.5,f:C.ink,w:600});
+  const al=half*r.a/mx,bl=half*r.b/mx;
+  s+=RC(cx-lw/2-8-al,y+17,al,13,{f:o.ca||C.a1,rx:2,op:aw?.92:.3});
+  s+=RC(cx+lw/2+8,y+17,bl,13,{f:o.cb||C.a2,rx:2,op:aw?.3:.92});
+  s+=T(cx-lw/2-8-al-6,y+27,(r.f||kf)(r.a),{a:'end',s:10,f:C.ink,w:aw?700:500});
+  s+=T(cx+lw/2+8+bl+6,y+27,(r.f||kf)(r.b),{s:10,f:C.ink,w:aw?500:700});
+  if(i<R.length-1)s+=LN(0,y+rh-4,w,y+rh-4,{c:C.grid});});
+ return SVG(w,h,s);};
+
+mk.pareto=o=>w=>{
+ const K=o.items.slice().sort((a,b)=>b.v-a.v),tot=K.reduce((s,c)=>s+c.v,0);
+ const h=o.h||270,p={l:48,r:42,t:20,b:52},n=K.length;
+ const F=frame(w,h,p,nice(K[0].v),o.f||kf);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.56,46);let run=0;const pts=[];
+ K.forEach((c,i)=>{const x=F.x0+bw*i+(bw-bar)/2,y=F.sy(c.v);
+  s+=RC(x,y,bar,F.y1-y,{f:c.c||C.a1,rx:3,op:.88});run+=c.v;
+  pts.push([F.x0+bw*i+bw/2,F.y1-(run/tot)*(F.y1-F.y0)]);
+  s+=T(F.x0+bw*i+bw/2,F.y1+16,c.n,{a:'middle',s:9,f:C.ink,w:600});
+  s+=T(F.x0+bw*i+bw/2,F.y1+28,(c.v/tot*100).toFixed(1)+'%',{a:'middle',s:9,f:C.mut,w:600});});
+ s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.ink,w:1.8});
+ pts.forEach(q=>{s+=CI(q[0],q[1],2.8,{f:C.card||'#fff',st:C.ink,sw:1.6});});
+ const y80=F.y1-.8*(F.y1-F.y0);
+ s+=LN(F.x0,y80,F.x1,y80,{c:C.neg,d:'4 4'});s+=T(F.x1-2,y80-5,'80%',{a:'end',s:9,f:C.neg,w:700});
+ for(let i=0;i<=4;i++){const v=25*i;s+=T(F.x1+7,F.y1-(v/100)*(F.y1-F.y0)+3.5,v+'%',{s:9});}
+ return SVG(w,h,s);};
+
+mk.control=o=>w=>{
+ const v=o.v.filter(x=>x!=null),mu=mean(v),sd=sdev(v),up=mu+2*sd,lo=Math.max(0,mu-2*sd);
+ const h=o.h||236,p={l:50,r:14,t:24,b:26},n=o.v.length;
+ const F=frame(w,h,p,nice(Math.max(...v,up)),o.f||kf);
+ let s=F.g;const X=i=>F.x0+(F.x1-F.x0)*i/(n-1);
+ s+=RC(F.x0,F.sy(up),F.x1-F.x0,F.sy(lo)-F.sy(up),{f:C.a1,op:.05});
+ [[up,'+2σ',C.neg],[mu,'mean',C.ink],[lo,'−2σ',C.neg]].forEach(([y,t,c])=>{
+  s+=LN(F.x0,F.sy(y),F.x1,F.sy(y),{c,d:y===mu?'':'4 4',w:y===mu?1.2:1});
+  const lb=t+' '+(o.f||kf)(y);
+  s+=RC(F.x0+2,F.sy(y)-11,lb.length*5.2+8,14,{f:C.card||'#fff',rx:3,op:.9});
+  s+=T(F.x0+6,F.sy(y)-1,lb,{s:8.5,f:c,w:600});});
+ const P=o.v.map((x,i)=>x==null?null:[X(i),F.sy(x),x,D.day[i]]).filter(Boolean);
+ s+=PA(P.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.a1,w:1.9});
+ const outs=[];
+ P.forEach(q=>{const bad=q[2]>up||q[2]<lo;s+=CI(q[0],q[1],bad?4.2:2.2,{f:bad?C.neg:C.a1});
+  if(bad){s+=CI(q[0],q[1],7.5,{st:C.neg,sw:1.1,op:.5});outs.push(q);}});
+ let pb=null;
+ outs.forEach((q,k)=>{const near=k>0&&q[0]-outs[k-1][0]<60,below=near?!pb:(q[1]<F.y0+34);pb=below;
+  const ax=q[0]>F.x1-40?'end':(q[0]<F.x0+40?'start':'middle');
+  s+=T(ax==='end'?q[0]+6:ax==='start'?q[0]-6:q[0],below?q[1]+17:q[1]-12,q[3]+' Aug',{a:ax,s:9,f:C.neg,w:700});});
+ if(o.cap)s+=T(0,F.y0-10,o.cap,{s:8,ls:'.12em',w:700});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,w<560?4:3);
+ return SVG(w,h,s);};
+
+mk.small=o=>w=>{
+ const P=o.panels,cols=o.cols||(w>1000?4:w>640?2:1),pw=w/cols,ph=o.ph||124;
+ const h=ph*Math.ceil(P.length/cols);let s='';
+ P.forEach((p,i)=>{const ox=(i%cols)*pw,oy=Math.floor(i/cols)*ph;
+  const x0=ox+2,x1=ox+pw-18,y0=oy+36,y1=oy+ph-24;
+  const c=p.v.filter(x=>x!=null),mn=Math.min(...c),mx=Math.max(...c);
+  const lo=p.k==='bar'?0:mn-(mx-mn)*.15,hi=mx+(mx-lo)*.14,Y=v=>y1-((v-lo)/(hi-lo))*(y1-y0);
+  s+=T(x0,oy+14,p.t,{s:10,f:C.ink,w:600});
+  s+=T(x0,oy+30,(p.f||kf)(c[c.length-1]),{s:14,f:C.ink,w:700});
+  s+=LN(x0,y1,x1,y1,{c:C.axis});
+  const n=p.v.length,bw=(x1-x0)/n,mi=p.v.indexOf(mx);
+  if(p.k==='bar'){p.v.forEach((v,j)=>{if(v==null){s+=RC(x0+bw*j+bw*.16,y1-4,bw*.68,4,{f:C.grid});return;}
+    s+=RC(x0+bw*j+bw*.16,Y(v),bw*.68,y1-Y(v),{f:p.c||C.a1,rx:1.5,op:j===mi?.92:.3});});}
+  else{const pts=p.v.map((v,j)=>v==null?null:[x0+bw*j+bw/2,Y(v)]).filter(Boolean);
+   s+=PA(pts.map((q,j)=>(j?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:p.c||C.a1,w:1.6});
+   s+=CI(pts[pts.length-1][0],pts[pts.length-1][1],2.4,{f:p.c||C.a1});
+   s+=CI(x0+bw*mi+bw/2,Y(mx),2.4,{f:C.card||'#fff',st:C.a2,sw:1.5});}
+  s+=T(x1,oy+30,(p.f||kf)(mx),{a:'end',s:9,f:C.a2,w:700});
+  s+=T(x0,y1+13,'1 Aug',{s:8.5,f:C.mut});s+=T(x1,y1+13,'21 Aug',{a:'end',s:8.5,f:C.mut});});
+ return SVG(w,h,s);};
+
+mk.dumbbell=o=>w=>{
+ const R=o.rows,rh=o.rh||34,pt=18,h=pt+R.length*rh+6;
+ const lw=o.lw||Math.min(140,w*.3),bx=lw+10,bw=w-bx-62;
+ const mx=Math.max(...R.flatMap(r=>[r.a,r.b]));
+ let s=T(bx,10,o.head||'',{s:8.5,ls:'.12em',w:700});
+ R.forEach((r,i)=>{const y=pt+i*rh+rh/2,xa=bx+bw*r.a/mx,xb=bx+bw*r.b/mx;
+  s+=T(0,y+4,r.n,{s:10.5,f:C.ink,w:500});
+  s+=LN(xa,y,xb,y,{c:C.grid,w:3});
+  s+=CI(xa,y,4.2,{f:o.ca||C.mut});s+=CI(xb,y,4.2,{f:o.cb||C.a1});
+  s+=T(w,y+4,(r.f||kf)(r.b),{a:'end',s:10.5,f:C.ink,w:600});});
+ return SVG(w,h,s);};
+
+mk.bridge=o=>w=>{
+ const S=o.segs,tot=o.total,h=S.length*40+64;
+ let s=T(0,11,o.head||'',{s:8.5,ls:'.12em',w:700}),acc=0;
+ s+=RC(0,20,w,24,{f:C.grid,rx:3});
+ S.forEach(g=>{const x=w*acc/tot,bw=w*g.v/tot;
+  s+=RC(x,20,Math.max(bw-1.5,1),24,{f:g.c,rx:2,op:g.op||1});acc+=g.v;});
+ S.forEach((g,i)=>{const y=62+i*40;
+  s+=RC(0,y-9,3,18,{f:g.c,rx:2,op:g.op||1});
+  s+=T(11,y+1,g.n,{s:11,f:C.ink,w:600});
+  s+=T(11,y+15,(g.v/tot*100).toFixed(0)+'% of total',{s:9,f:C.mut});
+  s+=T(w,y+4,(o.f||kf)(g.v),{a:'end',s:13,f:g.strong?g.c:C.ink,w:700});});
+ return SVG(w,h,s);};
+
+/* ---------------- boot ---------------- */
+function boot(){
+ const ns=[...document.querySelectorAll('[data-c]')];
+ const paint=()=>ns.forEach(n=>{const f=CH[n.dataset.c];if(!f)return;
+  const w=Math.max(200,Math.round(n.clientWidth));
+  if(n.dataset.w===String(w))return;n.dataset.w=String(w);n.innerHTML=f(w);});
+ let t;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{ns.forEach(n=>n.dataset.w='');paint();},140);});
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{ns.forEach(n=>n.dataset.w='');paint();});
+ paint();
+}
+
+const CH={};
+CH.combo=mk.combo({bars:D.revenue,line:D.spend,h:250,fb:rk,fl:rk,capL:'REVENUE',capR:'SPEND'});
+CH.pace=mk.bullet({rows:[{n:'Spend',v:1019310,t:2100000,f:rk},{n:'Revenue',v:6937242,t:19950000,f:rk},
+ {n:'ROI',v:6.8,t:9.5,f:xf},{n:'ROAS',v:6.6,t:9.5,f:xf}],mark:.677,markLabel:'68% elapsed',rh:56});
+const roll=(a,k)=>a.map((_,i)=>i<k-1||a.slice(i-k+1,i+1).some(x=>x==null)?null:a.slice(i-k+1,i+1).reduce((s,x)=>s+x,0)/k);
+CH.roll=w=>{
+ const R=roll(D.revenue.slice(0,20),7),h=250,p={l:48,r:14,t:20,b:26},n=21;
+ const F=frame(w,h,p,nice(Math.max(...D.revenue.filter(Boolean))),rk);
+ let s=F.g;const bw=(F.x1-F.x0)/n,bar=Math.min(bw*.56,22);
+ D.revenue.forEach((v,i)=>{const x=F.x0+bw*i+(bw-bar)/2;
+  if(v==null){s+=RC(x,F.y1-10,bar,10,{f:C.grid,rx:1});return;}
+  s+=RC(x,F.sy(v),bar,F.y1-F.sy(v),{f:C.a1,rx:2,op:.24});});
+ const pts=R.map((v,i)=>v==null?null:[F.x0+bw*i+bw/2,F.sy(v)]).filter(Boolean);
+ s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:C.a1,w:2.1});
+ pts.forEach(q=>{s+=CI(q[0],q[1],2.3,{f:C.card,st:C.a1,sw:1.5});});
+ s+=LN(F.x0,F.sy(643548),F.x1,F.sy(643548),{c:C.a4,d:'4 4'});
+ s+=T(F.x1-2,F.sy(643548)-5,'plan ₹644K/day',{a:'end',s:9,f:C.a4,w:600});
+ s+=dayAx(F.x0,F.x1,F.y1+15,n,2);return SVG(w,h,s);};
+const IDX=[['Spend','SPEND',D.spend,C.mut],['Sessions','SESSIONS',D.sessions,C.a3],['Carts','CARTS',D.carts,C.a2],
+ ['Orders','ORDERS',D.orders,C.a4],['Revenue','REVENUE',D.revenue,C.a1]].map(([n,ab,a,c])=>{
+ const r=roll(a,7),b=r[6];return {n,ab,c,v:r.map(x=>x==null?null:x/b*100)};});
+CH.idx=w=>{
+ const h=250,p={l:42,r:78,t:20,b:26};
+ const all=IDX.flatMap(d=>d.v).filter(x=>x!=null);
+ const lo=Math.floor(Math.min(...all)/10)*10-5,hi=Math.ceil(Math.max(...all)/10)*10+5;
+ const x0=p.l,x1=w-p.r,y0=p.t,y1=h-p.b;
+ const X=i=>x0+(x1-x0)*(i-6)/14,Y=v=>y1-((v-lo)/(hi-lo))*(y1-y0);
+ let s='';
+ for(let v=Math.ceil(lo/20)*20;v<=hi;v+=20){s+=LN(x0,Y(v),x1,Y(v),{c:v===100?C.axis:C.grid});
+  s+=T(x0-7,Y(v)+3.5,String(v),{a:'end',s:9});}
+ const E=[];
+ IDX.forEach(d=>{const pts=d.v.map((v,i)=>v==null?null:[X(i),Y(v)]).filter(Boolean);
+  s+=PA(pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' '),{c:d.c,w:1.9});
+  const l=pts[pts.length-1];s+=CI(l[0],l[1],2.6,{f:d.c});
+  E.push({y:l[1],c:d.c,t:Math.round(d.v.filter(v=>v!=null).pop()),n:d.ab});});
+ E.sort((a,b)=>a.y-b.y);for(let i=1;i<E.length;i++)if(E[i].y-E[i-1].y<12)E[i].y=E[i-1].y+12;
+ E.forEach(e=>{s+=T(x1+7,e.y+3.5,e.n+' '+e.t,{s:8.5,f:e.c,w:700,ls:'.04em'});});
+ for(let i=6;i<21;i+=2)s+=T(X(i),y1+15,String(D.day[i]),{a:'middle',s:9});
+ return SVG(w,h,s);};
+CH.var=w=>{
+ const V=D.revenue.slice(0,20),mu=mean(V),h=230,p={l:52,r:14,t:18,b:28},n=20;
+ const mx=nice(Math.max(...V.map(v=>Math.abs(v-mu))));
+ const x0=p.l,x1=w-p.r,y0=p.t,y1=h-p.b,zy=(y0+y1)/2,Y=v=>zy-(v/mx)*(y1-y0)/2;
+ let s='';[-1,-.5,0,.5,1].forEach(t=>{const v=mx*t;
+  s+=LN(x0,Y(v),x1,Y(v),{c:t===0?C.axis:C.grid,w:t===0?1.2:1});
+  s+=T(x0-7,Y(v)+3.5,(v>0?'+':'')+(v===0?'0':rk(Math.abs(v))),{a:'end',s:9});});
+ const bw=(x1-x0)/n,bar=Math.min(bw*.6,22);
+ V.forEach((v,i)=>{const d=v-mu,x=x0+bw*i+(bw-bar)/2;
+  s+=RC(x,Math.min(zy,Y(d)),bar,Math.abs(Y(d)-zy),{f:d>=0?C.a1:C.a4,rx:2,op:.85});});
+ s+=T(x1,zy-6,'mean '+rk(mu),{a:'end',s:9,f:C.mut,w:600});
+ for(let i=0;i<n;i+=3)s+=T(x0+bw*i+bw/2,y1+15,String(D.day[i]),{a:'middle',s:9});
+ return SVG(w,h,s);};
+CH.sm=mk.small({cols:3,ph:118,panels:[
+ {t:'Sessions',v:D.sessions,k:'bar',f:kf,c:C.a3},{t:'Orders',v:D.orders,k:'bar',f:v=>v,c:C.a1},
+ {t:'Cost per session',v:D.cps,k:'line',f:v=>'₹'+v.toFixed(2),c:C.a2},
+ {t:'Meta ROAS',v:D.metaRoas,k:'line',f:xf,c:C.a3},{t:'Google ROAS',v:D.googleRoas,k:'line',f:xf,c:C.a2},
+ {t:'Average order value',v:D.aov,k:'line',f:rk,c:C.a1}]});
+CH.fun=mk.funnel({stages:FUNNEL,rh:50,vw:100});
+CH.sc=mk.scatter({h:262,xMax:80000,yMax:2.5,fx:kf,fy:pc,xLab:'Daily sessions →',yLab:'A2C RATE',
+ refx:45095,refy:1.36,refyL:'avg 1.36%',
+ pts:D.day.map((d,i)=>({x:D.sessions[i],y:D.a2c[i],r:D.orders[i]?Math.max(4,Math.sqrt(D.orders[i])*1.4):4,
+  c:(i===18||i===19)?C.a4:C.a1,op:(i===18||i===19)?.6:.28,l:(i===18||i===19)?d+' Aug':null})),labels:true});
+CH.rates=mk.line({h:230,f:pc,yMax:7,series:[{v:D.a2c,c:C.a1,fill:1},{v:D.c2c,c:C.a2}]});
+CH.devbar=mk.hbar({rows:DEV.map((d,i)=>({n:d.n,v:d.o/d.s*100,c:[C.a1,C.a3,C.mut][i]})),
+ f:v=>v.toFixed(3)+'%',head:'CONVERSION RATE',rh:28,vw:60});
+CH.fly=mk.butterfly({la:'META',lb:'GOOGLE',ca:C.a3,cb:C.a2,lw:132,rows:[
+ {n:'Spend',a:25689,b:26234,f:rk},{n:'Click-to-session',a:87.4,b:94.9,f:pc},
+ {n:'Cost per click',a:3.8,b:3.6,f:v=>'₹'+v.toFixed(2),lo:1},{n:'Click-through rate',a:3.1,b:4.1,f:pc},
+ {n:'Orders',a:7,b:12,f:v=>v},{n:'Revenue',a:109440,b:197892,f:rk},{n:'ROAS',a:4.3,b:7.5,f:xf}]});
+CH.quad=mk.scatter({h:280,xMax:240000,yMax:20,fx:rk,fy:xf,xLab:'Spend, month to date →',yLab:'ROAS',
+ refx:127414,refy:6.57,refyL:'blended 6.6×',labels:true,
+ pts:CAMP.map(c=>({x:c.s,y:c.r/c.s,r:6+Math.sqrt(c.r/1461000)*15,c:c.p==='Meta'?C.a3:C.a2,l:c.sh}))});
+CH.par=mk.pareto({h:250,f:rk,items:CAMP.map(c=>({n:c.sh,v:c.r,c:c.p==='Meta'?C.a3:C.a2}))});
+CH.cat=mk.donut({h:200,center:'₹6.94M',centerSub:'REVENUE',segs:CATS.map((c,i)=>({n:c.n,v:c.r,c:[C.a1,C.a2,C.a3,C.a5][i]}))});
+CH.prod=mk.hbar({rows:PROD.slice(0,6).map(p=>({n:p.n,v:p.r})),f:rk,head:'REVENUE',rh:30,c:C.a1,vw:56});
+CH.band=mk.hbar({rows:BAND.map(b=>({n:b.n,v:b.o})),f:v=>v,head:'ORDERS',rh:34,c:C.a2,vw:42,lw:76});
+CH.geo=mk.hbar({rows:STATE.map(s=>({n:s.n,v:s.r})),f:rk,head:'REVENUE',rh:26,c:C.a3,vw:56});
+document.getElementById('td').innerHTML=DEV.map((d,i)=>
+ `<tr><td class="n"><span class="sw" style="background:${[C.a1,C.a3,C.mut][i]}"></span>${d.n}</td>
+ <td>${d.s.toLocaleString('en-US')}</td><td>${(d.s/902000*100).toFixed(0)}%</td>
+ <td>${d.c.toLocaleString('en-US')}</td><td>${d.o}</td><td>${(d.o/d.s*100).toFixed(3)}%</td>
+ <td>${rk(d.r)}</td><td>${rs(d.r/d.o)}</td></tr>`).join('');
+document.getElementById('tc').innerHTML=CAMP.slice().sort((a,b)=>b.r/b.s-a.r/a.s).map(c=>{const ro=c.r/c.s;
+ return `<tr><td class="n"><span class="sw" style="background:${c.p==='Meta'?C.a3:C.a2}"></span>${c.n}</td>
+ <td>${rs(c.s)}</td><td>${(c.s/1019310*100).toFixed(1)}%</td><td>${rs(c.r)}</td>
+ <td style="color:${ro>=6.57?'var(--pos)':'var(--neg)'};font-weight:600">${ro.toFixed(1)}×</td>
+ <td>${c.o}</td><td>${rs(c.s/c.o)}</td></tr>`;}).join('');
+document.getElementById('tcat').innerHTML=CATS.map((c,i)=>
+ `<tr><td class="n"><span class="sw" style="background:${[C.a1,C.a2,C.a3,C.a5][i]}"></span>${c.n}</td>
+ <td>${rs(c.r)}</td><td>${(c.r/6937242*100).toFixed(1)}%</td><td>${c.o}</td><td>${c.u}</td>
+ <td>${rs(c.r/c.o)}</td><td>${c.ret.toFixed(1)}%</td></tr>`).join('');
+boot();
+</script>
