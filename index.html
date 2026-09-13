@@ -147,6 +147,29 @@
       .system-embed { transform:scale(.5); }
     }
 
+    @media (max-width:1023px) {
+      .mobile-snap-row {
+        display:grid !important;
+        grid-template-columns:none !important;
+        grid-auto-flow:column;
+        grid-auto-columns:min(84vw, 620px);
+        align-items:stretch;
+        gap:16px !important;
+        width:100%;
+        min-width:0;
+        max-width:100%;
+        padding-right:32px;
+        overflow-x:auto !important;
+        overflow-y:hidden;
+        scroll-snap-type:x mandatory;
+        scrollbar-width:none;
+        overscroll-behavior-inline:contain;
+      }
+      .mobile-snap-row::-webkit-scrollbar { display:none; }
+      .mobile-snap-row > * { scroll-snap-align:start; }
+      .mobile-snap-row.space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top:0 !important; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html.js .reveal, .lift, .chip, .btn-primary, .btn-ghost, .system-card, #hero-portrait { transition: none !important; }
       .system-scan, .system-live-dot { animation: none !important; }
@@ -200,8 +223,8 @@
 
     <!-- ======================= HERO ======================= -->
     <section class="hero-bg relative overflow-hidden">
-      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 pt-36 pb-20 sm:pt-44 sm:pb-28">
-        <div class="grid lg:grid-cols-[1.35fr,1fr] gap-16 items-center">
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 pt-28 pb-14 sm:pt-32 sm:pb-16">
+        <div class="grid lg:grid-cols-[1.35fr,1fr] gap-12 lg:gap-16 items-center">
 
           <div>
             <p class="reveal inline-flex items-center gap-2.5 rounded-full border border-navy-100 bg-white px-4 py-1.5 text-[11px] font-bold tracking-[0.14em] uppercase text-navy shadow-soft">
@@ -270,7 +293,7 @@
         </div>
 
         <!-- Brand strip -->
-        <div class="reveal mt-24">
+        <div class="reveal mt-16 sm:mt-20">
           <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-slate-400 mb-4">Brands supported through my ecommerce leadership roles</p>
           <div class="flex flex-wrap gap-x-8 gap-y-3 display text-lg sm:text-xl text-slate-400 font-medium">
             <span class="hover:text-navy transition-colors">Philips</span>
@@ -289,22 +312,22 @@
     </section>
 
     <!-- ======================= ABOUT ======================= -->
-    <section id="about" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-      <div class="grid lg:grid-cols-[0.9fr,1.1fr] gap-12 lg:gap-20">
+    <section id="about" class="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
+      <div class="grid lg:grid-cols-[0.9fr,1.1fr] gap-10 lg:gap-16">
         <div class="reveal">
           <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">About</p>
           <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-navy">Operator first.<br/><span class="flourish">Consultant by design.</span></h2>
           <div class="mt-6 h-1 w-16 rounded-full bg-amber"></div>
           <blockquote class="mt-8 border-l-2 border-navy-100 pl-5 text-[15px] italic leading-relaxed text-slate-500">“A useful system should make the next decision clearer—not add another dashboard or process to manage.”</blockquote>
         </div>
-        <div class="reveal reveal-delay-1 text-[17px] leading-relaxed">
+        <div class="reveal reveal-delay-1 min-w-0 text-[17px] leading-relaxed">
           <p>
             I have spent <strong class="text-navy font-semibold">5+ years inside the machinery of ecommerce</strong>—close to the orders, reports, integrations, client reviews, escalations, and team handoffs where performance is actually won or lost.
           </p>
           <p class="mt-5">
             My path from MIS and business intelligence to ecommerce leadership gives me an unusually complete view: I can trace a commercial symptom back to the process, data, ownership, or system gap creating it—and then help build the fix.
           </p>
-          <div class="mt-8 grid gap-3 sm:grid-cols-3">
+          <div class="mobile-snap-row mt-8 grid gap-3 sm:grid-cols-3">
             <div class="rounded-2xl border border-slate-200/80 bg-[#F7FAFD] p-4"><p class="text-[11px] font-bold uppercase tracking-wider text-royal">Commercial lens</p><p class="mt-2 text-[13px] leading-relaxed text-slate-600">Margin, NSV, leakage, customer experience, and growth—not vanity metrics.</p></div>
             <div class="rounded-2xl border border-slate-200/80 bg-[#F7FAFD] p-4"><p class="text-[11px] font-bold uppercase tracking-wider text-royal">Operating depth</p><p class="mt-2 text-[13px] leading-relaxed text-slate-600">Practical experience across teams, platforms, SLAs, audits, and launches.</p></div>
             <div class="rounded-2xl border border-slate-200/80 bg-[#F7FAFD] p-4"><p class="text-[11px] font-bold uppercase tracking-wider text-royal">Builder mindset</p><p class="mt-2 text-[13px] leading-relaxed text-slate-600">Recommendations translated into workflows, controls, dashboards, and SOPs.</p></div>
@@ -316,36 +339,36 @@
     <!-- ======================= KEY ACHIEVEMENTS (navy band) ======================= -->
     <section id="achievements" class="relative bg-navy-900 text-white overflow-hidden">
       <div class="absolute inset-0 opacity-[0.06] dot-grid" aria-hidden="true" style="background-image: radial-gradient(rgba(255,255,255,.5) 1px, transparent 1px);"></div>
-      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+      <div class="relative max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
         <div class="reveal max-w-2xl">
           <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-amber">Key Achievements</p>
           <h2 class="display mt-4 text-4xl sm:text-[2.75rem] leading-tight font-semibold text-white">Business impact, in numbers.</h2>
         </div>
 
-        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
-          <div class="reveal bg-navy-900 p-8">
+        <div class="mt-10 sm:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
+          <div class="reveal bg-navy-900 p-5 sm:p-7">
             <p class="display text-5xl font-semibold text-amber">~<span class="counter" data-target="40">0</span>%</p>
             <p class="mt-3 text-sm font-semibold text-white">Operational efficiency gained</p>
             <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Through workflow optimization, AI automation, SOP standardization &amp; process improvement.</p>
           </div>
-          <div class="reveal reveal-delay-1 bg-navy-900 p-8">
+          <div class="reveal reveal-delay-1 bg-navy-900 p-5 sm:p-7">
             <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="50">0</span>%</p>
             <p class="mt-3 text-sm font-semibold text-white">Faster report generation</p>
             <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Cross-functional reporting automation cut generation time 40–50% while improving accuracy.</p>
           </div>
-          <div class="reveal reveal-delay-2 bg-navy-900 p-8">
+          <div class="reveal reveal-delay-2 bg-navy-900 p-5 sm:p-7">
             <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="4">0</span></p>
             <p class="mt-3 text-sm font-semibold text-white">Promotions in 3 years</p>
             <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Executive → Senior Executive → Associate Lead → Lead, on consistent performance.</p>
           </div>
-          <div class="reveal reveal-delay-3 bg-navy-900 p-8">
+          <div class="reveal reveal-delay-3 bg-navy-900 p-5 sm:p-7">
             <p class="display text-5xl font-semibold text-amber"><span class="counter" data-target="8">0</span></p>
             <p class="mt-3 text-sm font-semibold text-white">One-time projects delivered</p>
             <p class="mt-1.5 text-[13px] leading-relaxed text-slate-300">Delivered alongside regular S&amp;M engagements across the brand portfolio.</p>
           </div>
         </div>
 
-        <div class="mt-10 grid sm:grid-cols-3 gap-4">
+        <div class="mobile-snap-row mt-7 grid sm:grid-cols-3 gap-4">
           <div class="reveal flex items-start gap-3.5 rounded-2xl border border-white/10 bg-white/5 p-5">
             <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber/15 text-amber"><svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.3 5.9.9-4.2 4.1 1 5.8L10 14.4 4.7 17l1-5.8L1.5 7.2l5.9-.9L10 1z"/></svg></span>
             <p class="text-[13.5px] leading-relaxed text-slate-200"><strong class="text-white">Best Performer — R&amp;R award (Sep 2023)</strong> for consistently exceeding expectations.</p>
@@ -363,7 +386,7 @@
     </section>
 
     <!-- ======================= EXPERIENCE ======================= -->
-    <section id="experience" class="bg-[#F7FAFD] py-24 sm:py-28">
+    <section id="experience" class="bg-[#F7FAFD] py-14 sm:py-16">
       <div class="max-w-6xl mx-auto px-5 sm:px-8">
         <div class="reveal grid gap-6 lg:grid-cols-[1fr,0.72fr] lg:items-end">
           <div>
@@ -373,7 +396,7 @@
           <p class="max-w-xl text-[16px] leading-relaxed text-slate-600">The full chronology is in my résumé. These are the three chapters that shape how I diagnose and solve ecommerce problems today.</p>
         </div>
 
-        <ol class="mt-14 grid gap-6 lg:grid-cols-3">
+        <ol class="mobile-snap-row mt-10 sm:mt-12 grid gap-6 lg:grid-cols-3">
           <li class="reveal lift rounded-3xl border border-slate-200/80 bg-white p-7 shadow-soft sm:p-8">
             <div class="flex items-center justify-between gap-4"><span class="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">2018–2022</span><span class="display text-4xl font-semibold text-navy/15">01</span></div>
             <h3 class="display mt-6 text-2xl font-semibold text-navy">Data discipline</h3>
@@ -404,7 +427,7 @@
     </section>
 
     <!-- ======================= SERVICES ======================= -->
-    <section id="services" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+    <section id="services" class="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
       <div class="reveal grid gap-6 lg:grid-cols-[1fr,0.7fr] lg:items-end">
         <div>
           <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Consulting Services</p>
@@ -413,7 +436,7 @@
         <p class="max-w-xl text-[16px] leading-relaxed text-slate-600">Each engagement starts with the business bottleneck—not a predetermined tool. We define the decision, process, or workflow that needs fixing and build the smallest useful system around it.</p>
       </div>
 
-      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+      <div class="mobile-snap-row mt-10 sm:mt-12 grid gap-6 lg:grid-cols-3">
         <article class="reveal lift flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
           <div class="h-1.5 bg-gradient-to-r from-navy to-royal"></div>
           <div class="flex grow flex-col p-7 sm:p-8">
@@ -485,7 +508,7 @@
     </section>
 
     <!-- ======================= SYSTEM SHOWCASE ======================= -->
-    <section id="systems" class="relative overflow-hidden bg-navy-950 py-24 text-white sm:py-28">
+    <section id="systems" class="relative overflow-hidden bg-navy-950 py-14 text-white sm:py-16">
       <div class="absolute inset-0 opacity-20 dot-grid" aria-hidden="true"></div>
       <div class="relative max-w-6xl mx-auto px-5 sm:px-8">
         <div class="reveal grid gap-6 lg:grid-cols-[1fr,0.72fr] lg:items-end">
@@ -496,7 +519,7 @@
           <p class="max-w-xl text-[16px] leading-relaxed text-slate-300">Three illustrative working concepts showing how I structure executive visibility, channel performance, and operational controls. The figures are sample data; the decision logic reflects real ecommerce work.</p>
         </div>
 
-        <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        <div class="mobile-snap-row mt-10 sm:mt-12 grid gap-6 lg:grid-cols-3">
           <article class="reveal system-card overflow-hidden rounded-3xl border border-white/10 bg-white text-slate-600 shadow-navy">
             <div class="system-preview">
               <iframe class="system-embed" src="dashboards/performance-review.html" title="Executive performance review dashboard preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
@@ -548,7 +571,7 @@
     </section>
 
     <!-- ======================= CLIENT OUTCOMES ======================= -->
-    <section id="projects" class="bg-[#F7FAFD] py-24 sm:py-28">
+    <section id="projects" class="bg-[#F7FAFD] py-14 sm:py-16">
       <div class="max-w-6xl mx-auto px-5 sm:px-8">
         <div class="reveal max-w-3xl">
           <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-royal">Selected Client Outcomes</p>
@@ -556,7 +579,7 @@
           <p class="mt-5 max-w-2xl text-[16px] leading-relaxed text-slate-600">Representative engagements from my work with D2C and GCC brands. Client information is intentionally anonymized; the operational problems, interventions, and results are real.</p>
         </div>
 
-        <div class="mt-14 space-y-6">
+        <div class="mobile-snap-row mt-10 sm:mt-12 space-y-6">
           <article class="reveal lift overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
             <div class="grid lg:grid-cols-[0.72fr,1.28fr]">
               <div class="flex flex-col justify-between bg-navy p-7 text-white sm:p-9">
@@ -632,7 +655,7 @@
     </section>
 
     <!-- ======================= PROCESS & CREDIBILITY ======================= -->
-    <section id="process" class="py-24 sm:py-28">
+    <section id="process" class="py-14 sm:py-16">
       <div class="max-w-6xl mx-auto px-5 sm:px-8">
         <div class="reveal grid gap-6 lg:grid-cols-[1fr,0.72fr] lg:items-end">
           <div>
@@ -642,7 +665,7 @@
           <p class="max-w-xl text-[16px] leading-relaxed text-slate-600">No oversized transformation plan and no tool-first pitch. We start with one costly bottleneck, define the result, and build toward adoption.</p>
         </div>
 
-        <ol class="mt-14 grid gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4">
+        <ol class="mobile-snap-row mt-10 sm:mt-12 grid gap-px overflow-hidden rounded-3xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4">
           <li class="reveal bg-white p-7 sm:p-8"><div class="flex items-center justify-between"><span class="display text-3xl font-semibold text-amber">01</span><span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Discover</span></div><h3 class="mt-6 font-bold text-navy">Define the decision</h3><p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Clarify the business problem, who feels it, and what a useful outcome looks like.</p></li>
           <li class="reveal reveal-delay-1 bg-white p-7 sm:p-8"><div class="flex items-center justify-between"><span class="display text-3xl font-semibold text-amber">02</span><span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Diagnose</span></div><h3 class="mt-6 font-bold text-navy">Trace the root cause</h3><p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Map the data, process, ownership, and system gaps behind the visible symptom.</p></li>
           <li class="reveal reveal-delay-2 bg-white p-7 sm:p-8"><div class="flex items-center justify-between"><span class="display text-3xl font-semibold text-amber">03</span><span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Build</span></div><h3 class="mt-6 font-bold text-navy">Create the smallest useful system</h3><p class="mt-2 text-[13.5px] leading-relaxed text-slate-600">Implement the dashboard, control, workflow, or operating rhythm that solves it.</p></li>
@@ -667,13 +690,13 @@
     </section>
 
     <!-- ======================= CONTACT ======================= -->
-    <section id="contact" class="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
+    <section id="contact" class="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-16">
       <div class="reveal relative overflow-hidden rounded-[2rem] bg-navy-900 text-white shadow-navy">
         <div class="absolute inset-0 opacity-[0.07]" aria-hidden="true" style="background-image: radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px); background-size: 24px 24px;"></div>
         <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-royal/25 blur-3xl" aria-hidden="true"></div>
         <div class="absolute -bottom-28 -left-16 h-72 w-72 rounded-full bg-amber/15 blur-3xl" aria-hidden="true"></div>
 
-        <div class="relative px-7 py-14 sm:px-16 sm:py-20 grid lg:grid-cols-[1.3fr,1fr] gap-12 items-center">
+        <div class="relative px-7 py-10 sm:px-14 sm:py-14 grid lg:grid-cols-[1.3fr,1fr] gap-10 items-center">
           <div>
             <p class="text-[11px] uppercase tracking-[0.22em] font-bold text-amber">Contact</p>
             <h2 class="display mt-4 text-4xl sm:text-5xl leading-tight font-semibold">Let's grow something together.</h2>
